@@ -25,7 +25,7 @@ export class DashboardService {
         } catch (error) {
             /** @databaseError */
             if (error instanceof DatabaseError && error.message.includes('invalid identifier')) {
-                throw new BadRequestException('Invalid input data or database error', 'Database Error');
+                throw new BadRequestException('Invalid select data or database error', 'Database Error');
             } else {
                 throw new BadRequestException('Server database error', 'Database Error');
             }
