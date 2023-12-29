@@ -7,13 +7,15 @@ import { ExceptionFilterErrors } from './shared/handle.errors';
 import { AuthInterceptor } from './middleware/interceptors/auth.interceptor';
 import { DashboardModule } from './resources/dashboard/dashboard.module';
 import { ProfileModule } from './resources/profile/profile.module';
+import { UserModule } from './resources/user/user.module';
 
 @Module({
     imports: [
         DatabaseModule, 
         AuthModule,
         DashboardModule,
-        ProfileModule
+        ProfileModule,
+        UserModule
     ],
     controllers: [AppController],
     providers: [
