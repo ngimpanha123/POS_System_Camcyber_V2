@@ -7,10 +7,11 @@ import { AuthGuard } from 'src/middleware/guards/auth.guard';
 @UseGuards(AuthGuard)
 @Controller('api/dashboard')
 export class DashboardController {
-    constructor(private readonly dashboardService: DashboardService) { };
-    //========================================
+
+    constructor(private dashboardService: DashboardService) { };
+
     @Get()
-    getDashboardInfo() {
-        return this.dashboardService.getDashboardInfo();;
+    async getDashboardInfo(): Promise<{ data: { total_sale_today: number }, message: string }> {
+        return await this.dashboardService.getDashboardInfo();
     }
 }
