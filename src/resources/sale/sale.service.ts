@@ -4,6 +4,7 @@ import OrderDetails from 'src/models/order/detail.model';
 import Order from 'src/models/order/order.model';
 import Product from 'src/models/product/product.model';
 import User from 'src/models/user/user.model';
+import { List } from './sale.types';
 
 interface GetSaleParams {
     receipt_number?: number;
@@ -16,7 +17,7 @@ interface GetSaleParams {
 
 @Injectable()
 export class SaleService {
-    async listing(filters: GetSaleParams, limit: number, page: number): Promise<any> {
+    async listing(filters: GetSaleParams, limit: number, page: number): Promise<List> {
         const offset = (page - 1) * limit;
 
         const whereClause: any = {};
@@ -56,13 +57,17 @@ export class SaleService {
         const totalCount = data.count;
         const totalPages = Math.ceil(totalCount / limit);
 
-        return {
+        const dataFormat: List = {
             data: data.rows,
-            currentPage: page,
-            perPage: limit,
-            total: totalCount,
-            total_pages: totalPages,
-        };
+            pagination: {
+                current_page: page,
+                per_page: limit,
+                total_items: totalCount,
+                total_pages: totalPages
+            }
+        }
+
+        return dataFormat;
     }
 
     async delete(id: number): Promise<{ status_code: number, message: string }> {

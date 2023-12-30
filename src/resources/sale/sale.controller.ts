@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/middleware/guards/auth.guard';
 import { SaleService } from './sale.service';
 import { User } from 'src/middleware/decorators/user.decorator';
 import { UserPayload } from 'src/middleware/interceptors/auth.interceptor';
+import { List } from './sale.types';
 
 interface GetSaleParams {
     receipt_number?: number;
@@ -22,14 +23,14 @@ export class SaleController {
     constructor(private saleService: SaleService) { };
 
     @Get()
-    listing(
+    async listing(
         @User() payload: UserPayload,
         @Query('receipt_number') receipt_number?: number,
         @Query('from') from?: string,
         @Query('to') to?: string,
         @Query('limit') limit?: number,
         @Query('page') page?: number,
-    ) {
+    ): Promise<List> {
 
         const fromDate = from ? new Date(from) : null;
         const toDate = to ? new Date(to) : null;
@@ -59,7 +60,7 @@ export class SaleController {
             page = 1;
         }
 
-        return this.saleService.listing(filters, limit, page);
+        return await this.saleService.listing(filters, limit, page);
     }
 
     @Delete(':id')
