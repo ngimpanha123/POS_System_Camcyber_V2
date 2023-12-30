@@ -35,25 +35,22 @@ const userSeeder = {
     ],
     users: [
         {
-            type_id: UsersTypeEnum.Admin,
-            name: 'Yim Klok',
-            avatar: 'static/icon/user.png',
-            email: 'yimklok.kh@gmail.com',
-            phone: '0977779688',
-            password: '123456',
-            is_active: UsersActiveEnum.Active,
-            creator_id: null,
-            updater_id: null,
-            deleter_id: null
+            type_id     : UsersTypeEnum.Admin,
+            name        : 'Yim Klok',
+            avatar      : 'static/pos/user/avatar.png',
+            email       : 'yimklok.kh@gmail.com',
+            phone       : '0977779688',
+            password    : '123456',
+            is_active   : UsersActiveEnum.Active
         },
         {
-            type_id: UsersTypeEnum.Staff,
-            email: 'hengmeymey@gmail.com',
-            phone: '0979688777',
-            password: '123456',
-            is_active: UsersActiveEnum.Active,
-            name: 'Heng MeyMey',
-            avatar: 'static/icon/user.png'
+            type_id     : UsersTypeEnum.Staff,
+            name        : 'Heng MeyMey',
+            avatar      : 'static/pos/user/avatar.png',
+            email       : 'hengmeymey@gmail.com',
+            phone       : '0979688777',
+            password    : '123456',
+            is_active   : UsersActiveEnum.Active
         }
     ]
 }
