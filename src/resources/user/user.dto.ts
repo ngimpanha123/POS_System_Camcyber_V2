@@ -58,6 +58,10 @@ export class UpdatePasswordDto {
     @MinLength(6)
     @IsString()
     password: string
+
+    @MinLength(6)
+    @IsString()
+    confirm_password: string
 }
 
 export class UpdateStatusDto {

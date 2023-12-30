@@ -8,6 +8,10 @@ import { AuthInterceptor } from './middleware/interceptors/auth.interceptor';
 import { DashboardModule } from './resources/dashboard/dashboard.module';
 import { ProfileModule } from './resources/profile/profile.module';
 import { UserModule } from './resources/user/user.module';
+import { ProductModule } from './resources/product/product.module';
+import { PosModule } from './resources/pos/pos.module';
+import { SaleModule } from './resources/sale/sale.module';
+import { InvoiceModule } from './resources/invoice/invoice.module';
 
 @Module({
     imports: [
@@ -15,7 +19,11 @@ import { UserModule } from './resources/user/user.module';
         AuthModule,
         DashboardModule,
         ProfileModule,
-        UserModule
+        UserModule,
+        ProductModule,
+        PosModule,
+        SaleModule,
+        InvoiceModule
     ],
     controllers: [AppController],
     providers: [

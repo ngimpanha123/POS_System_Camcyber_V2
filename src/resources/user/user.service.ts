@@ -2,7 +2,7 @@ import { BadRequestException, ConflictException, HttpStatus, Injectable } from "
 import { Op } from "sequelize";
 import UsersType from "src/models/user/type.model";
 import User from "src/models/user/user.model";
-import { CreateUserDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
+import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
 
 @Injectable()
 export class UserService {
@@ -193,6 +193,34 @@ export class UserService {
         return {
             statusCode: HttpStatus.OK,
             message: 'User has been deleted successfully.'
+        };
+    }
+
+    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ statusCode: number, message: string }> {
+        //=============================================
+        let currentUser: User;
+        try {
+            currentUser = await User.findByPk(userId);
+        } catch (error) {
+            throw new BadRequestException('Someting went wrong!. Please try again later.', 'Error Query');
+        }
+        if (!currentUser) {
+            throw new BadRequestException('Invalid user_id');
+        }
+
+        //=============================================
+        try {
+            await User.update(body, {
+                where: { id: userId }
+            });
+        } catch (error) {
+            throw new BadRequestException('Someting went wrong!. Please try again later.', 'Error Update');
+        }
+
+        //=============================================
+        return {
+            statusCode: HttpStatus.OK,
+            message: 'Password has been updated successfully.'
         };
     }
 

@@ -1,5 +1,6 @@
-import { Model, Column, Table, BelongsTo, ForeignKey, DataType } from 'sequelize-typescript';
+import { Model, Column, Table, BelongsTo, ForeignKey, DataType, HasMany } from 'sequelize-typescript';
 import User from '../user/user.model';
+import OrderDetails from './detail.model';
 
 @Table({ tableName: 'order', createdAt: 'created_at', updatedAt: 'updated_at' })
 class Order extends Model<Order> { 
@@ -17,7 +18,10 @@ class Order extends Model<Order> {
     ordered_at?: Date;
 
     @BelongsTo(() => User)
-    cashiers: User;
+    cashier: User;
+
+    @HasMany(() => OrderDetails) 
+    details: OrderDetails
 }
 
 export default Order;

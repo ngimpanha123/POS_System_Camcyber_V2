@@ -19,10 +19,10 @@ class OrderDetails extends Model<OrderDetails> {
     qty: number;
 
     @BelongsTo(() => Order)
-    orders: Order;
+    order: Order;
 
     @BelongsTo(() => Product)
-    products: Product;
+    product: Product;
 }
 
 export default OrderDetails;

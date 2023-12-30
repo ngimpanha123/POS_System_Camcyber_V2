@@ -138,11 +138,13 @@ export class ProfileService {
     private generateToken(id: number, name: string, email: string, avatar: string, phone: string, role: string): string {
         return jwt.sign(
             {
-                id: id,
-                name: name,
-                email: email,
-                phone: phone,
-                avatar: avatar,
+                user: {
+                    id: id,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    avatar: avatar,
+                },
                 role: role
             }, jwtConstants.secret,
             {

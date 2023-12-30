@@ -78,7 +78,8 @@ export class AuthService {
     private generateToken(user: User): string {
         return jwt.sign(
             {
-                user: new UserDto(user)
+                user: new UserDto(user),
+                role: user.type.name
             }, jwtConstants.secret,
             {
                 expiresIn: jwtConstants.expiresIn

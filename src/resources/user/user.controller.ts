@@ -1,10 +1,10 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Patch, Post, Put, Query, UseGuards, UsePipes } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, UseGuards, UsePipes } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { Roles, UserRoleDecorator } from "src/middleware/decorators/rolse.decorator";
 import { AuthGuard } from "src/middleware/guards/auth.guard";
 import { User as UserDecorator } from 'src/middleware/decorators/user.decorator';
 import { UserPayload } from "src/middleware/interceptors/auth.interceptor";
-import { CreateUserDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
+import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
 import { UsersTypeExistsPipe } from "src/shared/pipes/user.pipe";
 import * as bcrypt from 'bcryptjs';
 import { FileResponse } from "src/shared/file.interface";
@@ -98,8 +98,20 @@ export class UserController {
         return await this.userService.delete(id);
     }
 
-    @Patch(':id/change-status')
+    @Put(':id/change-status')
     async updateStatus(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateStatusDto): Promise<{ statusCode: number, message: string }> {
         return await this.userService.updateStatus(id, body);
+    }
+
+    @Put(':id/update-password')
+    async updatePassword(@Param('id', ParseIntPipe) id: number, @Body() body: UpdatePasswordDto): Promise<{ statusCode: number, message: string }> {
+        if (!(body.password === body.confirm_password)) {
+            throw new BadRequestException('Password and confirm password do not match');
+        }
+        // remove confirm_password from body and hash the password
+        body.confirm_password = undefined;
+        const passwordHash = await bcrypt.hash(body.password, 12);
+        body.password = passwordHash;
+        return await this.userService.updatePassword(id, body);
     }
 }

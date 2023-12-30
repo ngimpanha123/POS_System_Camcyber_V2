@@ -4,7 +4,8 @@ import * as jwt from 'jsonwebtoken';
 import User from "src/models/user/user.model";
 
 export interface UserPayload {
-    user: User
+    user: User,
+    role: string,
     iat: number
     exp: number
 }
