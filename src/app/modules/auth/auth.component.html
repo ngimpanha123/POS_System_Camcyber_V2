@@ -1,0 +1,86 @@
+<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
+    <div
+        class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full md:w-1/3 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+
+            <div class="w-32 m-auto">
+                <img src="assets/images/logo/pos-none-text.png">
+            </div>
+
+
+            <div class="mt-4 text-center text-4xl font-extrabold tracking-tight">
+                ប្រព័ន្ធគ្រប់គ្រងការលក់
+            </div>
+            <div class="mt-2 text-center text-2xl font-extrabold tracking-tight">
+                POS Management System
+            </div>
+            <div class="mt-8 text-center text-3xl font-extrabold tracking-tight">
+                ចូលគណនីរបស់អ្នក
+            </div>
+
+
+            <form class="mt-8 md-form-field-appearance-outline" [formGroup]="loginForm">
+
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>លេខទូរស័ព្ទ</mat-label>
+                    <input matInput [formControlName]="'username'">
+                    <mat-error>
+                        សូមបញ្ចូលលេខលេខទូរស័ព្ទ
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>លេខសម្ងាត់</mat-label>
+                    <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
+                    <button mat-icon-button type="button"
+                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                        matSuffix>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                    </button>
+                    <mat-error>
+                        សូមបញ្ចូលលេខសម្ងាត់
+                    </mat-error>
+                </mat-form-field>
+
+                <button class="helpers-mat-button-md w-full" mat-flat-button
+                    [disabled]="loginForm.disabled || loginForm.invalid" (click)="login()">
+                    <span *ngIf="!loginForm.disabled">
+                        ចូលប្រព័ន្ធ
+                    </span>
+                    <mat-progress-spinner *ngIf="loginForm.disabled" [diameter]="24"
+                        [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div
+        class="relative hidden md:flex flex-auto items-center justify-center w-full h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
+
+        <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
+            preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
+                <circle r="234" cx="196" cy="23"></circle>
+                <circle r="234" cx="790" cy="491"></circle>
+            </g>
+        </svg>
+        <!-- Dots -->
+        <svg class="absolute -top-16 -right-16 text-gray-700" viewBox="0 0 220 192" width="220" height="192"
+            fill="none">
+            <defs>
+                <pattern id="837c3e70-6c3a-44e6-8854-cc48c737b659" x="0" y="0" width="20" height="20"
+                    patternUnits="userSpaceOnUse">
+                    <rect x="0" y="0" width="4" height="4" fill="currentColor"></rect>
+                </pattern>
+            </defs>
+            <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"></rect>
+        </svg>
+
+        <!-- Content -->
+        <div class="z-10 relative w-full max-w-5xl">
+            <img src="assets/images/background/pos-bg.png" alt="Inlid image">
+        </div>
+    </div>
+</div>

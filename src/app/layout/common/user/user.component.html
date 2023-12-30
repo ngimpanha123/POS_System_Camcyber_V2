@@ -1,0 +1,21 @@
+<!-- Button -->
+<button mat-icon-button [matMenuTriggerFor]="userActions" class="mt-1.5">
+    <span class="relative border min-w-11 max-w-11 min-h-11 max-h-11 flex items-center justify-center rounded-full">
+        <img *ngIf="user?.avatar" class="min-w-10 max-w-10 min-h-10 max-h-10 object-cover rounded-full" [src]="fileUrl + user?.avatar">
+        <mat-icon *ngIf="!user?.avatar" [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+    </span>
+</button>
+
+<mat-menu [xPosition]="'before'" #userActions="matMenu" class="absolute top-3.5 -right-3 py-0">
+    <button mat-menu-item [routerLink]="['/profile']">
+        <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+        <!-- <span>គណនី</span> -->
+        <span *transloco="let t">{{t('profile')}}</span>
+    </button>
+    <mat-divider class="my-0"></mat-divider>
+    <button mat-menu-item (click)="logout()">
+        <mat-icon [svgIcon]="'feather:log-out'"></mat-icon>
+        <!-- <span>ចាកចេញ</span> -->
+        <span *transloco="let t">{{t('logout')}}</span>
+    </button>
+</mat-menu>
