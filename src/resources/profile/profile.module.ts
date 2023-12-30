@@ -5,7 +5,6 @@ import { FileService } from 'src/services/file.service';
 
 @Module({
     controllers: [ProfileController],
-    providers: [ProfileService, FileService],
-    imports: []
+    providers: [ProfileService, FileService]
 })
 export class ProfileModule { }

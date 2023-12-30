@@ -9,9 +9,8 @@ import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class ProfileService {
-    constructor() { }
 
-    async update(body: UpdateProfileDto, userId: number) {
+    async update(body: UpdateProfileDto, userId: number): Promise<{ access_token: string, message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -86,14 +85,13 @@ export class ProfileService {
         }
 
         const token: string = this.generateToken(updateUser.id, updateUser.name, updateUser.email, updateUser.avatar, updateUser.phone, updateUser.type.name);
-        const dataResponse = {
+        return {
             access_token: token,
             message: 'Your profile has been updated successfully.'
         }
-        return dataResponse;
     }
 
-    async updatePassword(userId: number, body: UpdatePasswordDto) {
+    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ statusCode: number, message: string }> {
         //=============================================
         let currentUser: User;
         try {

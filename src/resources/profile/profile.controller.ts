@@ -1,4 +1,4 @@
-import { Controller, Body, UseGuards, Put, BadRequestException } from '@nestjs/common';
+import { Controller, Body, UseGuards, Put, BadRequestException, HttpCode, HttpStatus } from '@nestjs/common';
 import { UserPayload } from 'src/middleware/interceptors/auth.interceptor';
 import { AuthGuard } from 'src/middleware/guards/auth.guard';
 import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decorator';
@@ -21,34 +21,34 @@ export class ProfileController {
     async update(
         @Body() body: UpdateProfileDto,
         @UserDecorator() payload: UserPayload,
-    ) {
+    ): Promise<{ access_token: string, message: string }> {
+
         if (body.avatar) {
-            // Check if the image is a string and starts with the valid prefixes
             const base64PrefixJPEG = 'data:image/jpeg;base64,';
             const base64PrefixPNG = 'data:image/png;base64,';
             if (!(typeof body.avatar === 'string' && (body.avatar.startsWith(base64PrefixJPEG) || body.avatar.startsWith(base64PrefixPNG)))) {
                 throw new BadRequestException('Invalid image');
             }
-            let avatar: FileResponse;
             try {
-                avatar = await this.fileService.base64Image(body.avatar);
+                const avatar: FileResponse = await this.fileService.base64Image(body.avatar);
+                body.avatar = avatar.data.uri;
             } catch (error) {
                 throw new BadRequestException(error.message);
             }
-            // replace base64 string by file uri from FileService
-            body.avatar = avatar.data.uri;
         }
         else {
             body.avatar = undefined;
         }
-        return this.profileService.update(body, payload.user.id);
+
+        return await this.profileService.update(body, payload.user.id);
     }
 
     @Put('update-password')
+    @HttpCode(HttpStatus.OK)
     async updatePassword(
         @Body() body: UpdatePasswordDto,
         @UserDecorator() payload: UserPayload,
-    ) {
+    ): Promise<{ statusCode: number, message: string }> {
         if (!(body.new_password === body.confirm_password)) {
             throw new BadRequestException('New password and confirm password do not match');
         }
