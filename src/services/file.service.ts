@@ -9,20 +9,25 @@ const pathToTemp = process.env.FILE_DIR || './temp/';
 @Injectable()
 export class FileService {
     async callFileService(filePath: string, folder: string): Promise<any> {
-        const fileServiceUrl = process.env.FILE_URL;
+        
+        const fileUrl: string = process.env.FILE_URL || 'http://localhost:8080';
+        const fileKey: string = process.env.FILE_KEY || 'POS';
+        const username: string = process.env.FILE_USERNAME || 'CamCyber';
+        const password: string = process.env.FILE_PASSWORD || 'pos@123';
+
         try {
             const imageStream = fileSystem.createReadStream(filePath);
             const formData = new FormData();
-            formData.append('key', 'POS');
+            formData.append('key', fileKey);
             formData.append('file', imageStream, {
                 filename: 'temp.png',
                 contentType: 'image/png'
             });
             formData.append('folder', folder);
-            const response = await axios.post(fileServiceUrl + '/api/file/upload-single', formData, {
+            const response = await axios.post(fileUrl + '/api/file/upload-single', formData, {
                 headers: {
                     ...formData.getHeaders(),
-                    Authorization: `Basic ${btoa('pos:pos@123')}`
+                    Authorization: `Basic ${btoa(`${username}:${password}`)}`
                 }
             });
             if (response.status === HttpStatus.OK) {
