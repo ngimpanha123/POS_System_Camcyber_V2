@@ -87,7 +87,7 @@ export class ProductController {
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: number): Promise<{ statusCode: number, message: string }> {
+    async delete(@Param('id') id: number): Promise<{ status_code: number, message: string }> {
         return await this.productService.delete(id);
     }
 }

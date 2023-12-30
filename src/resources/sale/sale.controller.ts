@@ -64,7 +64,7 @@ export class SaleController {
 
     @Delete(':id')
     @HttpCode(HttpStatus.OK)
-    async delete(@Param('id') id: number): Promise<{ statusCode: number, message: string }> {
+    async delete(@Param('id') id: number): Promise<{ status_code: number, message: string }> {
         return await this.saleService.delete(id);
     }
 }

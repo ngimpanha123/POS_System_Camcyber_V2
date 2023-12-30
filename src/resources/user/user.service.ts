@@ -1,13 +1,14 @@
-import { BadRequestException, ConflictException, HttpStatus, Injectable } from "@nestjs/common";
+import { BadRequestException, ConflictException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Op } from "sequelize";
 import UsersType from "src/models/user/type.model";
 import User from "src/models/user/user.model";
 import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
+import { Create, List, Update } from "./user.types";
 
 @Injectable()
 export class UserService {
 
-    async listing(userId: number, key?: string, limit: number = 10, page: number = 1) {
+    async listing(userId: number, key?: string, limit: number = 10, page: number = 1): Promise<List> {
         const offset = (page - 1) * limit;
         const where = {
             [Op.and]: [
@@ -38,18 +39,20 @@ export class UserService {
         const totalCount = data.count;
         const totalPages = Math.ceil(totalCount / limit);
 
-        return {
+        const dataFormat: List = {
             data: data.rows,
             pagination: {
-                currentPage: page,
-                perPage: limit,
-                totalItems: totalCount,
-                totalPages: totalPages
+                current_page: page,
+                per_page: limit,
+                total_items: totalCount,
+                total_pages: totalPages
             }
-        };
+        }
+
+        return dataFormat;
     }
 
-    async create(body: CreateUserDto, userId: number) {
+    async create(body: CreateUserDto, userId: number): Promise<Create> {
         let user: User;
         try {
             user = await User.findOne({
@@ -88,13 +91,15 @@ export class UserService {
             ]
         });
 
-        return {
-            statusCode: HttpStatus.OK,
-            data: data
-        };
+        const dataFormat: Create = {
+            data: data,
+            message: "User has been created"
+        }
+
+        return dataFormat;
     }
 
-    async update(userId: number, body: UpdateUserDto, updaterId: number) {
+    async update(userId: number, body: UpdateUserDto, updaterId: number): Promise<Update> {
         //=============================================
         let currentUser: User;
         try {
@@ -105,7 +110,6 @@ export class UserService {
         if (!currentUser) {
             throw new BadRequestException('Invalid user_id');
         }
-
         //=============================================
         let checkExistPhone: User;
         try {
@@ -121,7 +125,6 @@ export class UserService {
         if (checkExistPhone) {
             throw new ConflictException('Phone is already in use');
         }
-
         //=============================================
         let checkExistEmail: User;
         try {
@@ -138,7 +141,6 @@ export class UserService {
         if (checkExistEmail) {
             throw new ConflictException('Email is already in use');
         }
-
         //=============================================
         try {
             await User.update({
@@ -154,7 +156,6 @@ export class UserService {
         } catch (error) {
             throw new BadRequestException('Someting went wrong!. Please try again later.', 'Error Update');
         }
-
         //=============================================
         let updateUser: User;
         try {
@@ -173,30 +174,35 @@ export class UserService {
         updateUser.password = undefined;
 
         //=============================================
-        return {
-            statusCode: HttpStatus.OK,
+        const dataFormat: Update = {
             data: updateUser,
             message: 'User has been updated successfully.'
-        };
+        }
+        return dataFormat;
     }
 
-    async delete(userId: number): Promise<{ statusCode: number, message: string }> {
+    async delete(userId: number): Promise<{ status_code: number, message: string }> {
         try {
-            await User.destroy({
+            const rowsAffected = await User.destroy({
                 where: {
                     id: userId
                 }
             });
+
+            if (rowsAffected === 0) {
+                throw new NotFoundException('This user not found.');
+            }
+
+            return {
+                status_code: HttpStatus.OK,
+                message: 'User has been deleted successfully.'
+            };
         } catch (error) {
-            throw new BadRequestException('Someting went wrong!. Please try again later.', 'Error Delete');
+            throw new BadRequestException(error.message ?? 'Something went wrong!. Please try again later.', 'Error Delete');
         }
-        return {
-            statusCode: HttpStatus.OK,
-            message: 'User has been deleted successfully.'
-        };
     }
 
-    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ statusCode: number, message: string }> {
+    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ status_code: number, message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -219,12 +225,12 @@ export class UserService {
 
         //=============================================
         return {
-            statusCode: HttpStatus.OK,
+            status_code: HttpStatus.OK,
             message: 'Password has been updated successfully.'
         };
     }
 
-    async updateStatus(userId: number, body: UpdateStatusDto): Promise<{ statusCode: number, message: string }> {
+    async updateStatus(userId: number, body: UpdateStatusDto): Promise<{ status_code: number, message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -247,7 +253,7 @@ export class UserService {
 
         //=============================================
         return {
-            statusCode: HttpStatus.OK,
+            status_code: HttpStatus.OK,
             message: 'Status has been updated successfully.'
         };
     }

@@ -105,7 +105,7 @@ export class ProductService {
         return await Product.findByPk(id);
     }
 
-    async delete(id: number): Promise<{ statusCode: number, message: string }> {
+    async delete(id: number): Promise<{ status_code: number, message: string }> {
         try {
             const rowsAffected = await Product.destroy({
                 where: {
@@ -118,7 +118,7 @@ export class ProductService {
             }
 
             return {
-                statusCode: HttpStatus.OK,
+                status_code: HttpStatus.OK,
                 message: 'This product has been deleted successfully.'
             };
         } catch (error) {

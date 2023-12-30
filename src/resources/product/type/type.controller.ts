@@ -32,7 +32,7 @@ export class ProductsTypeController {
 
     @Delete(':id')
     @HttpCode(200)
-    async delete(@Param('id') id: number): Promise<{ statusCode: number, message: string }> {
+    async delete(@Param('id') id: number): Promise<{ status_code: number, message: string }> {
         return await this.typeService.delete(id);
     }
 }

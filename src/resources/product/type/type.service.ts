@@ -60,7 +60,7 @@ export class ProductsTypeService {
         return 'updated';
     }
 
-    async delete(id: number): Promise<{ statusCode: number, message: string }> {
+    async delete(id: number): Promise<{ status_code: number, message: string }> {
         try {
             const rowsAffected = await Product.destroy({
                 where: {
@@ -73,7 +73,7 @@ export class ProductsTypeService {
             }
 
             return {
-                statusCode: HttpStatus.OK,
+                status_code: HttpStatus.OK,
                 message: 'Data has been deleted successfully.'
             };
         } catch (error) {

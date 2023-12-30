@@ -91,7 +91,7 @@ export class ProfileService {
         }
     }
 
-    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ statusCode: number, message: string }> {
+    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ status_code: number, message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -128,7 +128,7 @@ export class ProfileService {
 
         //=============================================
         return {
-            statusCode: HttpStatus.OK,
+            status_code: HttpStatus.OK,
             message: 'Password has been updated successfully.'
         };
     }

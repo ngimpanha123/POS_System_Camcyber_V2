@@ -48,7 +48,7 @@ export class ProfileController {
     async updatePassword(
         @Body() body: UpdatePasswordDto,
         @UserDecorator() payload: UserPayload,
-    ): Promise<{ statusCode: number, message: string }> {
+    ): Promise<{ status_code: number, message: string }> {
         if (!(body.new_password === body.confirm_password)) {
             throw new BadRequestException('New password and confirm password do not match');
         }

@@ -10,6 +10,7 @@ import * as bcrypt from 'bcryptjs';
 import { FileResponse } from "src/shared/file.interface";
 import { FileService } from "src/services/file.service";
 import { UsersActiveEnum } from "src/enums/user/active.enum";
+import { Create, List, Update } from "./user.types";
 
 @Roles(UserRoleDecorator.ADMIN)
 @UseGuards(AuthGuard)
@@ -22,12 +23,7 @@ export class UserController {
     ) { };
 
     @Get()
-    async listing(
-        @UserDecorator() payload: UserPayload,
-        @Query('key') key?: string,
-        @Query('limit') limit?: number,
-        @Query('page') page?: number
-    ) {
+    async listing(@UserDecorator() payload: UserPayload, @Query('key') key?: string, @Query('limit') limit?: number, @Query('page') page?: number): Promise<List> {
         // Set default values if not provided
         if (!limit) {
             limit = 10;
@@ -40,51 +36,39 @@ export class UserController {
 
     @Post()
     @UsePipes(UsersTypeExistsPipe)
-    async create(
-        @Body() body: CreateUserDto,
-        @UserDecorator() payload: UserPayload
-    ) {
-
+    async create(@Body() body: CreateUserDto, @UserDecorator() payload: UserPayload): Promise<Create> {
         const passwordHash = await bcrypt.hash(body.password, 12);
         body.password = passwordHash;
-
-        // Check if the image is a string and starts with the valid prefixes
         const base64PrefixJPEG = 'data:image/jpeg;base64,';
         const base64PrefixPNG = 'data:image/png;base64,';
         if (!(typeof body.avatar === 'string' && (body.avatar.startsWith(base64PrefixJPEG) || body.avatar.startsWith(base64PrefixPNG)))) {
             throw new BadRequestException('Invalid image');
         }
-        let avatar: FileResponse;
         try {
-            avatar = await this.fileService.base64Image(body.avatar);
+            const avatar: FileResponse = await this.fileService.base64Image(body.avatar);
+            body.avatar = avatar.data.uri;
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-        // replace base64 string by file uri from FileService
-        body.avatar = avatar.data.uri;
         body.is_active = UsersActiveEnum.Active;
-
         return this.userService.create(body, payload.user.id);
     }
 
     @Put(':id')
     @UsePipes(UsersTypeExistsPipe)
-    async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateUserDto, @UserDecorator() payload: UserPayload) {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateUserDto, @UserDecorator() payload: UserPayload): Promise<Update> {
         if (body.avatar) {
-            // Check if the image is a string and starts with the valid prefixes
             const base64PrefixJPEG = 'data:image/jpeg;base64,';
             const base64PrefixPNG = 'data:image/png;base64,';
             if (!(typeof body.avatar === 'string' && (body.avatar.startsWith(base64PrefixJPEG) || body.avatar.startsWith(base64PrefixPNG)))) {
                 throw new BadRequestException('Invalid image');
             }
-            let avatar: FileResponse;
             try {
-                avatar = await this.fileService.base64Image(body.avatar);
+                const avatar: FileResponse = await this.fileService.base64Image(body.avatar);
+                body.avatar = avatar.data.uri;
             } catch (error) {
                 throw new BadRequestException(error.message);
             }
-            // replace base64 string by file uri from FileService
-            body.avatar = avatar.data.uri;
         }
         else {
             body.avatar = undefined;
@@ -94,17 +78,17 @@ export class UserController {
 
     @Delete(':id')
     @HttpCode(200)
-    async delete(@Param('id') id: number): Promise<{ statusCode: number, message: string }> {
+    async delete(@Param('id') id: number): Promise<{ status_code: number, message: string }> {
         return await this.userService.delete(id);
     }
 
     @Put(':id/change-status')
-    async updateStatus(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateStatusDto): Promise<{ statusCode: number, message: string }> {
+    async updateStatus(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateStatusDto): Promise<{ status_code: number, message: string }> {
         return await this.userService.updateStatus(id, body);
     }
 
     @Put(':id/update-password')
-    async updatePassword(@Param('id', ParseIntPipe) id: number, @Body() body: UpdatePasswordDto): Promise<{ statusCode: number, message: string }> {
+    async updatePassword(@Param('id', ParseIntPipe) id: number, @Body() body: UpdatePasswordDto): Promise<{ status_code: number, message: string }> {
         if (!(body.password === body.confirm_password)) {
             throw new BadRequestException('Password and confirm password do not match');
         }

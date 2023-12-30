@@ -1,5 +1,5 @@
 export interface FileResponse {
-    statusCode: number,
+    status_code: number,
     data: FilePayload,
     message: string
 }

@@ -9,7 +9,7 @@ export class ExceptionFilterErrors implements ExceptionFilter {
         // If we one to Customize the error response for specific status codes
         if (exception.status === HttpStatus.FORBIDDEN) {
             response.status(HttpStatus.FORBIDDEN).json({
-                statusCode: HttpStatus.FORBIDDEN,
+                status_code: HttpStatus.FORBIDDEN,
                 message: 'Access forbidden for this role.',
                 error: 'Forbidden',
             });
@@ -18,7 +18,7 @@ export class ExceptionFilterErrors implements ExceptionFilter {
             // console.log(exception)
             // For other status codes, use the default response
             response.status(exception.status || HttpStatus.INTERNAL_SERVER_ERROR).json({
-                statusCode: exception.status || HttpStatus.INTERNAL_SERVER_ERROR,
+                status_code: exception.status || HttpStatus.INTERNAL_SERVER_ERROR,
                 message: typeof exception.response === 'string' ? exception.response : exception.response?.message || 'Internal server error',
                 error: exception.response ? exception.response.error : HttpStatus[exception.status] || 'Unknown error',
             });
