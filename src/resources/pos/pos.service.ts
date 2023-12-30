@@ -102,7 +102,7 @@ export class PosService {
             htmlMessage += `-លេខវិកយប័ត្រ៖ ${data.receipt_number}\n`;
             htmlMessage += `-អ្នកគិតលុយ៖ ${data.cashier?.name || ''}\n`;
             htmlMessage += `-កាលបរិច្ឆេទ: ${data.ordered_at ? new Date(data.ordered_at).toLocaleString() : ''}\n`;
-            htmlMessage += `-From NestJS API`;
+            htmlMessage += `-From NestJS API\n`;
             await this.telegramService.sendHTMLMessage(htmlMessage);
 
             return {

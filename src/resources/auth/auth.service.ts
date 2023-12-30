@@ -6,15 +6,11 @@ import UsersType from '../../models/user/type.model';
 import { DatabaseError, Op } from 'sequelize';
 import { jwtConstants } from 'src/shared/constants.jwt';
 import { UserDto } from './auth.dto';
+import { UsersActiveEnum } from 'src/enums/user/active.enum';
 
 interface LoginParams {
     username: string
     password: string
-}
-
-export enum Status {
-    Padding = 0,
-    Approve = 1
 }
 
 @Injectable()
@@ -29,7 +25,7 @@ export class AuthService {
                         { phone: body.username },
                         { email: body.username }
                     ],
-                    is_active: Status.Approve
+                    is_active: UsersActiveEnum.Active
                 },
                 attributes: ['id', 'name', 'avatar', 'phone', 'email', 'password'],
                 include: [
@@ -40,7 +36,6 @@ export class AuthService {
                 ]
             });
         } catch (error) {
-            /** @databaseError */
             if (error instanceof DatabaseError && error.message.includes('invalid identifier')) {
                 throw new BadRequestException('Invalid input data or database error', 'Database Error');
             } else {
@@ -48,31 +43,26 @@ export class AuthService {
             }
         }
 
-        /** @userCredentailsInvalid */
         if (!user) {
             throw new BadRequestException('Invalid credentials');
         }
 
-        /** @passwordInvalid */
         const isPasswordValid = await bcrypt.compare(body.password, user.password);
         if (!isPasswordValid) {
             throw new BadRequestException('Invalid password', 'Password Error');
         }
 
         const role: string = user.type.name ?? '';
-
-        /** @generateToken */
         const token = this.generateToken(user);
-        const dataResponse = {
+
+        //================================================
+        return {
             access_token: token,
             token_type: 'bearer',
             expires_in: `${jwtConstants.expiresIn / 3600}h`,
             user: new UserDto(user),
             role: role
         };
-
-        /** @responseBack */
-        return dataResponse;
     }
 
     private generateToken(user: User): string {
