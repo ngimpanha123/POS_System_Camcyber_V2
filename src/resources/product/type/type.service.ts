@@ -7,7 +7,7 @@ import { Op, Sequelize } from 'sequelize';
 @Injectable()
 export class ProductsTypeService {
 
-    async listing() {
+    async listing(): Promise<{ data: { id: number, name: string, n_of_products: number }[] }> {
         const data = await ProductsType.findAll({
             attributes: [
                 'id',
@@ -24,10 +24,18 @@ export class ProductsTypeService {
             order: [['name', 'ASC']],
         });
 
-        return data;
+        const dataFormat = data.map(type => ({
+            id: type.id,
+            name: type.name,
+            n_of_products: type?.get('n_of_products') || 0
+        }));
+
+        return {
+            data: dataFormat as { id: number, name: string, n_of_products: number }[]
+        };
     }
 
-    async create(body: CreateProductTypeDto) {
+    async create(body: CreateProductTypeDto): Promise<{ data: ProductsType, message: string }> {
         const checkExistName = await ProductsType.findOne({
             where: { name: body.name }
         });
@@ -37,10 +45,16 @@ export class ProductsTypeService {
         const productType = await ProductsType.create({
             name: body.name
         });
-        return productType;
+
+        const dataFormat = {
+            data: productType,
+            message: 'Product type has been created.'
+        } as { data: ProductsType, message: string };
+
+        return dataFormat;
     }
 
-    async update(body: UpdateProductTypeDto, id: number) {
+    async update(body: UpdateProductTypeDto, id: number): Promise<{ data: ProductsType, message: string }> {
         const checkExist = await ProductsType.findByPk(id);
         if (!checkExist) {
             throw new BadRequestException('គ្មានទិន្នន័យនៅក្នុងប្រព័ន្ធ')
@@ -57,7 +71,13 @@ export class ProductsTypeService {
         await ProductsType.update(body, {
             where: { id: id }
         });
-        return 'updated';
+
+        const dataFormat = {
+            data: await ProductsType.findByPk(id, { attributes: ['id', 'name', 'updated_at'] }),
+            message: 'Product type has been created.'
+        } as { data: ProductsType, message: string };
+
+        return dataFormat;
     }
 
     async delete(id: number): Promise<{ status_code: number, message: string }> {

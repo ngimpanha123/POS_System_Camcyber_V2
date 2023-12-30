@@ -6,6 +6,7 @@ import { ProductsTypeExistsPipe } from 'src/shared/pipes/product.pipe';
 import { CreateProductDto, UpdateProductDto } from './product.dto';
 import { FileService } from 'src/services/file.service';
 import { FileResponse } from 'src/shared/file.interface';
+import Product from 'src/models/product/product.model';
 
 
 @Roles(UserRoleDecorator.ADMIN)
@@ -38,24 +39,19 @@ export class ProductController {
 
     @Post()
     @UsePipes(ProductsTypeExistsPipe)
-    async create(
-        @Body() body: CreateProductDto
-    ) {
-        // Check if the image is a string and starts with the valid prefixes
+    async create(@Body() body: CreateProductDto): Promise<{ data: Product, message: string }> {
         const base64PrefixJPEG = 'data:image/jpeg;base64,';
         const base64PrefixPNG = 'data:image/png;base64,';
         if (!(typeof body.image === 'string' && (body.image.startsWith(base64PrefixJPEG) || body.image.startsWith(base64PrefixPNG)))) {
             throw new BadRequestException('Invalid image');
         }
-        let image: FileResponse;
         try {
-            image = await this.fileService.base64Image(body.image);
+            const image: FileResponse = await this.fileService.base64Image(body.image);
+            body.image = image.data.uri;
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-        // replace base64 string by file uri from FileService
-        body.image = image.data.uri;
-        return this.productService.create(body);
+        return await this.productService.create(body);
     }
 
     @Put(':id')

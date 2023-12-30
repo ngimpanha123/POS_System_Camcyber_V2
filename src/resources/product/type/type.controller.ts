@@ -3,6 +3,7 @@ import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decora
 import { AuthGuard } from 'src/middleware/guards/auth.guard';
 import { ProductsTypeService } from './type.service';
 import { CreateProductTypeDto, UpdateProductTypeDto } from './type.dto';
+import ProductsType from 'src/models/product/type.model';
 
 @Roles(UserRoleDecorator.ADMIN)
 @UseGuards(AuthGuard)
@@ -11,15 +12,13 @@ export class ProductsTypeController {
     constructor(private typeService: ProductsTypeService) { };
 
     @Get()
-    listing() {
-        return this.typeService.listing();
+    async listing(): Promise<{ data: { id: number, name: string, n_of_products: number }[] }> {
+        return await this.typeService.listing();
     }
 
     @Post()
-    create(
-        @Body() body: CreateProductTypeDto,
-    ): Promise<any> {
-        return this.typeService.create(body);
+    async create(@Body() body: CreateProductTypeDto): Promise<{ data: ProductsType, message: string }> {
+        return await this.typeService.create(body);
     }
 
     @Put(':id')

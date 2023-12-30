@@ -51,7 +51,7 @@ export class ProductService {
         };
     }
 
-    async create(body: CreateProductDto) {
+    async create(body: CreateProductDto): Promise<{ data: Product, message: string }> {
         const checkExistCode = await Product.findOne({
             where: { code: body.code }
         });
@@ -66,11 +66,12 @@ export class ProductService {
         }
         const product = await Product.create(body);
         return {
-            product
-        };
+            data: product,
+            message: 'Product has created.'
+        } as { data: Product, message: string };
     }
 
-    async update(body: UpdateProductDto, id: number) {
+    async update(body: UpdateProductDto, id: number): Promise<{ data: Product, message: string }> {
 
         const checkExist = await Product.findByPk(id);
 
@@ -102,7 +103,10 @@ export class ProductService {
             where: { id: id }
         });
 
-        return await Product.findByPk(id);
+        return {
+            data: await Product.findByPk(id),
+            message: 'Product has updated.'
+        } as { data: Product, message: string };
     }
 
     async delete(id: number): Promise<{ status_code: number, message: string }> {
