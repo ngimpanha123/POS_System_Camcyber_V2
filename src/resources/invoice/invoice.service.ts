@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import OrderDetails from 'src/models/order/detail.model';
 import Order from 'src/models/order/order.model';
 import Product from 'src/models/product/product.model';
@@ -63,7 +63,7 @@ export class InvoiceService {
         } catch (error) {
             // Log the error or handle it in a more appropriate way
             console.error('Failed to generate the report:', error);
-            throw new Error('Failed to generate the report');
+            throw new BadRequestException('Failed to generate the report');
         }
     }
 }

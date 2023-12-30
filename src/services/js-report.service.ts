@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface ReportTemplate {
@@ -34,7 +34,7 @@ export class JsReportService {
             return base64Report;
         } catch (error) {
             console.error('Failed to generate the report:', error.message);
-            throw new Error('Failed to generate the report');
+            throw new BadRequestException('Failed to generate the report');
         }
     }
 }
