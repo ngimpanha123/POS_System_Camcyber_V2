@@ -5,6 +5,8 @@ import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decora
 import { AuthGuard } from 'src/middleware/guards/auth.guard';
 import { User } from 'src/middleware/decorators/user.decorator';
 import { UserPayload } from 'src/middleware/interceptors/auth.interceptor';
+import Product from 'src/models/product/product.model';
+import Order from 'src/models/order/order.model';
 
 @Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
 @UseGuards(AuthGuard)
@@ -13,15 +15,12 @@ export class PosController {
     constructor(private readonly posService: PosService) { };
 
     @Get('products')
-    async getProducts() {
+    async getProducts(): Promise<{ data: { id: number, name: string, products: Product[] }[] }> {
         return await this.posService.getProducts();
     }
 
     @Post('order')
-    async makeOrder(
-        @Body() body: CreateOrderDto,
-        @User() payload: UserPayload
-    ) {
+    async makeOrder(@Body() body: CreateOrderDto, @User() payload: UserPayload): Promise<{ data: Order, message: string }> {
         return await this.posService.makeOrder(payload.user.id, body);
     }
 }

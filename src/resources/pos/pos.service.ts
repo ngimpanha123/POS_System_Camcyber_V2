@@ -14,7 +14,7 @@ export class PosService {
 
     constructor(private telegramService: TelegramService) { };
 
-    async getProducts() {
+    async getProducts(): Promise<{ data: { id: number, name: string, products: Product[] }[] }> {
         const data = await ProductsType.findAll({
             attributes: ['id', 'name'],
             include: [
@@ -26,10 +26,19 @@ export class PosService {
             order: [['name', 'ASC']],
         });
 
-        return data;
+        const dataFormat: { id: number, name: string, products: Product[] }[] = data.map(type => ({
+            id: type.id,
+            name: type.name,
+            products: type.products || []
+        }));
+
+        return {
+            data: dataFormat
+        };
     }
 
-    async makeOrder(cashierId: number, body: CreateOrderDto) {
+
+    async makeOrder(cashierId: number, body: CreateOrderDto): Promise<{ data: Order, message: string }> {
 
         const sequelize = new Sequelize(sequelizeConfig);
         let transaction: Transaction;
@@ -106,7 +115,7 @@ export class PosService {
             await this.telegramService.sendHTMLMessage(htmlMessage);
 
             return {
-                order: data,
+                data: data,
                 message: 'ការបញ្ជាទិញត្រូវបានបង្កើតដោយជោគជ័យ។',
             };
         } catch (error) {
