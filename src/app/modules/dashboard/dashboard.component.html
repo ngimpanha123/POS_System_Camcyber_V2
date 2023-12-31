@@ -1,1 +1,52 @@
-<p>dashboard works!</p>
+<div class="dashboard-section">
+    <div class="flex-auto grid grid-cols-4 gap-4">
+        <div
+            class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-indigo-50 text-indigo-800 dark:bg-white dark:bg-opacity-5 dark:text-indigo-400">
+            <div class="text-5xl sm:text-7xl flex justify-center font-semibold leading-none tracking-tight">
+                @if(data && !loading) {
+                    {{data.total_sale_today | number}}
+                }
+                @else {
+                    <mat-progress-spinner class="mb-2" [diameter]="40" [mode]="'indeterminate'"></mat-progress-spinner>
+                }
+            </div>
+            <div class="mt-1 text-sm sm:text-lg font-medium">ការលក់សរុបថ្ងៃនេះ</div>
+        </div>
+        <div
+            class="col-span-2 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-green-50 text-green-800 dark:bg-white dark:bg-opacity-5 dark:text-green-500">
+            <div class="text-5xl sm:text-7xl font-semibold leading-none tracking-tight">
+                20
+            </div>
+            <div class="mt-1 text-sm sm:text-lg font-medium">ផលិតផលសរុប</div>
+        </div>
+
+        <div
+            class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
+            <div class="text-5xl font-semibold leading-none tracking-tight">
+                100
+            </div>
+            <div class="mt-1 text-sm font-medium text-center">ការលក់</div>
+        </div>
+        <div
+            class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
+            <div class="text-5xl font-semibold leading-none tracking-tight">
+                2
+            </div>
+            <div class="mt-1 text-sm font-medium text-center">អ្នកប្រើប្រាស់</div>
+        </div>
+        <div
+            class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
+            <div class="text-5xl font-semibold leading-none tracking-tight">
+                15
+            </div>
+            <div class="mt-1 text-sm font-medium text-center">ផលិតផលមានក្នុងស្កុក</div>
+        </div>
+        <div
+            class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-8 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
+            <div class="text-5xl font-semibold leading-none tracking-tight">
+                5
+            </div>
+            <div class="mt-1 text-sm font-medium text-center">ផលិតផលបានលក់ចេញ</div>
+        </div>
+    </div>
+</div>
