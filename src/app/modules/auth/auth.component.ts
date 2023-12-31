@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
 import { GlobalConstants } from 'helpers/shared/global-constants';
 
 @Component({
@@ -39,12 +40,13 @@ export class AuthLoginComponent implements OnInit {
         });
     }
 
-
+    private snackBarService = inject(SnackbarService);
     login(): void {
 
         // Sign in
         this.authService.login(this.loginForm.value).subscribe({
-            next: response => {
+            next: _response => {
+                this.snackBarService.openSnackBar('ok', GlobalConstants.error);
                 this.router.navigateByUrl('');
             },
             error: (err: HttpErrorResponse) => {
@@ -53,7 +55,7 @@ export class AuthLoginComponent implements OnInit {
                 if (errors && errors.length > 0) {
                     message = errors.map((obj) => obj.message).join(', ')
                 }
-                console.log(message);
+                this.snackBarService.openSnackBar(message, GlobalConstants.error);
             }
         });
     }

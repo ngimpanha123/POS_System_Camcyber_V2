@@ -1,6 +1,8 @@
 /* 1. Components */
 @use 'components/example-viewer';
 @use 'components/input';
+@use 'components/snack-bar';
+@use 'components/switch';
 
 /* 2. Overrides */
 @use 'overrides/angular-material';

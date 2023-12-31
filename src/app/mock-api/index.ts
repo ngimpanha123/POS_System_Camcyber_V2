@@ -1,5 +1,7 @@
-import { NavigationMockApi } from 'app/mock-api/navigation/api';
+import { AdminNavigation } from './navigation/admin/api';
+import { StaffNavigation } from './navigation/staff/api';
 
 export const mockApiServices = [
-    NavigationMockApi
+    AdminNavigation,
+    StaffNavigation
 ];

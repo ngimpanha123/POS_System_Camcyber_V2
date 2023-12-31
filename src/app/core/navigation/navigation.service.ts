@@ -25,12 +25,19 @@ export class NavigationService
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Get all navigation data
-     */
-    get(): Observable<Navigation>
+    getAdminNavigation(): Observable<Navigation>
     {
-        return this._httpClient.get<Navigation>('api/common/navigation').pipe(
+        return this._httpClient.get<Navigation>('api/navigation/admin').pipe(
+            tap((navigation) =>
+            {
+                this._navigation.next(navigation);
+            }),
+        );
+    }
+
+    getStaffNavigation(): Observable<Navigation>
+    {
+        return this._httpClient.get<Navigation>('api/navigation/staff').pipe(
             tap((navigation) =>
             {
                 this._navigation.next(navigation);

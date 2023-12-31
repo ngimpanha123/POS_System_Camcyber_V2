@@ -11,29 +11,48 @@ export const appRoutes: Route[] = [
 
     // Auth routes for guests
     {
-        path: 'auth',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
-        component: LayoutComponent,
+        path        : 'auth',
+        canActivate : [NoAuthGuard],
+        component   : LayoutComponent,
         data: {
-            layout: 'empty'
+            layout  : 'empty'
         },
         loadChildren: () => import('app/modules/auth/auth.routes')
     },
 
     // Admin routes
     {
-        path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        component: LayoutComponent,
-        resolve: {
+        path        : '',
+        canActivate : [AuthGuard],
+        component   : LayoutComponent,
+        resolve     : {
             initialData: initialDataResolver
         },
-        children: [
+        children    : [
+
             {
-                path: 'dashboard',
+                path        : 'dashboard',
                 loadChildren: () => import('app/modules/dashboard/dashboard.routing')
+            },
+            {
+                path        : 'pos',
+                loadChildren: () => import('app/modules/pos/pos.routing')
+            },
+            {
+                path        : 'sales',
+                loadChildren: () => import('app/modules/sale/sale.routing')
+            },
+            {
+                path        : 'products',
+                loadChildren: () => import('app/modules/product/product.routing')
+            },
+            {
+                path        : 'users',
+                loadChildren: () => import('app/modules/profile/profile.routing')
+            },
+            {
+                path        : 'profile',
+                loadChildren: () => import('app/modules/profile/profile.routing')
             },
 
             // 404 & Catch all
