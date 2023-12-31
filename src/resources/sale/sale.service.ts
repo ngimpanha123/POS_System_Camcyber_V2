@@ -73,7 +73,7 @@ export class SaleService {
 
     async delete(id: number): Promise<{ status_code: number, message: string }> {
         try {
-            const rowsAffected = await Product.destroy({
+            const rowsAffected = await Order.destroy({
                 where: {
                     id: id
                 }
