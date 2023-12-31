@@ -4,7 +4,7 @@
     "description": "",
     "author": "Yim Klok",
     "private": true,
-    "license": "CamCyberTeam",
+    "license": "CamCyberDigitalTechTeam",
     "scripts": {
         "build": "nest build",
         "start": "nest start",
