@@ -5,6 +5,6 @@ export class AppController {
     @Get()
     @Render('main')
     root() {
-        return { message: 'Training Management System' };
+        return { message: 'CamCyber POS System' };
     }
 }
