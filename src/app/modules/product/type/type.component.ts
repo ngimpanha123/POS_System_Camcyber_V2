@@ -133,8 +133,7 @@ export class ProductsTypeComponent implements OnInit {
                         this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
                     },
                     error: (err: HttpErrorResponse) => {
-                        const error: { httpStatus: 400, message: string } = err.error;
-                        this.snackBarService.openSnackBar(error.message, GlobalConstants.error);
+                        this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
                     }
                 });
             }

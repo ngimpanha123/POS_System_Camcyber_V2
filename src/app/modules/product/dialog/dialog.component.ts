@@ -1,19 +1,22 @@
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Data } from '../type.types';
+import { Data } from '../product.types';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ProductService } from '../product.service';
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { ProductsTypeService } from '../type.service';
+import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
+import { MatSelectModule } from '@angular/material/select';
+import { environment as env } from 'environments/environment';
 import { GlobalConstants } from 'helpers/shared/global-constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-    selector: 'products-type-dialog',
+    selector: 'product-dialog',
     standalone: true,
     templateUrl: './dialog.component.html',
     imports: [
@@ -22,45 +25,68 @@ import { HttpErrorResponse } from '@angular/common/http';
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
+        MatSelectModule,
         MatButtonModule,
-        MatDialogModule
+        MatDialogModule,
+        PortraitComponent
     ]
 })
-export class ProductsTypeDialogComponent implements OnInit {
+export class ProductDialogComponent implements OnInit {
 
     ResponseData = new EventEmitter<Data>();
-    typeForm: UntypedFormGroup;
+    productForm: UntypedFormGroup;
     saving: boolean = false;
+    src: string = 'assets/images/avatars/image-icon.jpg';
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: { title: string, type: Data },
-        private dialogRef: MatDialogRef<ProductsTypeDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: { title: string, product: Data, setup: { id: number, name: string }[] },
+        private dialogRef: MatDialogRef<ProductDialogComponent>,
         private formBuilder: UntypedFormBuilder,
         private snackBarService: SnackbarService,
-        private typeService: ProductsTypeService
+        private productService: ProductService
     ) { }
 
     ngOnInit(): void {
+        this.data.product != null ? this.src = `${env.FILE_BASE_URL}${this.data.product.image}` : '';
         this.ngBuilderForm();
     }
 
+    srcChange(base64: string): void {
+        this.productForm.get('image').setValue(base64);
+    }
+
     ngBuilderForm(): void {
-        this.typeForm = this.formBuilder.group({
-            name: [this.data?.type?.name || null, [Validators.required]]
+        this.productForm = this.formBuilder.group({
+            code: [this.data?.product?.code || null, [Validators.required]],
+            name: [this.data?.product?.name || null, [Validators.required]],
+            type_id: [this.data?.product?.type?.id || null, [Validators.required]],
+            image: [null, this.data.product == null ? Validators.required : []],
+            unit_price: [this.data?.product?.unit_price || null, [Validators.required]]
         });
     }
 
     submit() {
-        this.data.type == null ? this.create() : this.update();
+        this.data.product == null ? this.create() : this.update();
     }
 
     create(): void {
         this.dialogRef.disableClose = true;
         this.saving = true;
-        this.typeService.create(this.typeForm.value).subscribe({
+        this.productService.create(this.productForm.value).subscribe({
             next: response => {
-                response.data.n_of_products = 0;
-                this.ResponseData.emit(response.data);
+                const product: Data = {
+                    id: response.data.id,
+                    code: response.data.code,
+                    name: response.data.name,
+                    image: response.data.image,
+                    unit_price: response.data.unit_price,
+                    created_at: response.data.created_at,
+                    type: {
+                        id: response.data.type_id,
+                        name: this.data.setup.find(v => v.id === response.data.type_id).name ?? ''
+                    }
+                }
+                this.ResponseData.emit(product);
                 this.dialogRef.close();
                 this.saving = false;
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
@@ -81,9 +107,21 @@ export class ProductsTypeDialogComponent implements OnInit {
     update(): void {
         this.dialogRef.disableClose = true;
         this.saving = true;
-        this.typeService.update(this.data.type.id, this.typeForm.value).subscribe({
+        this.productService.update(this.data.product.id, this.productForm.value).subscribe({
             next: response => {
-                this.ResponseData.emit(response.data);
+                const product: Data = {
+                    id: response.data.id,
+                    code: response.data.code,
+                    name: response.data.name,
+                    image: response.data.image,
+                    unit_price: response.data.unit_price,
+                    created_at: response.data.created_at,
+                    type: {
+                        id: response.data.type_id,
+                        name: this.data.setup.find(v => v.id === response.data.type_id).name ?? ''
+                    }
+                }
+                this.ResponseData.emit(product);
                 this.dialogRef.close();
                 this.saving = false;
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
