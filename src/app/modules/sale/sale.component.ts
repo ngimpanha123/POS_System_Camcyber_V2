@@ -84,10 +84,8 @@ export class SaleComponent implements OnInit {
                 this.isLoading = false;
             },
             error: (err: HttpErrorResponse) => {
-                this.snackBarService.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
-            },
-            complete: () => {
                 this.isLoading = false;
+                this.snackBarService.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
             }
         });
     }

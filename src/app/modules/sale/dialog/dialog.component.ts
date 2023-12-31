@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Data } from '../sale.types';
 
 @Component({
-    selector: 'user-dialog',
+    selector: 'sale-dialog',
     standalone: true,
     imports: [CommonModule],
     templateUrl: './dialog.component.html',

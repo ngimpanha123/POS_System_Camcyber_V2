@@ -8,7 +8,6 @@ export default [
         resolve: {
             roles: roleResolver(['Admin'])
         },
-        component: ProductComponent,
         children: [
             {
                 path: 'all',

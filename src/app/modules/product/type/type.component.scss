@@ -1,0 +1,67 @@
+.products-type-section {
+    width: 100%;
+    height: calc(100dvh - 4rem) !important;
+    overflow: hidden;
+
+    .products-type-body,
+    .no-data {
+        width: 100%;
+        height: calc(100dvh - 7.5rem);
+        overflow: hidden;
+
+        .products-type-content {
+            width: 100%;
+            height: calc(100dvh - 8.5rem);
+            overflow: auto;
+        }
+    }
+}
+
+table {
+    padding: 1rem !important;
+    width: 100%;
+}
+
+
+::ng-deep .products-type-content .mat-cell {
+    padding: 1rem 6px !important;
+    color: rgb(71 85 105) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+::ng-deep .products-type-content .mdc-data-table__header-cell {
+    font-size: 1rem !important;
+    padding: 0 !important;
+    color: rgb(71 85 105) !important;
+    z-index: 100 !important;
+}
+
+::ng-deep .dark .products-type-content .mdc-data-table__header-cell,
+.dark .products-type-content .mat-cel {
+    color: rgb(243, 243, 243) !important;
+}
+
+.products-type-content .mat-column-no {
+    min-width: 10rem;
+    text-align: left;
+    padding: 0.5rem 2rem !important;
+}
+
+.products-type-content .mat-column-name {
+    min-width: 15rem;
+    text-align: left;
+    padding: 0.5rem 2rem !important;
+}
+
+.products-type-content .mat-column-n_of_products {
+    min-width: 11rem;
+    text-align: left;
+    padding: 0.5rem 2rem !important;
+}
+
+.products-type-content .mat-column-action {
+    flex: none;
+    width: 2rem;
+    margin-right: -2px !important;
+}

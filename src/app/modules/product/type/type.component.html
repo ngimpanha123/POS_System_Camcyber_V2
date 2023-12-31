@@ -1,1 +1,96 @@
-<p>type works!</p>
+<div class="products-type-section">
+    <div class="min-h-14 max-h-14 flex gap-2 justify-between items-center py-2 pl-5 pr-2.5">
+        <div class="flex flex-1 items-center font-medium">
+            <div class="flex items-center">
+                <mat-icon class="text-gray-600 dark:text-white icon-size-5" matPrefix
+                    [svgIcon]="'heroicons_outline:home'"></mat-icon>
+            </div>
+            <div class="flex items-center ml-1.5">
+                <span class="text-lg text-gray-600 dark:text-white -mb-0.5">ផលិតផល</span>
+            </div>
+            <div class="flex items-center">
+                <mat-icon class="-mb-0.5" [svgIcon]="'mat_solid:chevron_right'">
+                </mat-icon>
+                <span class="text-lg text-gray-600 dark:text-white -mb-0.5">ប្រភេទ</span>
+            </div>
+        </div>
+        <button class="helpers-mat-button-sm" (click)="create()" mat-flat-button>
+            បង្កើតថ្មី
+        </button>
+    </div>
+    <div class="products-type-body">
+        @if(dataSource.data.length == 0 && !isLoading) {
+        <div class="no-data">
+            <div class="flex flex-col justify-center items-center mb-4">
+                <mat-icon class="icon-size-24" svgIcon="toc"></mat-icon>
+                <span class="text-2xl"><span>គ្មានទិន្នន័យ</span></span>
+            </div>
+        </div>
+        }
+        @else {
+        <div class="products-type-content px-4">
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="no">
+                    <th mat-header-cell *matHeaderCellDef>ល.រ</th>
+                    <td mat-cell *matCellDef="let i = index">
+                        <span>{{i+1}}</span>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>ឈ្មោះ</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span>{{element?.name}}</span>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="n_of_products">
+                    <th mat-header-cell *matHeaderCellDef>ចំនួនផលិតផល</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="min-w-[95px] max-w-[95px] flex justify-end">
+                            {{element?.n_of_products | number}}
+                        </span>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <div class="flex">
+                            <span class="text-lg">សរុប:</span>
+                            <b class="min-w-15 max-w-15 flex justify-end">
+                                {{getTotal() | number}}
+                            </b>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon class="icon-size-6" svgIcon="mat_outline:more_vert"></mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="update(element)">
+                                <mat-icon class="icon-size-5 text-blue-500" svgIcon="feather:edit"></mat-icon>
+                                <span class="text-lg text-blue-500">កែប្រែទិន្នន័យ</span>
+                            </button>
+                            <button mat-menu-item [disabled]="element.n_of_products != 0" (click)="onDelete(element)">
+                                <mat-icon class="icon-size-5 text-red-400"
+                                    svgIcon="mat_solid:delete_outline"></mat-icon>
+                                <span [class.text-red-400]="element.n_of_products == 0"
+                                    class="text-lg">លុបទិន្នន័យ</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns;" class="border-t"></tr>
+            </table>
+        </div>
+        }
+    </div>
+
+</div>

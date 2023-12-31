@@ -26,11 +26,10 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.list().subscribe({
             next: (response: List) => {
                 this.data = response.data;
+                this.loading = false;
             },
             error: (err: HttpErrorResponse) => {
                 this.snackBarService.openSnackBar(err.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
-            },
-            complete: () => {
                 this.loading = false;
             }
         })
