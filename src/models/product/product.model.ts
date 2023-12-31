@@ -4,7 +4,7 @@ import ProductsType from './type.model';
 @Table({ tableName: 'product', createdAt: 'created_at', updatedAt: 'updated_at' })
 class Product extends Model<Product> {
     @ForeignKey(() => ProductsType)
-    @Column({ onDelete: 'CASCADE' })
+    @Column({ onDelete: 'RESTRICT' })
     type_id: number;
 
     @Column({ allowNull: false, unique: true, type: DataType.STRING(100) })

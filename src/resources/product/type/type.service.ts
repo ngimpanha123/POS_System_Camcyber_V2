@@ -80,12 +80,24 @@ export class ProductsTypeService {
         return dataFormat;
     }
 
-    async delete(id: number): Promise<{ status_code: number, message: string }> {
+    async delete(id: number): Promise<{ status_code: number; message: string }> {
         try {
-            const rowsAffected = await Product.destroy({
+            // Check if there are associated products
+            const productsCount = await Product.count({
                 where: {
-                    id: id
-                }
+                    type_id: id,
+                },
+            });
+
+            if (productsCount > 0) {
+                throw new BadRequestException('Cannot delete. Products are associated with this ProductsType.');
+            }
+
+            // No associated products, proceed with deletion
+            const rowsAffected = await ProductsType.destroy({
+                where: {
+                    id: id,
+                },
             });
 
             if (rowsAffected === 0) {
@@ -94,10 +106,13 @@ export class ProductsTypeService {
 
             return {
                 status_code: HttpStatus.OK,
-                message: 'Data has been deleted successfully.'
+                message: 'Data has been deleted successfully.',
             };
         } catch (error) {
-            throw new BadRequestException(error.message ?? 'Something went wrong!. Please try again later.', 'Error Delete');
+            throw new BadRequestException(
+                error.message ?? 'Something went wrong!. Please try again later.',
+                'Error Delete'
+            );
         }
     }
 }
