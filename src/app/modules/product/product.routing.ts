@@ -8,9 +8,10 @@ export default [
         resolve: {
             roles: roleResolver(['Admin'])
         },
+        component: ProductComponent,
         children: [
             {
-                path: '',
+                path: 'all',
                 component: ProductComponent
             },
             {

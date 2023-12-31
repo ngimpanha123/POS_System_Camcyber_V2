@@ -37,7 +37,7 @@ export const adminNavigation: HelpersNavigationItem[] = [
                 id       : 'all',
                 title    : 'ទាំងអស់',
                 type     : 'basic',
-                link     : 'products'
+                link     : 'products/all'
             },
             {
                 id      : 'type',
