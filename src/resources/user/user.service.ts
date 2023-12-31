@@ -23,7 +23,7 @@ export class UserService {
                 { id: { [Op.not]: userId } },
             ],
         };
-        const data = await User.findAndCountAll({
+        const data = await User.findAll({
             attributes: ['id', 'name', 'avatar', 'phone', 'email', 'is_active', 'created_at'],
             where: where,
             include: [
@@ -36,11 +36,11 @@ export class UserService {
             offset: offset,
             limit: limit,
         });
-        const totalCount = data.count;
+        const totalCount = await User.count();
         const totalPages = Math.ceil(totalCount / limit);
 
         const dataFormat: List = {
-            data: data.rows,
+            data: data,
             pagination: {
                 current_page: page,
                 per_page: limit,

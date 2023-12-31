@@ -17,6 +17,7 @@ interface GetSaleParams {
 
 @Injectable()
 export class SaleService {
+
     async listing(filters: GetSaleParams, limit: number, page: number): Promise<List> {
         const offset = (page - 1) * limit;
 
@@ -30,7 +31,7 @@ export class SaleService {
             };
         }
 
-        const data = await Order.findAndCountAll({
+        const data = await Order.findAll({
             attributes: ['id', 'receipt_number', 'total_price', 'created_at'],
             where: whereClause,
             include: [
@@ -54,18 +55,18 @@ export class SaleService {
             limit: limit,
         });
 
-        const totalCount = data.count;
+        const totalCount = await Order.count();
         const totalPages = Math.ceil(totalCount / limit);
 
         const dataFormat: List = {
-            data: data.rows,
+            data: data,
             pagination: {
                 current_page: page,
                 per_page: limit,
                 total_items: totalCount,
                 total_pages: totalPages
             }
-        }
+        };
 
         return dataFormat;
     }
