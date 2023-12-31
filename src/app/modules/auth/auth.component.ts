@@ -46,7 +46,6 @@ export class AuthLoginComponent implements OnInit {
         // Sign in
         this.authService.login(this.loginForm.value).subscribe({
             next: _response => {
-                this.snackBarService.openSnackBar('ok', GlobalConstants.error);
                 this.router.navigateByUrl('');
             },
             error: (err: HttpErrorResponse) => {

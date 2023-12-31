@@ -1,0 +1,91 @@
+.list-user-section {
+    width: 100%;
+    height: calc(100dvh - 4rem) !important;
+    overflow: hidden;
+
+    .list-user-body,
+    .no-data {
+        width: 100%;
+        height: calc(100dvh - 7.5rem);
+        overflow: hidden;
+
+        .list-user-content {
+            width: 100%;
+            height: calc(100dvh - 10.5rem);
+            overflow: hidden;
+
+            .list-user-data {
+                width: 100%;
+                max-height: calc(100dvh - 11.5rem);
+                overflow: auto;
+            }
+        }
+    }
+}
+
+table {
+    padding: 1rem !important;
+    width: 100%;
+}
+
+
+::ng-deep .list-user-data .mat-cell {
+    padding: 1rem 6px !important;
+    color: rgb(71 85 105) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+::ng-deep .list-user-data .mdc-data-table__header-cell {
+    font-size: 1rem !important;
+    padding: 0 !important;
+    color: rgb(71 85 105) !important;
+    z-index: 100 !important;
+}
+
+::ng-deep .dark .list-user-data .mdc-data-table__header-cell,
+.dark.list-user-data .mat-cel {
+    color: rgb(243, 243, 243) !important;
+}
+
+.list-user-data .mat-column-profile {
+    min-width: 10rem;
+    text-align: left;
+    padding: 0.5rem 2rem !important;
+}
+
+.list-user-data .mat-column-contact {
+    min-width: 15rem;
+    text-align: left;
+    padding: 0.5rem 2rem !important;
+}
+
+.list-user-data .mat-column-last_activity {
+    min-width: 16rem;
+    text-align: left;
+    padding: 0.5rem 2rem !important;
+}
+
+.list-user-data .mat-column-status {
+    min-width: 5rem;
+    padding: 0.5rem 2rem !important;
+}
+
+
+.list-user-data .mat-column-action {
+    flex: none;
+    width: 2rem;
+    margin-right: -2px !important;
+}
+
+.flex-custom {
+    display: flex !important;
+}
+
+::placeholder {
+    color: rgb(100 116 139) !important;
+}
+
+::-ms-input-placeholder {
+    color: rgb(100 116 139) !important;
+}

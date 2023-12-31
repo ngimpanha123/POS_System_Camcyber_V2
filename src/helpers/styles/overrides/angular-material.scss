@@ -133,8 +133,8 @@
 
     /* Lower the icon opacity on disabled buttons */
     &[disabled=true] {
-        background-color: rgb(226 232 240) !important;
-        color: #9da9bb !important;
+        // background-color: rgb(226 232 240) !important;
+        // color: #9da9bb !important;
 
         .mat-icon {
             opacity: 0.38 !important;
@@ -295,8 +295,8 @@
     &.helpers-mat-button-md:disabled,
     &.helpers-mat-button-lg:disabled,
     &.helpers-mat-button-xl:disabled {
-        background-color: rgb(226 232 240) !important;
-        color: #9da9bb !important;
+        // background-color: rgb(226 232 240) !important;
+        // color: #9da9bb !important;
         cursor: not-allowed !important;
     }
 

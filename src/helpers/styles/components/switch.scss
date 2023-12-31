@@ -8,13 +8,13 @@
 
     small {
         position: absolute;
-        width: 18px !important;
-        height: 18px !important;
+        width: 14px !important;
+        height: 14px !important;
         border-radius: 50%;
         background-color: #FFF !important;
-        top: 0 !important;
-        z-index: 99;
-        right: calc(100% - 18px) !important;
+        top: 2px !important;
+        z-index: 1;
+        right: calc(100% - 17px) !important;
     }
 
     &.checked {
@@ -24,7 +24,7 @@
 
         small {
             background-color: #FFF !important;
-            right: 0 !important;
+            right: 2px !important;
         }
     }
 }

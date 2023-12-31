@@ -16,13 +16,14 @@ import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
 import { HelpersConfigService, Scheme } from 'helpers/services/config';
 import { environment as env } from 'environments/environment';
+import { LoadingComponent } from 'helpers/shared/loading/loading.component';
 
 @Component({
     selector: 'classy-layout',
     templateUrl: './classy.component.html',
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [HelpersLoadingBarComponent, HelpersNavigationComponent, UserComponent, NgIf, MatIconModule, MatButtonModule, LanguagesComponent, HelpersFullscreenComponent, RouterOutlet],
+    imports: [HelpersLoadingBarComponent, LoadingComponent, HelpersNavigationComponent, UserComponent, NgIf, MatIconModule, MatButtonModule, LanguagesComponent, HelpersFullscreenComponent, RouterOutlet],
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
