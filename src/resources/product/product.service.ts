@@ -8,6 +8,13 @@ import { CreateProductDto, UpdateProductDto } from './product.dto';
 @Injectable()
 export class ProductService {
 
+    async setup(): Promise<{ data: ProductsType[] }> {
+        const setup = await ProductsType.findAll({ attributes: ['id', 'name'] });
+        return {
+            data: setup
+        };
+    }
+
     async listing(type_id?: number, key?: string, limit: number = 10, page: number = 1) {
 
         const offset = (page - 1) * limit;
@@ -24,7 +31,7 @@ export class ProductService {
                 type_id ? { type_id: Number(type_id) } : {}
             ]
         };
-        const data = await Product.findAndCountAll({
+        const data = await Product.findAll({
             attributes: ['id', 'code', 'name', 'image', 'unit_price', 'created_at'],
             where: where,
             include: [
@@ -37,16 +44,16 @@ export class ProductService {
             offset: offset,
             limit: limit,
         });
-        const totalCount = data.count;
+        const totalCount = await Product.count();
         const totalPages = Math.ceil(totalCount / limit);
 
         return {
-            data: data.rows,
+            data: data,
             pagination: {
-                currentPage: page,
-                perPage: limit,
-                totalItems: totalCount,
-                totalPages: totalPages
+                current_page: page,
+                per_page: limit,
+                total_items: totalCount,
+                total_pages: totalPages
             }
         };
     }

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator'
 
 export class CreateProductDto {
     @IsString()
@@ -39,6 +39,7 @@ export class UpdateProductDto {
     @IsPositive()
     unit_price: number
 
+    @IsOptional()
     @IsString()
-    image?: string
+    image: string
 }

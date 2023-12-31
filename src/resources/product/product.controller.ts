@@ -7,6 +7,7 @@ import { CreateProductDto, UpdateProductDto } from './product.dto';
 import { FileService } from 'src/services/file.service';
 import { FileResponse } from 'src/shared/file.interface';
 import Product from 'src/models/product/product.model';
+import ProductsType from 'src/models/product/type.model';
 
 
 @Roles(UserRoleDecorator.ADMIN)
@@ -18,6 +19,11 @@ export class ProductController {
         private productService: ProductService,
         private fileService: FileService
     ) { };
+
+    @Get('setup')
+    async setup(): Promise<{ data: ProductsType[] }> {
+        return await this.productService.setup();
+    }
 
     @Get()
     async listing(
