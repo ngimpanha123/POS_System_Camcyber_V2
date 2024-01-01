@@ -5,6 +5,6 @@ export class AppController {
     @Get()
     @Render('main')
     root() {
-        return { message: 'CamCyber POS System' };
+        return { message: 'CamCyber POS System for FullStack Developer Program' };
     }
 }
