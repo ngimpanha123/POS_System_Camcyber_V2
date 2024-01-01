@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from 'environments/environment';
 import { Observable, catchError, of, switchMap, tap } from 'rxjs';
-import { Data, List, RequestPutUser, RequestUser, ResponseUser } from './user.types';
+import { Data, List, RequestUser, ResponseUser, UpdatePassword } from './user.types';
 import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
 
 @Injectable({
@@ -33,18 +33,22 @@ export class UserService {
     }
 
     create(body: RequestUser): Observable<ResponseUser> {
-        return this.httpClient.post<ResponseUser>(env.API_BASE_URL + '/users', body);
+        return this.httpClient.post<ResponseUser>(`${env.API_BASE_URL}/users`, body);
     }
 
-    update(id: number = 0, body: RequestPutUser): Observable<{ statusCode: number, data: Data, message: string }> {
-        return this.httpClient.put<{ statusCode: number, data: Data, message: string }>(env.API_BASE_URL + '/users/' + id, body);
+    update(id: number, body: RequestUser): Observable<ResponseUser> {
+        return this.httpClient.put<ResponseUser>(`${env.API_BASE_URL}/users/${id}`, body);
     }
 
-    delete(id: number = 0): Observable<{ status_code: number, message: string }> {
+    delete(id: number): Observable<{ status_code: number, message: string }> {
         return this.httpClient.delete<{ status_code: number, message: string }>(`${env.API_BASE_URL}/users/${id}`);
     }
 
-    updateStatus(id: number = 0, body: { is_active: number }): Observable<{ statusCode: number, message: string }> {
+    updatePassword(id: number, body: UpdatePassword): Observable<{ status_code: number, message: string }> {
+        return this.httpClient.put<{ status_code: number, message: string }>(`${env.API_BASE_URL}/users/${id}/update-password`, body);
+    }
+
+    updateStatus(id: number, body: { is_active: number }): Observable<{ statusCode: number, message: string }> {
         return this.httpClient.put<{ statusCode: number, message: string }>(`${env.API_BASE_URL}/users/${id}/change-status`, body);
     }
 }

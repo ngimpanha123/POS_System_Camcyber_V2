@@ -1,1 +1,73 @@
-<p>dialog works!</p>
+<div mat-dialog-title>
+    <span class="text-xl">{{data.title}}</span>
+</div>
+<mat-dialog-content class="border-t">
+    <form [formGroup]="userForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3">
+        <div class="p-5 border border-dashed rounded-xl mb-4 h-fit">
+            <div class="w-full md:min-w-64 flex flex-col items-center">
+                <div class="pr-0 md:pr-5 w-full max-w-64 min-h-64 overflow-hidden relative">
+                    <app-portrait [disabled]="saving" [mode]="'UPLOAD'" [title]="'បញ្ចូលរូបភាព'" [src]="src"
+                        [index]="'profile'" (srcChange)='srcChange($event)'></app-portrait>
+                </div>
+            </div>
+        </div>
+        <div class="md-form-field-appearance-outline">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>ឈ្មោះ</mat-label>
+                <input matInput formControlName="name" placeholder="បញ្ចូលឈ្មោះ">
+                <mat-error>សូមបញ្ចូលឈ្មោះអ្នកប្រើប្រាស់</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>ប្រភេទអ្នកប្រើប្រាស់</mat-label>
+                <mat-select formControlName="type_id">
+                    @for (item of typesEnum; track item.id) {
+                    <mat-option [value]="item.id">
+                        <span>{{item.name}}</span>
+                    </mat-option>
+                    }
+                    @empty {
+                    <span>គ្មានទិន្នន័យ</span>
+                    }
+                </mat-select>
+                <mat-error>សូមជ្រើសរើសប្រភេទអ្នកប្រើប្រាស់</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>លេខទូរស័ព្ទ</mat-label>
+                <input matInput formControlName="phone" placeholder="បញ្ចូលលេខទូរស័ព្ទ">
+                <mat-error>សូមបញ្ចូលលេខទូរស័ព្ទអ្នកប្រើប្រាស់</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>អ៊ីម៉ែល</mat-label>
+                <input matInput formControlName="email" placeholder="បញ្ចូលអ៊ីម៉ែល">
+                <mat-error>សូមបញ្ចូលអ៊ីម៉ែលអ្នកប្រើប្រាស់</mat-error>
+            </mat-form-field>
+            @if(!data.user){
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>ពាក្យសម្ងាត់</mat-label>
+                <input matInput type="password" [formControlName]="'password'" #passwordField>
+                <button mat-icon-button type="button"
+                    (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                    matSuffix>
+                    <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                        [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                    <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                        [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                </button>
+                <mat-error>
+                    សូមបញ្ចូលពាក្យសម្ងាត់
+                </mat-error>
+            </mat-form-field>
+            }
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="flex items-center justify-end gap-2">
+    <button class="helpers-mat-button-md" mat-flat-button (click)="submit()" [disabled]="userForm.invalid || saving">
+        <span *ngIf="!userForm.disabled">រក្សាទុក</span>
+        <mat-progress-spinner *ngIf="userForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+    <button class="helpers-mat-button-md helpers-mat-button-red" [disabled]="saving" mat-flat-button
+        [mat-dialog-close]="false">
+        <span>បោះបង់</span>
+    </button>
+</mat-dialog-actions>

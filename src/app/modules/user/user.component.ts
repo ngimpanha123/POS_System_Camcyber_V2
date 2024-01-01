@@ -14,7 +14,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
 import { environment as env } from 'environments/environment';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { UserDialogComponent } from './dialog/dialog.component';
+import { UpdatePasswordDialogComponent, UserDialogComponent } from './dialog/dialog.component';
 
 @Component({
     selector: 'app-user',
@@ -88,34 +88,44 @@ export class UserComponent implements OnInit {
     create(): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {
-            type: 'Create',
+            title: 'បង្កើតអ្នកប្រើប្រាស់',
             user: null
         };
-        dialogConfig.width = "650px";
+        dialogConfig.width = "700px";
         dialogConfig.minHeight = "200px";
         dialogConfig.autoFocus = false;
         const dialogRef = this.matDialog.open(UserDialogComponent, dialogConfig);
         dialogRef.componentInstance.ResponseData.subscribe((user: Data) => {
-            console.log(user);
+            const data = this.dataSource.data;
+            data.unshift(user);
+            this.dataSource.data = data;
         });
     }
     update(row: Data): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {
-            type: 'Update',
+            title: 'កែប្រែអ្នកប្រើប្រាស់',
             user: row
         };
-        dialogConfig.width = "650px";
+        dialogConfig.width = "700px";
         dialogConfig.minHeight = "200px";
         dialogConfig.autoFocus = false;
         const dialogRef = this.matDialog.open(UserDialogComponent, dialogConfig);
         dialogRef.componentInstance.ResponseData.subscribe((user: Data) => {
-            console.log(user);
+            const index = this.dataSource.data.indexOf(row);
+            const data = this.dataSource.data;
+            data[index] = user;
+            this.dataSource.data = data;
         });
     }
 
-    updatePassword(id: number): void {
-        console.log(id);
+    updatePassword(user: Data): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = user;
+        dialogConfig.width = "650px";
+        dialogConfig.minHeight = "200px";
+        dialogConfig.autoFocus = false;
+        this.matDialog.open(UpdatePasswordDialogComponent, dialogConfig);
     }
 
     onDelete(user: Data): void {
@@ -167,6 +177,10 @@ export class UserComponent implements OnInit {
         };
         this.userService.updateStatus(user.id, body).subscribe({
             next: (response) => {
+                const index = this.dataSource.data.indexOf(user);
+                const data = this.dataSource.data;
+                data[index].is_active = status ? 1 : 0;
+                this.dataSource.data = data;
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
             },
             error: (err) => {
