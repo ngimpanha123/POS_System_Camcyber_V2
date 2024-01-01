@@ -1,12 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as TelegramBot from 'node-telegram-bot-api';
 
 @Injectable()
 export class TelegramService {
     private bot: TelegramBot;
+    private readonly logger = new Logger(TelegramService.name);
 
     constructor() {
-        this.bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
+        try {
+            this.bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN || 'bot_token');
+        } catch (error) {
+            this.handleInitializationError(error);
+        }
+    }
+
+    private handleInitializationError(error: any) {
+        this.logger.error(`Error initializing Telegram bot: ${error.message}`);
     }
 
     async sendHTMLMessage(htmlText: string) {
@@ -14,6 +23,14 @@ export class TelegramService {
             parse_mode: 'HTML' as TelegramBot.ParseMode
         };
 
-        await this.bot.sendMessage(process.env.TELEGRAM_CHAT_ID, htmlText, messageOptions);
+        try {
+            await this.bot.sendMessage(process.env.TELEGRAM_CHAT_ID || 'bot_cart_id', htmlText, messageOptions);
+        } catch (error) {
+            this.handleSendMessageError(error);
+        }
+    }
+
+    private handleSendMessageError(error: any) {
+        this.logger.error(`Error sending message to Telegram: ${error.message}`);
     }
 }

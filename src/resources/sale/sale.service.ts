@@ -32,7 +32,7 @@ export class SaleService {
         }
 
         const data = await Order.findAll({
-            attributes: ['id', 'receipt_number', 'total_price', 'created_at'],
+            attributes: ['id', 'receipt_number', 'total_price', 'ordered_at'],
             where: whereClause,
             include: [
                 {
