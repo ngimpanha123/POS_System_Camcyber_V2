@@ -1,12 +1,19 @@
+// =========================================================================>> Core Library
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import * as expressHandlebars from 'express-handlebars';
-import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
-import * as cors from 'cors';
-import * as bodyParser from 'body-parser';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
+// =========================================================================>> Third Party Library
+import * as expressHandlebars from 'express-handlebars';
+import { join } from 'path'; //Join all arguments together and normalize the resulting path.
+import * as cors from 'cors'; // Product Origin Request
+import * as bodyParser from 'body-parser'; // Json Converter
+
+// =========================================================================>> Custom Library
+// Module
+import { AppModule } from './app.module';
+
+// ======================================= >> Code Starts Here << ========================== //
 const bootstrap = async () => {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
