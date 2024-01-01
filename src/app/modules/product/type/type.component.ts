@@ -46,6 +46,7 @@ export class ProductsTypeComponent implements OnInit {
     isLoading: boolean = false;
 
     ngOnInit(): void {
+        this.isLoading = true;
         this.typeService.list().subscribe({
             next: (response: List) => {
                 this.dataSource.data = response.data;

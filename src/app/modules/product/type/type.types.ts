@@ -7,4 +7,3 @@ export interface Data {
     name: string,
     n_of_products: number,
 }
-
