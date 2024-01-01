@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { PosService } from './pos.service';
 import { Data, Product } from './pos.types';
@@ -14,6 +13,7 @@ import { UserService } from 'app/core/user/user.service';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DecimalPipe } from '@angular/common';
 
 interface CartItem {
     id: number;
@@ -29,7 +29,7 @@ interface CartItem {
     templateUrl: './pos.component.html',
     styleUrls: ['./pos.component.scss'], // Note: Corrected from 'styleUrl' to 'styleUrls'
     imports: [
-        CommonModule,
+        DecimalPipe,
         MatIconModule,
         MatTabsModule,
         ItemComponent,
@@ -45,7 +45,7 @@ export class PosComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<User> = new Subject<User>();
     data: Data[] = [];
     isLoading: boolean = false;
-    cart: CartItem[] = [];
+    carts: CartItem[] = [];
     user: User;
     isOrderBeingMade: boolean = false;
     canSubmit: boolean = false;
@@ -85,7 +85,7 @@ export class PosComponent implements OnInit, OnDestroy {
     }
 
     addToCart(incomingItem: Product, qty = 0): void {
-        const existingItem = this.cart.find(item => item.id === incomingItem.id);
+        const existingItem = this.carts.find(item => item.id === incomingItem.id);
 
         if (existingItem) {
             existingItem.qty += qty;
@@ -98,7 +98,7 @@ export class PosComponent implements OnInit, OnDestroy {
                 temp_qty: qty,
                 unit_price: incomingItem.unit_price,
             };
-            this.cart.push(newItem);
+            this.carts.push(newItem);
             this.canSubmit = true;
         }
 
@@ -106,7 +106,7 @@ export class PosComponent implements OnInit, OnDestroy {
     }
 
     getTotalPrice(): void {
-        this.totalPrice = this.cart.reduce((total, item) => total + (item.qty * item.unit_price), 0);
+        this.totalPrice = this.carts.reduce((total, item) => total + (item.qty * item.unit_price), 0);
     }
 
     remove(value: any, index: number = -1): void {
@@ -114,12 +114,12 @@ export class PosComponent implements OnInit, OnDestroy {
             this.canSubmit = true;
         }
 
-        this.cart.splice(index, 1);
+        this.carts.splice(index, 1);
         this.getTotalPrice();
     }
 
     blur(event: any, index: number = -1): void {
-        const tempQty = this.cart[index].qty;
+        const tempQty = this.carts[index].qty;
 
         if (event.target.value == 0) {
             this.canSubmit = false;
@@ -133,31 +133,31 @@ export class PosComponent implements OnInit, OnDestroy {
         }
 
         if (!event.target.value) {
-            this.cart[index].qty = tempQty;
-            this.cart[index].temp_qty = tempQty;
+            this.carts[index].qty = tempQty;
+            this.carts[index].temp_qty = tempQty;
         } else {
-            this.cart[index].qty = enteredValue;
-            this.cart[index].temp_qty = enteredValue;
+            this.carts[index].qty = enteredValue;
+            this.carts[index].temp_qty = enteredValue;
         }
 
         this.getTotalPrice();
     }
 
     checkOut(): void {
-        const cart: { [itemId: number]: number } = {};
-        this.cart.forEach((item: CartItem) => {
-            cart[item.id] = item.qty;
+        const carts: { [itemId: number]: number } = {};
+        this.carts.forEach((item: CartItem) => {
+            carts[item.id] = item.qty;
         });
 
         const body = {
-            cart: JSON.stringify(cart)
+            cart: JSON.stringify(carts)
         };
 
         this.isOrderBeingMade = true;
         this.posService.create(body).subscribe({
             next: response => {
                 this.isOrderBeingMade = false;
-                this.cart = [];
+                this.carts = [];
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
             },
             error: (err: HttpErrorResponse) => {
