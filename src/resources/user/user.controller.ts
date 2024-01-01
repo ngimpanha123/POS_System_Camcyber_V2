@@ -9,7 +9,6 @@ import { UsersTypeExistsPipe } from "src/shared/pipes/user.pipe";
 import * as bcrypt from 'bcryptjs';
 import { FileResponse } from "src/shared/file.interface";
 import { FileService } from "src/services/file.service";
-import { UsersActiveEnum } from "src/enums/user/active.enum";
 import { Create, List, Update } from "./user.types";
 
 @Roles(UserRoleDecorator.ADMIN)
@@ -50,7 +49,6 @@ export class UserController {
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-        body.is_active = UsersActiveEnum.Active;
         return this.userService.create(body, payload.user.id);
     }
 

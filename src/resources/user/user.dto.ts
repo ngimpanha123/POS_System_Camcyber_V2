@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsPositive, IsString, Matches, MinLength } from 'class-validator'
+import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Matches, MinLength } from 'class-validator'
 import { UsersActiveEnum } from 'src/enums/user/active.enum'
 
 export class CreateUserDto {
@@ -25,9 +25,6 @@ export class CreateUserDto {
     @IsString()
     @IsNotEmpty()
     avatar: string
-
-    @IsNumber()
-    is_active: number
 }
 
 export class UpdateUserDto {
@@ -47,11 +44,9 @@ export class UpdateUserDto {
     @IsEmail()
     email: string
 
+    @IsOptional()
     @IsString()
-    avatar?: string
-
-    @IsNumber()
-    is_active: number
+    avatar: string
 }
 
 export class UpdatePasswordDto {
