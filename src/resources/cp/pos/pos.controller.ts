@@ -16,7 +16,9 @@ import { UserPayload } from 'src/middleware/interceptors/auth.interceptor';
 import { PosService } from './pos.service';
 import { CreateOrderDto } from './pos.dto';
 
-// ======================================================================>> Code Starts Here
+
+// ======================================= >> Code Starts Here << ========================== //
+
 @UseGuards(AuthGuard) // ===> Check Authentication (Login or Not)
 @Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF) // ===> Check Role or Aurthorization
 

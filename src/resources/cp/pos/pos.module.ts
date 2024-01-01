@@ -9,7 +9,7 @@ import { TelegramService } from 'src/services/telegram.service';
 import { PosController } from './pos.controller';
 import { PosService } from './pos.service';
 
-// ======================================================================>> Code Starts Here
+// ======================================= >> Code Starts Here << ========================== //
 @Module({
     controllers: [PosController], // Controller Declaration
     providers: [PosService, TelegramService] // Service Declaration
