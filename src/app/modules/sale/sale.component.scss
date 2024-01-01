@@ -28,7 +28,6 @@ table {
     width: 100%;
 }
 
-
 ::ng-deep .list-sale-data .mat-cell {
     padding: 1rem 6px !important;
     color: rgb(71 85 105) !important;
@@ -66,7 +65,7 @@ table {
     padding: 0.5rem 2rem !important;
 }
 
-.list-sale-data .mat-column-created {
+.list-sale-data .mat-column-ordered_at {
     min-width: 16rem;
     text-align: left;
     padding: 0.5rem 2rem !important;

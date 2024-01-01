@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DecimalPipe } from '@angular/common';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SharedDetailsComponent } from 'helpers/shared/details/details.component';
 
 interface CartItem {
     id: number;
@@ -143,6 +145,7 @@ export class PosComponent implements OnInit, OnDestroy {
         this.getTotalPrice();
     }
 
+    private matDialog = inject(MatDialog);
     checkOut(): void {
         const carts: { [itemId: number]: number } = {};
         this.carts.forEach((item: CartItem) => {
@@ -159,6 +162,12 @@ export class PosComponent implements OnInit, OnDestroy {
                 this.isOrderBeingMade = false;
                 this.carts = [];
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
+                const dialogConfig = new MatDialogConfig();
+                dialogConfig.data = response.data;
+                dialogConfig.width = "650px";
+                dialogConfig.minHeight = "200px";
+                dialogConfig.autoFocus = false;
+                this.matDialog.open(SharedDetailsComponent, dialogConfig);
             },
             error: (err: HttpErrorResponse) => {
                 this.isOrderBeingMade = false;

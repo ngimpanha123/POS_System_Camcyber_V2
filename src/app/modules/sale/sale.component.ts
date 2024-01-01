@@ -14,11 +14,13 @@ import { Data, List } from './sale.types';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GlobalConstants } from 'helpers/shared/global-constants';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SaleDialogComponent } from './dialog/dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SharedDetailsComponent } from 'helpers/shared/details/details.component';
+import { DetailsService } from 'helpers/shared/details/details.service';
+import FileSaver from 'file-saver';
 
 @Component({
     selector: 'app-sale',
@@ -46,8 +48,9 @@ export class SaleComponent implements OnInit {
     private saleService = inject(SaleService);
     private snackBarService = inject(SnackbarService);
     private helpersConfirmationService = inject(HelpersConfirmationService);
+    private detailsService = inject(DetailsService);
 
-    displayedColumns: string[] = ['receipt', 'seller', 'price', 'created', 'action'];
+    displayedColumns: string[] = ['receipt', 'seller', 'price', 'ordered_at', 'action'];
     dataSource: MatTableDataSource<Data> = new MatTableDataSource<Data>([]);
     fileUrl: string = env.FILE_BASE_URL;
     total: number = 10;
@@ -72,7 +75,7 @@ export class SaleComponent implements OnInit {
         }
         if (this.from && this.to) {
             params.from = new Date(this.from).toString(),
-            params.to = new Date(this.to).toString()
+                params.to = new Date(this.to).toString()
         }
         this.isLoading = true;
         this.saleService.list(params).subscribe({
@@ -105,10 +108,7 @@ export class SaleComponent implements OnInit {
         dialogConfig.width = "650px";
         dialogConfig.minHeight = "200px";
         dialogConfig.autoFocus = false;
-        const dialogRef = this.matDialog.open(SaleDialogComponent, dialogConfig);
-        dialogRef.componentInstance.ResponseData.subscribe((sale: Data) => {
-            console.log(sale);
-        });
+        this.matDialog.open(SharedDetailsComponent, dialogConfig);
     }
 
     onDelete(sale: Data): void {
@@ -151,5 +151,38 @@ export class SaleComponent implements OnInit {
                 });
             }
         });
+    }
+
+    downloading: boolean = false;
+    print(row: Data) {
+        this.downloading = true;
+        this.detailsService.download(row.receipt_number).subscribe({
+            next: res => {
+                this.downloading = false;
+                let blob = this.b64toBlob(res.file_base64, 'application/pdf');
+                FileSaver.saveAs(blob, 'Invoice-' + row.receipt_number + '.pdf');
+            },
+            error: (err: HttpErrorResponse) => {
+                this.snackBarService.openSnackBar(err.error?.message || GlobalConstants.genericError, GlobalConstants.error);
+            }
+        });
+    }
+    // =================================>> Convert base64 to blob
+    b64toBlob(b64Data: string, contentType: string, sliceSize?: number) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        var blob = new Blob(byteArrays, { type: contentType });
+        return blob;
     }
 }
