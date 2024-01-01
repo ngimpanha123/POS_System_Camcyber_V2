@@ -1,15 +1,25 @@
+// =========================================================================>> Core Library
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { PosService } from './pos.service';
-import { CreateOrderDto } from './pos.dto';
+
+// =========================================================================>> Custom Library
+// Model
+import Product from 'src/models/product/product.model';
+import Order from 'src/models/order/order.model';
+
+// Middleware
 import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decorator';
 import { AuthGuard } from 'src/middleware/guards/auth.guard';
 import { User } from 'src/middleware/decorators/user.decorator';
 import { UserPayload } from 'src/middleware/interceptors/auth.interceptor';
-import Product from 'src/models/product/product.model';
-import Order from 'src/models/order/order.model';
 
-@Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
-@UseGuards(AuthGuard)
+// External Lib
+import { PosService } from './pos.service';
+import { CreateOrderDto } from './pos.dto';
+
+// ======================================================================>> Code Starts Here
+@UseGuards(AuthGuard) // ===> Check Authentication (Login or Not)
+@Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF) // ===> Check Role or Aurthorization
+
 @Controller('api/pos')
 export class PosController {
     constructor(private readonly posService: PosService) { };
