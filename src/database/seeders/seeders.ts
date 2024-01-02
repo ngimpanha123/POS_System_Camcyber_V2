@@ -8,23 +8,25 @@ import * as readlineSync from 'readline-sync';
 import "colors"
 
 async function seeds() {
-
-    // Ask the user for confirmation
-    const message = 'This will drop and seed agian. Are you sure you want to proceed?'.yellow;
-    const confirmation = readlineSync.keyInYNStrict(message);
-
-    if (!confirmation) {
-        console.log('\nSeeders has been cancelled.'.cyan);
-        process.exit(0);
-    }
-
-    // Connect to the Dadabase
     const sequelize = new Sequelize(sequelizeConfig);
 
     // Initialize models from each group
-    sequelize.addModels(models)
+    sequelize.addModels(models);
 
     try {
+        // Check if there are any existing tables in the database
+        const tableNames = await sequelize.getQueryInterface().showAllTables();
+        if (tableNames.length > 0) {
+            // Ask the user for confirmation
+            const message = 'This will drop and seed agian. Are you sure you want to proceed?'.yellow;
+            const confirmation = readlineSync.keyInYNStrict(message);
+
+            if (!confirmation) {
+                console.log('\nSeeders has been cancelled.'.cyan);
+                process.exit(0);
+            }
+        }
+
         // drop all existing UserGroup in the database and recreate it again.
         await sequelize.sync({ force: true });
 
