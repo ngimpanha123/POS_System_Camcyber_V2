@@ -8,7 +8,7 @@ git clone git@gitlab.camcyber.com:pos/v2/file-v3.git
 ```
 2. **Navigate to the Project Directory:**
 ```bash
-cd api
+cd file-v3
 ```
 3. **Install Dependencies:**
 ```bash
