@@ -4,7 +4,7 @@ Welcome to the Simple API File Service! This service allows you to upload and ma
 To run the API File Service on your local machine, follow these steps:
 1. **Clone the Repository:**
 ```bash
-git clone https://gitlab.camcyber.com/file-service/api-v2.git
+git clone git@gitlab.camcyber.com:pos/v2/file-v3.git
 ```
 2. **Navigate to the Project Directory:**
 ```bash
