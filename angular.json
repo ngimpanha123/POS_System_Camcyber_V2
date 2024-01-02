@@ -36,7 +36,8 @@
                             "crypto-js/hmac-sha256",
                             "crypto-js/enc-base64",
                             "flat",
-                            "quill"
+                            "quill",
+                            "file-saver"
                         ],
                         "assets": [
                             "src/assets"
