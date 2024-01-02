@@ -1,0 +1,50 @@
+{
+    "name": "file-service",
+    "version": "3.0.0",
+    "description": "Implementation for using internal team",
+    "main": "index.ts",
+    "scripts": {
+        "start": "npx ts-node src/index.ts",
+        "start:dev": "nodemon",
+        "migrate": "npx ts-node src/database/migrations/migrate.ts",
+        "seeder": "npx ts-node src/database/seeds/seeds.ts"
+    },
+    "author": "Yim Klok",
+    "license": "CamCyberICTDevTeam",
+    "devDependencies": {
+        "@types/cors": "^2.8.13",
+        "@types/fs-extra": "^11.0.1",
+        "@types/multer": "^1.4.7",
+        "@types/node": "^20.8.4",
+        "@types/uuid": "^9.0.1",
+        "typescript": "^5.0.4"
+    },
+    "dependencies": {
+        "@types/bcryptjs": "^2.4.4",
+        "@types/express": "^4.17.17",
+        "@types/jsonwebtoken": "^9.0.3",
+        "@types/umzug": "^2.3.3",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2",
+        "express-validator": "^7.0.1",
+        "fs-extra": "^11.1.1",
+        "jsonwebtoken": "^9.0.2",
+        "multer": "^1.4.5-lts.1",
+        "mysql2": "^3.6.0",
+        "node-poppler": "^6.2.3",
+        "nodemon": "^2.0.22",
+        "office-to-pdf": "^4.0.0",
+        "oracledb": "^6.2.0",
+        "pg": "^8.11.3",
+        "sequelize": "^6.32.1",
+        "sequelize-typescript": "^2.1.5",
+        "sharp": "^0.32.5",
+        "ts-node": "^10.9.1",
+        "umzug": "^3.3.1",
+        "uuid": "^9.0.0"
+    }
+}

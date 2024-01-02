@@ -1,92 +1,300 @@
-# File V3
-
-
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+# One Stop File Service
+Welcome to the Simple API File Service! This service allows you to upload and manage files with basic authentication for added security.
+## How to Run the app
+To run the API File Service on your local machine, follow these steps:
+1. **Clone the Repository:**
+```bash
+git clone https://gitlab.camcyber.com/file-service/api-v2.git
 ```
-cd existing_repo
-git remote add origin https://gitlab.camcyber.com/pos/v2/file-v3.git
-git branch -M master
-git push -uf origin master
+2. **Navigate to the Project Directory:**
+```bash
+cd api
+```
+3. **Install Dependencies:**
+```bash
+$ npm install
+```
+4. **Start the Server:**
+```bash
+# development watch mode
+npm run start:dev
+# production deployment
+npm run start
+```
+## Database Connection Options
+This file service allowed you to connect three database:
+### MySQL Connection:
+1. Create the `.env` file in the root directory
+```bash
+DB_CONNECTION   = 'mysql'
+DB_PORT         = 'your_db_port'
+DB_HOST         = 'your_db_localhost'
+DB_DATABASE     = 'your_db_name'
+DB_USERNAME     = 'your_db_root'
+DB_PASSWORD     = 'your_db_password'
+```
+### Postgres Connection:
+1. Create the `.env` file in the root directory
+```bash
+DB_CONNECTION   = 'postgres'
+DB_PORT         = 'your_db_port'
+DB_HOST         = 'your_db_localhost'
+DB_DATABASE     = 'your_db_name'
+DB_USERNAME     = 'your_db_root'
+DB_PASSWORD     = 'your_db_password'
+```
+### Oracle Connection:
+1. Create the `.env` file in the root directory
+2. Uncomment the connection oracle in `src/configs/database.config.ts` and comment out the MySQL and Postgres connections.
+```bash
+DB_TNS          = 'your_db_service_name or sid'
+DB_CONNECTION   = 'postgres'
+DB_PORT         = 'your_db_port'
+DB_HOST         = 'your_db_localhost'
+DB_DATABASE     = 'your_db_name'
+DB_USERNAME     = 'your_db_root'
+DB_PASSWORD     = 'your_db_password'
 ```
 
-## Integrate with your tools
+## Migrate && Seeds
+### Migrate
+**Drop all tables && recreate table again**
+```bash
+npm run migrate
+```
+### Seeds
+**Drop all tables && recreate table again && insert data to the database**
+```bash
+npm run seeder
+```
 
-- [ ] [Set up project integrations](https://gitlab.camcyber.com/pos/v2/file-v3/-/settings/integrations)
+## All Routes For File Update 
 
-## Collaborate with your team
+In addition to the basic functionality, the One Stop File Service API provides several routes for specific file operations. Here are some of the key routes:
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Read a File
 
-## Test and Deploy
+- **URL**: `/upload/file/:filename`
+- **HTTP Method**: GET
+- **Description**: Retrieve the contents of a specific file.
+- **Authentication**: None required
 
-Use the built-in continuous integration in GitLab.
+### Upload a Single File
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- **URL**: `/api/file/upload-single`
+- **HTTP Method**: POST
+- **Description**: Upload a single file to the server.
+- **Authentication**: Basic Auth (Username and Password required)
 
-***
+**Request Fields (form-data):**
 
-# Editing this README
+- `key` (string): A unique key or identifier for the file.
+- `file` (file): The file to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### Upload Multiple Files
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+- **URL**: `/api/file/upload-multiple`
+- **HTTP Method**: POST
+- **Description**: Upload multiple files to the server.
+- **Authentication**: Basic Auth (Username and Password required)
 
-## Name
-Choose a self-explaining name for your project.
+**Request Fields (form-data):**
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+- `key` (string): A unique key or identifier for the file.
+- `files` (files): The files to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Upload an Image (Base64)
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- **URL**: `/api/file/upload-base64`
+- **HTTP Method**: POST
+- **Description**: Upload an image in base64 format.
+- **Authentication**: Basic Auth (Username and Password required)
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+**Request Fields (form-data):**
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+- `key` (string): A unique key or identifier for the file.
+- `image` (strng): The image must be base64 image strign to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Convert PDF to Image (First Page)
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+- **URL**: `/api/file/pdf-to-image`
+- **HTTP Method**: POST
+- **Description**: Convert a specific PDF to an image (first page only).
+- **Authentication**: Basic Auth (Username and Password required)
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+**Request Fields (form-data):**
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+- `key` (string): A unique key or identifier for the file.
+- `file` (file): The file to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### Convert Multiple PDFs to Images (First Page)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+- **URL**: `/api/file/pdfs-to-image`
+- **HTTP Method**: POST
+- **Description**: Convert multiple PDFs to images (first page only).
+- **Authentication**: Basic Auth (Username and Password required)
+
+**Request Fields (form-data):**
+
+- `key` (string): A unique key or identifier for the file.
+- `files` (files): The files to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
+
+### Convert Office to PDF
+
+- **URL**: `/api/file/office-to-pdf`
+- **HTTP Method**: POST
+- **Description**: Upload an office document and convert it to a PDF.
+- **Authentication**: Basic Auth (Username and Password required)
+
+**Request Fields (form-data):**
+
+- `key` (string): A unique key or identifier for the file.
+- `file` (file): The file to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
+
+### Convert Multiple Offices to PDFs
+
+- **URL**: `/api/file/offices-to-pdf`
+- **HTTP Method**: POST
+- **Description**: Upload multiple office documents and convert them to PDFs.
+- **Authentication**: Basic Auth (Username and Password required)
+
+**Request Fields (form-data):**
+
+- `key` (string): A unique key or identifier for the file.
+- `files` (files): The files to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
+
+### Convert Office to PDF to Image (First Page)
+
+- **URL**: `/api/file/office-to-pdf-image`
+- **HTTP Method**: POST
+- **Description**: Convert an office document to a PDF and then to an image (first page only).
+- **Authentication**: Basic Auth (Username and Password required)
+
+**Request Fields (form-data):**
+
+- `key` (string): A unique key or identifier for the file.
+- `file` (file): The file to be uploaded.
+- `folder` (string): The destination folder where the file should be stored.
+
+
+## Authentication Login (Use for Web Integrate)
+### Route
+
+- **URL**: `/api/auth/login`
+- **HTTP Method**: POST
+- **Description**: Authenticate a user with their phone and password to obtain an access token.
+- **Authentication**: None required
+
+**Request Fields (JSON):**
+
+- `phone` (string): The user's phone number.
+- `password` (string): The user's password.
+
+**Response (JSON):**
+
+The response to the authentication login request includes the following fields:
+
+- `statusCode` (number): The status code of the response, with a value of 200 indicating a successful response.
+- `data` (object): An object containing the authentication information.
+  - `access_token` (string): The access token for the authenticated user.
+  - `expires_in` (number): The duration in seconds for which the access token is valid.
+  - `user` (object): User information.
+
+**Example Success Response (JSON):**
+
+```json
+{
+    "statusCode": 200,
+    "data": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiWWltIEtsb2siLCJwaG9uZSI6IjA5Nzc3Nzk2ODgiLCJhdmF0YXIiOiJhcGkvZmlsZS9zZXJ2ZS9hYTIwZWJjYi04YjM5LTQ3ZjMtYjUzNi1iNzVlYWFkOTFiMDUiLCJ0eXBlIjoiRGV2ZWxvcGVyIiwiY3JlYXRlZF9hdCI6IjIwMjMtMTAtMTdUMDc6Mzg6NDkuMDAwWiIsInVwZGF0ZWRfYXQiOiIyMDIzLTEwLTE3VDA3OjM4OjQ5LjAwMFoifSwiaWF0IjoxNjk3NTk4NTE5LCJleHAiOjE2OTc2ODQ5MTl9.0HRYcpl41ENWbWjzzIL40BgMCx_QW5Qy3Z5QFQJdHg0",
+        "token_type": "bearer",
+        "expires_in": "24h",
+        "user": {
+            "id": 1,
+            "name": "Yim Klok",
+            "phone": "0977779688",
+            "avatar": "api/file/serve/aa20ebcb-8b39-47f3-b536-b75eaad91b05",
+            "type": "Developer",
+            "created_at": "2023-10-17T07:38:49.000Z",
+            "updated_at": "2023-10-17T07:38:49.000Z"
+        }
+    }
+}
+```
+
+# Authorization Users
+
+## About Project
+
+### List Projects
+
+#### Route
+
+- **URL**: `/api/project`
+- **HTTP Method**: GET
+- **Description**: Retrieve a list of all projects.
+- **Authentication**: Requires JWT authorization.
+
+#### Response
+
+[...]
+### View Project
+
+#### Route
+
+- **URL**: `/api/project/:id`
+- **HTTP Method**: GET
+- **Description**: Retrieve details of a specific project by providing its ID in the URL.
+- **Authentication**: Requires JWT authorization.
+
+#### Response
+
+[...]
+### Create Project
+
+#### Route
+
+- **URL**: `/api/project`
+- **HTTP Method**: POST
+- **Description**: Create a new project by providing the necessary project details in the request.
+- **Authentication**: Requires JWT authorization.
+
+#### Request Fields (JSON or form-data):
+
+[...]
+### Update Project
+
+#### Route
+
+- **URL**: `/api/project/:id`
+- **HTTP Method**: PUT
+- **Description**: Update the details of an existing project by providing its ID in the URL and the updated project details in the request.
+- **Authentication**: Requires JWT authorization.
+
+#### Request Fields (JSON or form-data):
+
+[...]
+### Delete Project
+
+#### Route
+
+- **URL**: `/api/project/:id`
+- **HTTP Method**: DELETE
+- **Description**: Delete a specific project by providing its ID in the URL.
+- **Authentication**: Requires JWT authorization.
+
+#### Response
+
+[...]
+
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+ExpressJS with [YIM KLOK](https://t.me/yim_klok).
