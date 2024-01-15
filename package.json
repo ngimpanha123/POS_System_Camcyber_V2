@@ -10,8 +10,10 @@
         "start": "nest start",
         "start:dev": "nest start --watch",
         "start:prod": "node dist/main",
-        "migrate": "npx ts-node src/database/migrations/migrate.ts",
-        "seeder": "npx ts-node src/database/seeders/seeders.ts"
+        "db:test": "npx ts-node src/database/test-connnection.ts",
+        "db:create": "npx ts-node src/database/create-db.ts",
+        "db:migrate": "npx ts-node src/database/migrations/migrate.ts",
+        "db:seeder": "npx ts-node src/database/seeders/seeders.ts"
     },
     "dependencies": {
         "@nestjs/common": "^10.0.0",

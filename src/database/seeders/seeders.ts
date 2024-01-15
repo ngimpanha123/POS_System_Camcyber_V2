@@ -5,7 +5,7 @@ import { ProductSeeder } from './product.seeder';
 import { OrderSeeder } from './order.seeder'
 import { UserSeeder } from './user.seeder';
 import * as readlineSync from 'readline-sync';
-import "colors"
+import "colors";
 
 async function seeds() {
     const sequelize = new Sequelize(sequelizeConfig);
