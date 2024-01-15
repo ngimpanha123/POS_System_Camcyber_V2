@@ -13,7 +13,7 @@
         "db:test": "npx ts-node src/database/test-connnection.ts",
         "db:create": "npx ts-node src/database/create-db.ts",
         "db:migrate": "npx ts-node src/database/migrations/migrate.ts",
-        "db:seeder": "npx ts-node src/database/seeders/seeders.ts"
+        "db:seed": "npx ts-node src/database/seeders/seeders.ts"
     },
     "dependencies": {
         "@nestjs/common": "^10.0.0",
