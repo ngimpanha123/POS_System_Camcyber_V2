@@ -1,10 +1,16 @@
+// ================================================================>> Core Library
 import { NgFor, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+
+// ================================================================>> Third Party Library
+import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { HelpersNavigationService, HelpersNavigationComponent } from 'helpers/components/navigation';
-import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
 import { take } from 'rxjs';
+
+// ================================================================>> Costom Library
+import { HelpersNavigationService, HelpersNavigationComponent } from 'helpers/components/navigation';
+
 
 @Component({
     selector       : 'languages',

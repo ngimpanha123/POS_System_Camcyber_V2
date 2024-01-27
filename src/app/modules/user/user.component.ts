@@ -1,22 +1,27 @@
-import { Component, OnInit, inject } from '@angular/core';
+// ================================================================>> Core Library
+import * as core from '@angular/core';
 import { DatePipe, NgClass, NgIf } from '@angular/common';
-import { UserService } from './user.service';
-import { List, Data } from './user.types';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { GlobalConstants } from 'helpers/shared/global-constants';
+
+// ================================================================>> Third Party  Library
+import { UiSwitchModule } from 'ngx-ui-switch';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
-import { UiSwitchModule } from 'ngx-ui-switch';
-import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
 import { environment as env } from 'environments/environment';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
+// ================================================================>> Custom  Library
+import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { GlobalConstants } from 'helpers/shared/global-constants';
+import { UserService } from './user.service';
+import { List, Data } from './user.types';
 import { UpdatePasswordDialogComponent, UserDialogComponent } from './dialog/dialog.component';
 
-@Component({
+@core.Component({
     selector: 'app-user',
     standalone: true,
     templateUrl: './user.component.html',
@@ -33,11 +38,11 @@ import { UpdatePasswordDialogComponent, UserDialogComponent } from './dialog/dia
         UiSwitchModule
     ]
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements core.OnInit {
 
-    private userService = inject(UserService);
-    private snackBarService = inject(SnackbarService);
-    private helpersConfirmationService = inject(HelpersConfirmationService);
+    private userService = core.inject(UserService);
+    private snackBarService = core.inject(SnackbarService);
+    private helpersConfirmationService = core.inject(HelpersConfirmationService);
 
     displayedColumns: string[] = ['profile', 'contact', 'last_activity', 'status', 'action'];
     dataSource: MatTableDataSource<Data> = new MatTableDataSource<Data>([]);
@@ -84,7 +89,7 @@ export class UserComponent implements OnInit {
         }
     }
 
-    private matDialog = inject(MatDialog)
+    private matDialog = core.inject(MatDialog)
     create(): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {

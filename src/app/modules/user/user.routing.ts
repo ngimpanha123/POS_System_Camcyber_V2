@@ -1,6 +1,11 @@
+// ================================================================ Core Library
 import { Routes } from '@angular/router';
-import { UserComponent } from './user.component';
+
+// ================================================================ Third Party Library
+
+// ================================================================ Costom Library
 import { roleResolver } from 'helpers/resolvers/roles.resolver';
+import { UserComponent } from './user.component';
 
 export default [
     {

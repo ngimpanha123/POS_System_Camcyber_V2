@@ -1,7 +1,12 @@
+// ================================================================>> Core Library
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment as env } from 'environments/environment';
+
+// ================================================================>> Third party Library
 import { Observable } from 'rxjs';
+
+// ================================================================>> Custom Library
+import { environment as env } from 'environments/environment';
 import { List } from './dashboard.types';
 
 @Injectable({

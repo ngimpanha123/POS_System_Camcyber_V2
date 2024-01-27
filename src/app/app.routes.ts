@@ -1,4 +1,7 @@
+// ================================================================>> Core Library
 import { Route } from '@angular/router';
+
+// ================================================================>> Custom Library
 import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';

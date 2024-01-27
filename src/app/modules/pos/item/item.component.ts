@@ -1,8 +1,14 @@
+// ================================================================>> Core Library (Angular)
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+
+// ================================================================>> Third-Party Libraries
+import { MatIconModule } from '@angular/material/icon';
+
+// ================================================================>> Custom Libraries (Application-specific)
 import { Product } from '../pos.types';
 import { environment as env } from 'environments/environment';
-import { MatIconModule } from '@angular/material/icon';
-import { DecimalPipe } from '@angular/common';
+
 
 @Component({
     selector: 'product-item',

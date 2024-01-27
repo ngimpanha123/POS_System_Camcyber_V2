@@ -1,11 +1,17 @@
+// ================================================================>> Core Library
 import { inject } from '@angular/core';
-import { NavigationService } from 'app/core/navigation/navigation.service';
 import { Observable, forkJoin } from 'rxjs';
-import jwt_decode from 'jwt-decode';
-import { User } from './core/user/user.types';
 import { Router } from '@angular/router';
+
+// ================================================================>> Third party Library
+import jwt_decode from 'jwt-decode';
+
+// ================================================================>> Custom Library
+import { User } from './core/user/user.types';
 import { AuthService } from './core/auth/auth.service';
 import { UserService } from './core/user/user.service';
+import { NavigationService } from 'app/core/navigation/navigation.service';
+
 
 interface UserPayload {
     exp: number;

@@ -1,7 +1,12 @@
+// ================================================================>> Core Library
 import { inject } from '@angular/core';
 import { CanActivateChildFn, CanActivateFn, Router } from '@angular/router';
-import { AuthService } from 'app/core/auth/auth.service';
+
+// ================================================================>> Third Party Library
 import { of, switchMap } from 'rxjs';
+
+// ================================================================>> Custom Librar
+import { AuthService } from 'app/core/auth/auth.service';
 
 export const AuthGuard: CanActivateFn | CanActivateChildFn = (_route, _state) => {
     const router: Router = inject(Router);

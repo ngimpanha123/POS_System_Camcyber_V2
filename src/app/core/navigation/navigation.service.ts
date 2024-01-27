@@ -1,7 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+// ================================================================>> Core Library
 import { inject, Injectable } from '@angular/core';
-import { Navigation } from 'app/core/navigation/navigation.types';
+
+// ================================================================>> Third Party Library
+import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, tap } from 'rxjs';
+
+// ================================================================>> Custom Library
+import { Navigation } from 'app/core/navigation/navigation.types';
+
 
 @Injectable({providedIn: 'root'})
 export class NavigationService

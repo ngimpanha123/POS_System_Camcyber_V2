@@ -1,16 +1,22 @@
+// ================================================================>> Core Library (Angular)
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Data } from '../type.types';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+
+// ================================================================>> Third-Party Libraries (Angular Material)
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+
+// ================================================================>> Custom Libraries (Application-specific)
 import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { ProductsTypeService } from '../type.service';
 import { GlobalConstants } from 'helpers/shared/global-constants';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ProductsTypeService } from '../type.service';
+import { Data } from '../type.types';
+
 
 @Component({
     selector: 'products-type-dialog',

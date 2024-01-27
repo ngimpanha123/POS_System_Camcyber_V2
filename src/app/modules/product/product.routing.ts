@@ -1,6 +1,10 @@
+// ================================================================>> Core library Angular Router
 import { Routes } from '@angular/router';
-import { ProductComponent } from './product.component';
-import { roleResolver } from 'helpers/resolvers/roles.resolver';
+
+// ================================================================>> Custom Library (Application-specific)
+import { ProductComponent } from './product.component'; 
+import { roleResolver } from 'helpers/resolvers/roles.resolver'; 
+
 
 export default [
     {

@@ -1,6 +1,12 @@
+// ================================================================>> Core Library
 import { Injectable } from '@angular/core';
-import { User } from 'app/core/user/user.types';
+
+// ================================================================>> Third Party Library
 import { Observable, ReplaySubject } from 'rxjs';
+
+// ================================================================>> Custom Library
+import { User } from 'app/core/user/user.types';
+
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

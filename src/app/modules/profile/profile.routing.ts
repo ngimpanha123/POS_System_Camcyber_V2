@@ -1,9 +1,12 @@
-import { Routes } from '@angular/router';
-import { ProfileComponent } from './profile.component';
+// ================================================================>> Core Library 
+import * as router from '@angular/router';
+
+// ================================================================>> Custom Library 
+import * as profileComponent from './profile.component';
 
 export default [
     {
         path: '',
-        component: ProfileComponent
+        component: profileComponent.ProfileComponent
     },
-] as Routes;
+] as router.Routes;

@@ -1,20 +1,27 @@
+// ================================================================>> Core Library (Angular)
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
-import { User } from 'app/core/user/user.types';
-import { UserService } from 'app/core/user/user.service';
-import { ProfileService } from '../profile.service';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { environment as env } from 'environments/environment';
-import jwt_decode from 'jwt-decode';
-import { GlobalConstants } from 'helpers/shared/global-constants';
+
+// ================================================================>> Third Party Library
+import { Subject, takeUntil } from 'rxjs'; // RxJS library for observables
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import jwt_decode from 'jwt-decode'; // External library for decoding JWT tokens
+
+// ================================================================>> Custom Library (Application-specific)
+import { GlobalConstants } from 'helpers/shared/global-constants';
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { User } from 'app/core/user/user.types';
+import { UserService } from 'app/core/user/user.service';
+import { ProfileService } from '../profile.service';
+import { environment as env } from 'environments/environment'; // Custom import for environment variables
+
+
 
 interface UserPayload {
     exp: number;

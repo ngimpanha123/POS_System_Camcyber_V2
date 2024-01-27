@@ -1,13 +1,19 @@
-import { DOCUMENT, NgIf } from '@angular/common';
+// ================================================================>> Core Libraries (Angular)
 import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { DOCUMENT, NgIf } from '@angular/common';
+
+// ================================================================>> Third-Party Libraries
+import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
+
+// ================================================================>> Custom Libraries (Application-specific)
 import { HelpersConfig, HelpersConfigService } from 'helpers/services/config';
 import { HelpersMediaWatcherService } from 'helpers/services/media-watcher';
 import { HelpersPlatformService } from 'helpers/services/platform';
 import { HELPERS_VERSION } from 'helpers/version';
-import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
 import { EmptyLayoutComponent } from './layouts/empty/empty.component';
 import { ClassyLayoutComponent } from './layouts/classy/classy.component';
+
 
 @Component({
     selector     : 'layout',
