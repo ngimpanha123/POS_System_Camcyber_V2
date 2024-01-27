@@ -1,5 +1,10 @@
+// ================================================================>> Core Library
 import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+
+// ================================================================>> Third party Library
 import { Op } from 'sequelize';
+
+// ================================================================>> Costom Library
 import OrderDetails from 'src/models/order/detail.model';
 import Order from 'src/models/order/order.model';
 import Product from 'src/models/product/product.model';

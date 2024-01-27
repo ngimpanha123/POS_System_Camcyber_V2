@@ -1,11 +1,16 @@
+// ================================================================>> Core Library
 import { BadRequestException, ConflictException, HttpStatus, Injectable } from '@nestjs/common';
-import { UpdatePasswordDto, UpdateProfileDto } from './profile.dto';
-import User from 'src/models/user/user.model';
+
+// ================================================================>> Third Party Library
 import { DatabaseError, Op } from 'sequelize';
 import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcryptjs';
+
+// ================================================================>> Costom Library
+import { UpdatePasswordDto, UpdateProfileDto } from './profile.dto';
+import User from 'src/models/user/user.model';
 import { jwtConstants } from 'src/shared/constants.jwt';
 import UsersType from 'src/models/user/type.model';
-import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class ProfileService {

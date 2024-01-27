@@ -1,4 +1,7 @@
+// ================================================================>> Third Party Library
 import { Model, Column, Table, HasMany, DataType } from 'sequelize-typescript';
+
+// ================================================================>> Costom Library
 import User from './user.model';
 
 @Table({ tableName: 'users_type', createdAt: 'created_at', updatedAt: 'updated_at' })

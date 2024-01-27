@@ -1,5 +1,10 @@
+// ================================================================>> Core Library
 import { BadRequestException, ConflictException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+
+// ================================================================>> Third Party Library
 import { Op } from "sequelize";
+
+// ================================================================>> Custom Library
 import UsersType from "src/models/user/type.model";
 import User from "src/models/user/user.model";
 import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";

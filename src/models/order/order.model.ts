@@ -1,4 +1,7 @@
+// ================================================================>> Third Party Library
 import { Model, Column, Table, BelongsTo, ForeignKey, DataType, HasMany } from 'sequelize-typescript';
+
+// ================================================================>> Costom Library
 import User from '../user/user.model';
 import OrderDetails from './detail.model';
 

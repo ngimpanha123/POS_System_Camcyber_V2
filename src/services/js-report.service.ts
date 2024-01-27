@@ -1,4 +1,7 @@
+// ================================================================>> Core Library
 import { BadRequestException, Injectable } from '@nestjs/common';
+
+// ================================================================>> Third Party Library
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface ReportTemplate {

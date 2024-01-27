@@ -1,4 +1,7 @@
+// ================================================================>> Third Party Library
 import { Model, Column, Table, BelongsTo, ForeignKey, DataType } from 'sequelize-typescript';
+
+// ================================================================>> Costom Library
 import UsersType from './type.model';
 import { UsersActiveEnum } from '../../enums/user/active.enum';
 

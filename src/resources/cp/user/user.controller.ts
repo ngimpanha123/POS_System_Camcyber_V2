@@ -1,4 +1,10 @@
+// ================================================================>> Core Library
 import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, UseGuards, UsePipes } from "@nestjs/common";
+
+// ================================================================>> Third party Library
+import * as bcrypt from 'bcryptjs';
+
+// ================================================================>> Costom Library
 import { UserService } from "./user.service";
 import { Roles, UserRoleDecorator } from "src/middleware/decorators/rolse.decorator";
 import { AuthGuard } from "src/middleware/guards/auth.guard";
@@ -6,7 +12,6 @@ import { User as UserDecorator } from 'src/middleware/decorators/user.decorator'
 import { UserPayload } from "src/middleware/interceptors/auth.interceptor";
 import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
 import { UsersTypeExistsPipe } from "src/shared/pipes/user.pipe";
-import * as bcrypt from 'bcryptjs';
 import { FileResponse } from "src/shared/file.interface";
 import { FileService } from "src/services/file.service";
 import { Create, List, Update } from "./user.types";
