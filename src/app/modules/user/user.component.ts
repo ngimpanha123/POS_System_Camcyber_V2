@@ -4,22 +4,30 @@ import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 // ================================================================>> Third Party  Library
-import { UiSwitchModule } from 'ngx-ui-switch';
+// Material UI
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
-import { environment as env } from 'environments/environment';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
+import { UiSwitchModule } from 'ngx-ui-switch';
+
+
 
 // ================================================================>> Custom  Library
+import { UpdatePasswordDialogComponent, UserDialogComponent } from './dialog/dialog.component';
+
 import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
 import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
 import { GlobalConstants } from 'helpers/shared/global-constants';
+
+import { environment as env } from 'environments/environment';
+
 import { UserService } from './user.service';
 import { List, Data } from './user.types';
-import { UpdatePasswordDialogComponent, UserDialogComponent } from './dialog/dialog.component';
+
 
 @core.Component({
     selector: 'app-user',
@@ -40,18 +48,28 @@ import { UpdatePasswordDialogComponent, UserDialogComponent } from './dialog/dia
 })
 export class UserComponent implements core.OnInit {
 
-    private userService = core.inject(UserService);
-    private snackBarService = core.inject(SnackbarService);
-    private helpersConfirmationService = core.inject(HelpersConfirmationService);
+
 
     displayedColumns: string[] = ['profile', 'contact', 'last_activity', 'status', 'action'];
     dataSource: MatTableDataSource<Data> = new MatTableDataSource<Data>([]);
+
+    // Pagination Variables
     fileUrl: string = env.FILE_BASE_URL;
-    total: number = 10;
-    limit: number = 10;
-    page: number = 1;
-    key: string = '';
+    total: number   = 10;
+    limit: number   = 10;
+    page: number    = 1;
+    key: string     = '';
+
+    // Loading Variable
     isLoading: boolean = false;
+
+    constructor(
+        private _userService                 = core.inject(UserService),
+        private _snackBarService             = core.inject(SnackbarService),
+        private _helpersConfirmationService  = core.inject(HelpersConfirmationService)
+    ) {
+
+    }
 
     ngOnInit(): void {
         this.list(this.page, this.limit);
@@ -66,7 +84,7 @@ export class UserComponent implements core.OnInit {
             params.key = this.key;
         }
         this.isLoading = true;
-        this.userService.list(params).subscribe({
+        this._userService.list(params).subscribe({
             next: (response: List) => {
                 this.dataSource.data = response.data;
                 this.total = response.pagination.total_items;
@@ -76,7 +94,7 @@ export class UserComponent implements core.OnInit {
             },
             error: (err: HttpErrorResponse) => {
                 this.isLoading = false;
-                this.snackBarService.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
+                this._snackBarService.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
             }
         });
     }
@@ -157,18 +175,18 @@ export class UserComponent implements core.OnInit {
             dismissible: true,
         };
         // Open the dialog and save the reference of it
-        const dialogRef = this.helpersConfirmationService.open(configAction);
+        const dialogRef = this._helpersConfirmationService.open(configAction);
 
         // Subscribe to afterClosed from the dialog reference
         dialogRef.afterClosed().subscribe((result: string) => {
             if (result && typeof result === 'string' && result === 'confirmed') {
-                this.userService.delete(user.id).subscribe({
+                this._userService.delete(user.id).subscribe({
                     next: (response: { status_code: number, message: string }) => {
                         this.dataSource.data = this.dataSource.data.filter((v: Data) => v.id != user.id);
-                        this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
+                        this._snackBarService.openSnackBar(response.message, GlobalConstants.success);
                     },
                     error: (err: HttpErrorResponse) => {
-                        this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
+                        this._snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
                     }
                 });
             }
@@ -180,16 +198,16 @@ export class UserComponent implements core.OnInit {
         const body = {
             is_active: status ? 1 : 0
         };
-        this.userService.updateStatus(user.id, body).subscribe({
+        this._userService.updateStatus(user.id, body).subscribe({
             next: (response) => {
                 const index = this.dataSource.data.indexOf(user);
                 const data = this.dataSource.data;
                 data[index].is_active = status ? 1 : 0;
                 this.dataSource.data = data;
-                this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
+                this._snackBarService.openSnackBar(response.message, GlobalConstants.success);
             },
             error: (err) => {
-                this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
+                this._snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
             }
         })
     }
