@@ -16,29 +16,35 @@ import { environment as env } from 'environments/environment';
 })
 export class SaleService {
 
+    // Constructor to inject dependencies, including the HttpClient for making HTTP requests
     constructor(private httpClient: HttpClient) { }
 
     private loadingSpinner = inject(LoadingSpinnerService);
-    list(params?: { page: number, limit: number, receipt_number?: string, from?: string, to?: string }): Observable<List> {
+    list    (params?: { page: number, limit: number, receipt_number?: string, from?: string, to?: string }): Observable<List> {
         return this.httpClient.get<List>(`${env.API_BASE_URL}/sales`, { params: params }).pipe(
-            switchMap((response: List) => {
+
+            switchMap   ((response      : List) => {
+
                 this.loadingSpinner.open();
                 return of(response);
             }),
-            catchError((error) => {
+
+            catchError  ((error) => {
+                
                 this.loadingSpinner.close();
                 return new Observable(observer => {
                     observer.error(error);
                     observer.complete();
                 });
             }),
-            tap((_response: List) => {
+
+            tap         ((_response     : List) => {
                 this.loadingSpinner.close();
             })
         );
     }
 
-    delete(id: number = 0): Observable<{ status_code: number, message: string }> {
+    delete  (id: number = 0): Observable<{ status_code: number, message: string }> {
         return this.httpClient.delete<{ status_code: number, message: string }>(`${env.API_BASE_URL}/sales/${id}`);
     }
 }

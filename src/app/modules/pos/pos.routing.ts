@@ -6,7 +6,7 @@ import { PosComponent } from './pos.component';
 
 export default [
     {
-        path: '',
-        component: PosComponent
+        path        : '',
+        component   :  PosComponent
     },
 ] as Routes;

@@ -6,7 +6,7 @@ import { ProductsTypeComponent } from './type.component';
 
 export default [
     {
-        path: '',
-        component: ProductsTypeComponent
+        path        : '',
+        component   : ProductsTypeComponent
     },
 ] as Routes;

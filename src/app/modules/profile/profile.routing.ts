@@ -6,7 +6,7 @@ import * as profileComponent from './profile.component';
 
 export default [
     {
-        path: '',
-        component: profileComponent.ProfileComponent
+        path        : '',
+        component   : profileComponent.ProfileComponent
     },
 ] as router.Routes;

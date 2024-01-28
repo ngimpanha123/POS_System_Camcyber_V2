@@ -15,18 +15,28 @@ import { UpdatePassword, UpdateProfile } from './profile.tyeps';
 })
 export class ProfileService {
 
-    private readonly url: string = env.API_BASE_URL;
-    private readonly httpOptions = {
+    // Base URL for the API
+    private readonly url: string    = env.API_BASE_URL;
+
+    // HTTP options with headers for sending JSON data
+    private readonly httpOptions    = {
         headers: new HttpHeaders().set('Content-Type', 'application/json'),
     };
 
+    // Constructor with HTTP client injection
     constructor(private http: HttpClient) { }
 
+    // Method to update user profile information
     updateProfile(body: UpdateProfile): Observable<{ access_token: string, message: string }> {
+
+        // Sends a PUT request to the API endpoint for updating the profile
         return this.http.put<{ access_token: string, message: string }>(this.url + '/profile', body, this.httpOptions);
     }
 
+    // Method to update user password
     updatePassword(body: UpdatePassword): Observable<{ status_code: number, message: string }> {
+
+        // Sends a PUT request to the API endpoint for updating the password
         return this.http.put<{ status_code: number, message: string }>(this.url + '/profile/update-password', body, this.httpOptions);
     }
 }

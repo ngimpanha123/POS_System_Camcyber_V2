@@ -1,18 +1,18 @@
 // ================================================================>> Core Libraries (Angular)
 import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { DOCUMENT, NgIf } from '@angular/common';
+import { ActivatedRoute, NavigationEnd, Router }    from '@angular/router';
+import { DOCUMENT, NgIf }                           from '@angular/common';
 
 // ================================================================>> Third-Party Libraries
 import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
 
 // ================================================================>> Custom Libraries (Application-specific)
-import { HelpersConfig, HelpersConfigService } from 'helpers/services/config';
-import { HelpersMediaWatcherService } from 'helpers/services/media-watcher';
-import { HelpersPlatformService } from 'helpers/services/platform';
-import { HELPERS_VERSION } from 'helpers/version';
-import { EmptyLayoutComponent } from './layouts/empty/empty.component';
-import { ClassyLayoutComponent } from './layouts/classy/classy.component';
+import { HelpersConfig, HelpersConfigService }      from 'helpers/services/config';
+import { HelpersMediaWatcherService }               from 'helpers/services/media-watcher';
+import { HelpersPlatformService }                   from 'helpers/services/platform';
+import { HELPERS_VERSION }                          from 'helpers/version';
+import { EmptyLayoutComponent }                     from './layouts/empty/empty.component';
+import { ClassyLayoutComponent }                    from './layouts/classy/classy.component';
 
 
 @Component({
@@ -23,25 +23,27 @@ import { ClassyLayoutComponent } from './layouts/classy/classy.component';
     standalone   : true,
     imports      : [NgIf, EmptyLayoutComponent, ClassyLayoutComponent],
 })
+
 export class LayoutComponent implements OnInit, OnDestroy
 {
-    config: HelpersConfig;
-    layout: string;
-    scheme: 'dark' | 'light';
-    theme: string;
+    config      : HelpersConfig;
+    layout      : string;
+    scheme      : 'dark' | 'light';
+    theme       : string;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
-        @Inject(DOCUMENT) private _document: any,
-        private _renderer2: Renderer2,
-        private _router: Router,
+
+        private _activatedRoute             : ActivatedRoute,
+        @Inject(DOCUMENT) private _document : any,
+        private _renderer2                  : Renderer2,
+        private _router                     : Router,
         private _helpersConfigService: HelpersConfigService,
-        private _helpersMediaWatcherService: HelpersMediaWatcherService,
-        private _helpersPlatformService: HelpersPlatformService,
+        private _helpersMediaWatcherService : HelpersMediaWatcherService,
+        private _helpersPlatformService     : HelpersPlatformService,
     )
     {
     }
@@ -57,9 +59,12 @@ export class LayoutComponent implements OnInit, OnDestroy
     {
         // Set the theme and scheme based on the configuration
         combineLatest([
+
             this._helpersConfigService.config$,
             this._helpersMediaWatcherService.onMediaQueryChange$(['(prefers-color-scheme: dark)', '(prefers-color-scheme: light)']),
+
         ]).pipe(
+
             takeUntil(this._unsubscribeAll),
             map(([config, mql]) =>
             {
@@ -77,11 +82,12 @@ export class LayoutComponent implements OnInit, OnDestroy
 
                 return options;
             }),
+
         ).subscribe((options) =>
         {
             // Store the options
             this.scheme = options.scheme;
-            this.theme = options.theme;
+            this.theme  = options.theme;
 
             // Update the scheme and theme
             this._updateScheme();
@@ -90,6 +96,7 @@ export class LayoutComponent implements OnInit, OnDestroy
 
         // Subscribe to config changes
         this._helpersConfigService.config$
+
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config: HelpersConfig) =>
             {
@@ -102,6 +109,7 @@ export class LayoutComponent implements OnInit, OnDestroy
 
         // Subscribe to NavigationEnd event
         this._router.events.pipe(
+
             filter(event => event instanceof NavigationEnd),
             takeUntil(this._unsubscribeAll),
         ).subscribe(() =>
@@ -137,10 +145,11 @@ export class LayoutComponent implements OnInit, OnDestroy
     private _updateLayout(): void
     {
         // Get the current activated route
-        let route = this._activatedRoute;
+        let route   = this._activatedRoute;
+
         while ( route.firstChild )
         {
-            route = route.firstChild;
+            route   = route.firstChild;
         }
 
         // 1. Set the layout from the config
@@ -174,6 +183,7 @@ export class LayoutComponent implements OnInit, OnDestroy
         //
         // Also, this will allow overriding the layout in any time so we
         // can have different layouts for different routes.
+        
         const paths = route.pathFromRoot;
         paths.forEach((path) =>
         {

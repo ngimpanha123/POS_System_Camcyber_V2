@@ -1,8 +1,14 @@
-import { NgIf } from '@angular/common';
+// ================================================================>> Core Library
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HelpersLoadingBarComponent } from 'helpers/components/loading-bar';
-import { Subject } from 'rxjs';
+import { RouterOutlet }                 from '@angular/router';
+import { NgIf }                         from '@angular/common';
+
+
+// ================================================================>> Third Party Library
+import { Subject }                      from 'rxjs';
+
+// ================================================================>> Custom Library
+import { HelpersLoadingBarComponent }   from 'helpers/components/loading-bar';
 
 @Component({
     selector     : 'empty-layout',

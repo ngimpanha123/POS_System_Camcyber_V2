@@ -1,13 +1,13 @@
 // ================================================================>> Core Library
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { inject }       from '@angular/core';
 
 // ================================================================>> Third Party Library
 import { catchError, Observable, throwError } from 'rxjs';
 
 // ================================================================>> Costom Library
-import { AuthService } from 'app/core/auth/auth.service';
-import { AuthUtils } from 'app/core/auth/auth.utils';
+import { AuthService }  from 'app/core/auth/auth.service';
+import { AuthUtils }    from 'app/core/auth/auth.utils';
 
 
 
@@ -17,7 +17,9 @@ import { AuthUtils } from 'app/core/auth/auth.utils';
  * @param req
  * @param next
  */
+
 export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
+
     const authService = inject(AuthService);
 
     // Clone the request object
@@ -31,7 +33,9 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
 
     // Response
     return next(newReq).pipe(
+        
         catchError((error) => {
+
             // Catch "401 Unauthorized" responses
             if (error instanceof HttpErrorResponse && error.status === 401) {
                 // Sign out

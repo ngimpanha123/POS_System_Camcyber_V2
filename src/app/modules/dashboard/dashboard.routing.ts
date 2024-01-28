@@ -1,12 +1,14 @@
 // ================================================================>> Core Library
-import { Routes } from '@angular/router';
+import { Routes }               from '@angular/router';
 
 // ================================================================>> Custom Library
-import { DashboardComponent } from './dashboard.component';
+import { DashboardComponent }   from './dashboard.component';
 
 export default [
+
     {
-        path: '',
-        component: DashboardComponent
+        path        : '',
+        component   : DashboardComponent
     },
+    
 ] as Routes;

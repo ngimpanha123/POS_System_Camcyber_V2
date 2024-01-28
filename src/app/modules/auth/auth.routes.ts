@@ -1,13 +1,15 @@
 // ================================================================ Core Libraries
-import { Routes } from '@angular/router';
+import { Routes }               from '@angular/router';
 
 // ================================================================ Custom Libraries (Application-specific)
-import { AuthLoginComponent } from 'app/modules/auth/auth.component';
+import { AuthLoginComponent }   from 'app/modules/auth/auth.component';
 
 
 export default [
+
     {
         path     : 'login',
         component: AuthLoginComponent,
     },
+    
 ] as Routes;

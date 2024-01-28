@@ -7,18 +7,20 @@ import { roleResolver } from 'helpers/resolvers/roles.resolver';
 
 
 export default [
+
     {
-        path: '',
-        resolve: {
+        path        : '',
+        resolve     : {
             roles: roleResolver(['Admin'])
         },
-        children: [
+
+        children    : [
             {
-                path: 'all',
-                component: ProductComponent
+                path        : 'all',
+                component   : ProductComponent
             },
             {
-                path: 'type',
+                path        : 'type',
                 loadChildren: () => import('./type/type.routing')
             }
         ]
