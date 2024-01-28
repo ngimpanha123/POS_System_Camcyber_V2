@@ -1,9 +1,15 @@
+// ================================================================ Core Library (Angular)
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment as env } from 'environments/environment';
+
+// ================================================================ Third-Party Library (RxJS)
 import { Observable, catchError, of, switchMap, tap } from 'rxjs';
+
+// ================================================================ Custom Library
 import { List } from './sale.types';
 import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
+import { environment as env } from 'environments/environment';
+
 
 @Injectable({
     providedIn: 'root',

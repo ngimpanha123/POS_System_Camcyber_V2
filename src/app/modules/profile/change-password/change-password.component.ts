@@ -1,15 +1,21 @@
+// ================================================================>> Core Library (Angular)
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { ProfileService } from '../profile.service';
-import { GlobalConstants } from 'helpers/shared/global-constants';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HttpErrorResponse } from '@angular/common/http';                                   
+
+// ================================================================>> Third Party Library
+import { MatFormFieldModule } from '@angular/material/form-field';                         
+import { MatInputModule } from '@angular/material/input';                                 
+import { MatButtonModule } from '@angular/material/button';                                 
+import { MatIconModule } from '@angular/material/icon';                                     
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+
+// ================================================================>> Custom Library (Application-specific)
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service'; 
+import { ProfileService } from '../profile.service';                
+import { GlobalConstants } from 'helpers/shared/global-constants';                          
+
 
 @Component({
     selector: 'profile-change-password',

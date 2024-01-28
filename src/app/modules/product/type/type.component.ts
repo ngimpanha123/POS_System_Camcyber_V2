@@ -1,18 +1,24 @@
+// ================================================================>> Core Library (Angular)
 import { Component, OnInit, inject } from '@angular/core';
 import { DecimalPipe, NgClass } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { HttpErrorResponse } from '@angular/common/http';
+
+// ================================================================>> Third Party Library (Angular Material)
+import { MatTableDataSource } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { ProductsTypeService } from './type.service';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
-import { environment as env } from 'environments/environment';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
+// ================================================================>> Custom Library (Application-specific)
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { GlobalConstants } from 'helpers/shared/global-constants';
+import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
 import { ProductsTypeDialogComponent } from './dialog/dialog.component';
 import { Data, List } from './type.types';
-import { HttpErrorResponse } from '@angular/common/http';
-import { GlobalConstants } from 'helpers/shared/global-constants';
+import { environment as env } from 'environments/environment';
+import { ProductsTypeService } from './type.service';
 
 @Component({
     selector: 'products-type',

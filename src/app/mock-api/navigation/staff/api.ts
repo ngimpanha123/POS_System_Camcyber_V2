@@ -1,7 +1,12 @@
+// ================================================================>> Core Library
 import { Injectable } from '@angular/core';
+
+// ================================================================>> Third Party Library
+import { cloneDeep } from 'lodash-es';
+
+// ================================================================>> Custom Library
 import { HelpersNavigationItem } from 'helpers/components/navigation';
 import { HelpersMockApiService } from 'helpers/mock-api';
-import { cloneDeep } from 'lodash-es';
 import { staffNavigation } from './data';
 
 @Injectable({ providedIn: 'root' })

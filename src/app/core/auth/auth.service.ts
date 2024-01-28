@@ -1,8 +1,14 @@
+
+// ================================================================>> Core Library
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+// ================================================================>> Third Party Library
+import { Observable, ReplaySubject, of, switchMap } from 'rxjs';
+
+// ================================================================>> Costom Library
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
-import { Observable, ReplaySubject, of, switchMap } from 'rxjs';
 import { Login } from './auth.types';
 import { environment as env } from 'environments/environment';
 

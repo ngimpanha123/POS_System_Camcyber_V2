@@ -1,17 +1,23 @@
+// ================================================================>> Core Library (Angular)
 import { NgIf } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+
+// ================================================================>> Third-Party Libraries
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router } from '@angular/router';
+
+// ================================================================>> Custom Libraries (Application-specific)
 import { AuthService } from 'app/core/auth/auth.service';
 import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
 import { GlobalConstants } from 'helpers/shared/global-constants';
+
 
 @Component({
     selector: 'auth',

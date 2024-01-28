@@ -1,21 +1,26 @@
+// ================================================================>> Core Library
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { PosService } from './pos.service';
-import { Data, Product } from './pos.types';
-import { HttpErrorResponse } from '@angular/common/http';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { GlobalConstants } from 'helpers/shared/global-constants';
-import { MatTabsModule } from '@angular/material/tabs';
-import { ItemComponent } from './item/item.component';
-import { User } from 'app/core/user/user.types';
-import { Subject, takeUntil } from 'rxjs';
-import { UserService } from 'app/core/user/user.service';
 import { FormsModule } from '@angular/forms';
+import { DecimalPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+
+// ================================================================>> Third party Library
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DecimalPipe } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { Subject, takeUntil } from 'rxjs';
+
+// ================================================================>> Custom Library
 import { SharedDetailsComponent } from 'helpers/shared/details/details.component';
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { GlobalConstants } from 'helpers/shared/global-constants';
+import { ItemComponent } from './item/item.component';
+import { User } from 'app/core/user/user.types';
+import { UserService } from 'app/core/user/user.service';
+import { PosService } from './pos.service';
+import { Data, Product } from './pos.types';
 
 interface CartItem {
     id: number;

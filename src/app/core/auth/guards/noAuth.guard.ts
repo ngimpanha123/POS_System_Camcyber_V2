@@ -1,7 +1,13 @@
+// ================================================================>> Core Library
 import { inject } from '@angular/core';
 import { CanActivateChildFn, CanActivateFn, Router } from '@angular/router';
-import { AuthService } from 'app/core/auth/auth.service';
+
+// ================================================================>> Third Party Library
 import { of, switchMap } from 'rxjs';
+
+// ================================================================>> Custom Library
+import { AuthService } from 'app/core/auth/auth.service';
+
 
 export const NoAuthGuard: CanActivateFn | CanActivateChildFn = (_route, _state) => {
     const router: Router = inject(Router);
@@ -13,6 +19,7 @@ export const NoAuthGuard: CanActivateFn | CanActivateChildFn = (_route, _state) 
             if (authenticated) {
                 return of(router.parseUrl(''));
             }
+
             // Allow the access
             return of(true);
         }),

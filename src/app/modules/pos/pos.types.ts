@@ -1,3 +1,4 @@
+// ================================================================>> Custom Library
 import { Data as DataSale } from "../sale/sale.types"
 
 export interface List {

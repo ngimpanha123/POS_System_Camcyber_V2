@@ -1,11 +1,16 @@
+// ================================================================>> Core Library (Angular)
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardService } from './dashboard.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Data, List } from './dashboard.types';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { GlobalConstants } from 'helpers/shared/global-constants';
+
+// ================================================================>> Third-Party Libraries
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+// ================================================================>> Custom Libraries (Application-specific)
+import { GlobalConstants } from 'helpers/shared/global-constants';
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { DashboardService } from './dashboard.service';
+import { Data, List } from './dashboard.types';
 
 @Component({
     selector: 'app-dashboard',

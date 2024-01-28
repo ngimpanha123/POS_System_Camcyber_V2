@@ -1,8 +1,14 @@
-import { Injectable } from '@angular/core';;
+// ================================================================>> Core Library (Angular)
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment as env } from 'environments/environment';
-import { UpdatePassword, UpdateProfile } from './profile.tyeps';
+
+// ================================================================>> Third party Library
 import { Observable } from 'rxjs';
+
+// ================================================================>> Custom Library (Application-specific)
+import { environment as env } from 'environments/environment';
+import { UpdatePassword, UpdateProfile } from './profile.tyeps'; 
+
 
 @Injectable({
     providedIn: 'root',

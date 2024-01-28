@@ -1,11 +1,16 @@
-import { Injectable, inject } from '@angular/core';
+// ================================================================>> Core Library (Angular)
+import * as core from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment as env } from 'environments/environment';
-import { Observable, catchError, of, switchMap, tap } from 'rxjs';
-import { Data, List } from './product.types';
-import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
 
-@Injectable({
+// ================================================================>> Third party Library 
+import { Observable, catchError, of, switchMap, tap } from 'rxjs';
+
+// ================================================================>> Custom Library (Application-specific)
+import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
+import { environment as env } from 'environments/environment';
+import { Data, List } from './product.types';
+
+@core.Injectable({
     providedIn: 'root',
 })
 export class ProductService {
@@ -16,7 +21,7 @@ export class ProductService {
         return this.httpClient.get<{ data: { id: number, name: string }[] }>(`${env.API_BASE_URL}/products/setup`);
     }
 
-    private loadingSpinner = inject(LoadingSpinnerService);
+    private loadingSpinner = core.inject(LoadingSpinnerService);
     list(params?: { page: number, limit: number, key?: string, type_id: number }): Observable<List> {
         return this.httpClient.get<List>(`${env.API_BASE_URL}/products`, { params: params }).pipe(
             switchMap((response: List) => {

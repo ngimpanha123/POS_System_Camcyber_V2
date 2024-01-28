@@ -1,20 +1,28 @@
+// ================================================================ Core Library
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
+
+// ================================================================ Core Library (Angular Material)
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Data, RequestUser } from '../user.types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { HttpErrorResponse } from '@angular/common/http';
+import { environment as env } from 'environments/environment';
+
+// ================================================================ Third Party Library
 import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { UiSwitchModule } from 'ngx-ui-switch';
+
+// ================================================================ Costom Library
 import { UserService } from '../user.service';
 import { GlobalConstants } from 'helpers/shared/global-constants';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSelectModule } from '@angular/material/select';
 import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
-import { environment as env } from 'environments/environment';
-import { UiSwitchModule } from 'ngx-ui-switch';
+import { Data, RequestUser } from '../user.types';
+
 
 @Component({
     selector: 'user-dialog',

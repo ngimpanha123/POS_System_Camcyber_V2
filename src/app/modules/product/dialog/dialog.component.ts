@@ -1,19 +1,25 @@
+// ================================================================>> Core Library (Angular)
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { Data } from '../product.types';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ProductService } from '../product.service';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { HttpErrorResponse } from '@angular/common/http';
+
+// ================================================================>> Third-Party Libraries (Angular Material)
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
 import { MatSelectModule } from '@angular/material/select';
-import { environment as env } from 'environments/environment';
+
+// ================================================================>> Custom Libraries (Application-specific)
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
 import { GlobalConstants } from 'helpers/shared/global-constants';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Data } from '../product.types';
+import { environment as env } from 'environments/environment';
+import { ProductService } from '../product.service';
+
 
 @Component({
     selector: 'product-dialog',

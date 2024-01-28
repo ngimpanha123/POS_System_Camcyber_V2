@@ -1,26 +1,35 @@
+// ================================================================>> Core Library 
 import { Component, OnInit, inject } from '@angular/core';
 import { DatePipe, DecimalPipe, NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+
+// ================================================================>> Third-Party Library
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { SaleService } from './sale.service';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
-import { RouterLink } from '@angular/router';
-import { environment as env } from 'environments/environment';
-import { Data, List } from './sale.types';
-import { HttpErrorResponse } from '@angular/common/http';
-import { GlobalConstants } from 'helpers/shared/global-constants';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import FileSaver from 'file-saver';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+
+// ================================================================>> Custom Library
 import { SharedDetailsComponent } from 'helpers/shared/details/details.component';
 import { DetailsService } from 'helpers/shared/details/details.service';
-import FileSaver from 'file-saver';
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+import { GlobalConstants } from 'helpers/shared/global-constants';
+import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
+import { environment as env } from 'environments/environment';
+import { Data, List } from './sale.types';
+import { SaleService } from './sale.service';
+
+
+
 
 @Component({
     selector: 'app-sale',

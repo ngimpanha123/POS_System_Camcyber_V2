@@ -1,9 +1,14 @@
+// ================================================================>> Core Library
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment as env } from 'environments/environment';
+
+// ================================================================>> Third party Library
 import { Observable, catchError, of, switchMap, tap } from 'rxjs';
-import { List, ResponseOrder } from './pos.types';
+
+// ================================================================>> Custom Library
 import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
+import { environment as env } from 'environments/environment';
+import { List, ResponseOrder } from './pos.types';
 
 @Injectable({
     providedIn: 'root',

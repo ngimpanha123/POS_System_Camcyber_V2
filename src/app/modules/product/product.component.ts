@@ -1,22 +1,28 @@
+// ================================================================>> Core Library (Angular)
 import { Component, OnInit, inject } from '@angular/core';
 import { DatePipe, DecimalPipe, NgClass } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http'; 
+
+// ================================================================>> Angular Material Modules
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
-import { ProductService } from './product.service';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
-import { environment as env } from 'environments/environment';
-import { Data, List } from './product.types';
-import { HttpErrorResponse } from '@angular/common/http';
-import { GlobalConstants } from 'helpers/shared/global-constants';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ProductDialogComponent } from './dialog/dialog.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
+// ================================================================>> Custom Library (Application-specific)
+import { GlobalConstants } from 'helpers/shared/global-constants';                      // Custom import for global constants
+import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service'; 
+import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
+import { environment as env } from 'environments/environment'; 
+import { Data, List } from './product.types'; 
+import { ProductService } from './product.service'; 
+import { ProductDialogComponent } from './dialog/dialog.component';                     // Assuming this is a custom dialog component related to products
+
 
 @Component({
     selector: 'app-product',
