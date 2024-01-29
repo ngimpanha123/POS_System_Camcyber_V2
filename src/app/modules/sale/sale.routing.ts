@@ -6,7 +6,7 @@ import { SaleComponent } from './sale.component';
 
 export default [
     {
-        path: '',
-        component: SaleComponent
+        path        : '',
+        component   : SaleComponent
     },
 ] as Routes;

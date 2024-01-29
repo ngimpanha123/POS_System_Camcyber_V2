@@ -1,183 +1,269 @@
 // ================================================================>> Core Library
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DecimalPipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule }              from '@angular/forms';
+import { DecimalPipe }              from '@angular/common';
+import { HttpErrorResponse }        from '@angular/common/http';
 
 // ================================================================>> Third party Library
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { Subject, takeUntil } from 'rxjs';
+import { MatButtonModule }              from '@angular/material/button';
+import { MatProgressSpinnerModule }     from '@angular/material/progress-spinner';
+import { MatTabsModule }                from '@angular/material/tabs';
+import { MatDialog, MatDialogConfig }   from '@angular/material/dialog';
+import { MatIconModule }                from '@angular/material/icon';
+
+import { Subject, takeUntil }           from 'rxjs';
 
 // ================================================================>> Custom Library
-import { SharedDetailsComponent } from 'helpers/shared/details/details.component';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { GlobalConstants } from 'helpers/shared/global-constants';
-import { ItemComponent } from './item/item.component';
-import { User } from 'app/core/user/user.types';
-import { UserService } from 'app/core/user/user.service';
-import { PosService } from './pos.service';
-import { Data, Product } from './pos.types';
+import { SharedDetailsComponent }   from 'helpers/shared/details/details.component';
+import { SnackbarService }          from 'helpers/services/snack-bar/snack-bar.service';
+import { GlobalConstants }          from 'helpers/shared/global-constants';
+import { ItemComponent }            from './item/item.component';
+import { User }                     from 'app/core/user/user.types';
+import { UserService }              from 'app/core/user/user.service';
+import { PosService }               from './pos.service';
+import { Data, Product }            from './pos.types';
 
 interface CartItem {
-    id: number;
-    name: string;
-    qty: number;
-    temp_qty: number;
-    unit_price: number;
+
+    id          : number;
+    name        : string;
+    qty         : number;
+    temp_qty    : number;
+    unit_price  : number;
 }
 
 @Component({
-    selector: 'app-pos',
-    standalone: true,
-    templateUrl: './pos.component.html',
-    styleUrls: ['./pos.component.scss'], // Note: Corrected from 'styleUrl' to 'styleUrls'
-    imports: [
-        DecimalPipe,
-        MatIconModule,
-        MatTabsModule,
-        ItemComponent,
-        FormsModule,
-        MatButtonModule,
-        MatProgressSpinnerModule
+
+    selector    : 'app-pos',
+    standalone  : true,
+    templateUrl : './pos.component.html',
+    styleUrls   : ['./pos.component.scss'], // Note: Corrected from 'styleUrl' to 'styleUrls'
+
+    imports     : [
+            DecimalPipe,
+            MatIconModule,
+            MatTabsModule,
+            ItemComponent,
+            FormsModule,
+            MatButtonModule,
+            MatProgressSpinnerModule
     ]
 })
+
 export class PosComponent implements OnInit, OnDestroy {
 
-    private posService: PosService;
-    private snackBarService: SnackbarService;
-    private _unsubscribeAll: Subject<User> = new Subject<User>();
-    data: Data[] = [];
-    isLoading: boolean = false;
-    carts: CartItem[] = [];
-    user: User;
-    isOrderBeingMade: boolean = false;
-    canSubmit: boolean = false;
-    totalPrice: number = 0;
+    private posService      : PosService;
+    private snackBarService : SnackbarService;
+    private _unsubscribeAll : Subject<User> = new Subject<User>();
+
+    data            : Data[]        = [];
+    isLoading       : boolean       = false;
+    carts           : CartItem[]    = [];
+    user            : User;
+    isOrderBeingMade: boolean       = false;
+    canSubmit       : boolean       = false;
+    totalPrice      : number        = 0;
 
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _userService: UserService
+
+        private _changeDetectorRef  : ChangeDetectorRef,
+        private _userService        : UserService
     ) {
+
+        // Subscribe to changes in the user's data
         this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
-            this.user = user;
-            // Mark for check
+
+            this.user               = user;
+            // Mark for check - triggers change detection manually
             this._changeDetectorRef.markForCheck();
         });
 
-        this.posService = inject(PosService);
-        this.snackBarService = inject(SnackbarService);
+        // Injecting the PosService and SnackbarService
+        this.posService             = inject(PosService);
+        this.snackBarService        = inject(SnackbarService);
     }
 
-    ngOnInit(): void {
-        this.isLoading = true;
+    ngOnInit    (): void {
+
+        // Set isLoading to true to indicate that data is being loaded
+        this.isLoading          = true;
+    
+        // Subscribe to the list method of the posService
         this.posService.list().subscribe({
-            next: response => {
+
+            // This block is executed when there is a successful response
+            next    : response  => {
+
+                // Set the data property to the received data
                 this.data = response.data;
+                // Set isLoading to false to indicate that data loading is complete
                 this.isLoading = false;
             },
-            error: (err: HttpErrorResponse) => {
+
+            // This block is executed when there is an error in the response
+            error   : (err: HttpErrorResponse)   => {
+
+                // Set isLoading to false to indicate that data loading is complete (even if there's an error)
                 this.isLoading = false;
+                // Show a snackbar with an error message. If there's no specific error message, show a generic one.
                 this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
             }
         });
     }
+    
+    ngOnDestroy (): void {
 
-    ngOnDestroy(): void {
+        // Emit a value through the _unsubscribeAll subject to trigger the unsubscription
         this._unsubscribeAll.next(null);
+        // Complete the subject to release resources
         this._unsubscribeAll.complete();
     }
+    
 
-    addToCart(incomingItem: Product, qty = 0): void {
-        const existingItem = this.carts.find(item => item.id === incomingItem.id);
+    addToCart   (incomingItem: Product, qty = 0): void {
 
-        if (existingItem) {
-            existingItem.qty += qty;
-            existingItem.temp_qty = existingItem.qty;
-        } else {
-            const newItem: CartItem = {
-                id: incomingItem.id,
-                name: incomingItem.name,
-                qty: qty,
-                temp_qty: qty,
-                unit_price: incomingItem.unit_price,
-            };
-            this.carts.push(newItem);
-            this.canSubmit = true;
-        }
+    // Find an existing item in the cart with the same id as the incoming item
+    const existingItem          = this.carts.find(item => item.id === incomingItem.id);
 
+    if  (existingItem) {
+
+        // If the item already exists, update its quantity and temp_qty
+        existingItem.qty        += qty;
+        existingItem.temp_qty   = existingItem.qty;
+
+    }   else {
+        
+        // If the item doesn't exist, create a new CartItem and add it to the cart
+        const newItem   : CartItem = {
+
+            id          : incomingItem.id,
+            name        : incomingItem.name,
+            qty         : qty,
+            temp_qty    : qty,
+            unit_price  : incomingItem.unit_price,
+        };
+
+        this.carts.push(newItem);
+        // Set canSubmit to true, indicating that there is at least one item in the cart
+        this.canSubmit  = true;
+    }
+
+        // Calculate and update the total price of the items in the cart
         this.getTotalPrice();
     }
 
     getTotalPrice(): void {
+
+        // Calculate the total price by iterating over items in the cart and summing the product of quantity and unit price
         this.totalPrice = this.carts.reduce((total, item) => total + (item.qty * item.unit_price), 0);
     }
 
-    remove(value: any, index: number = -1): void {
-        if (value === 0) {
-            this.canSubmit = true;
-        }
+    remove  (value: any, index: number = -1): void {
 
-        this.carts.splice(index, 1);
-        this.getTotalPrice();
+    // If the value is 0, set canSubmit to true
+    if      (value === 0) {
+
+        this.canSubmit = true;
     }
 
-    blur(event: any, index: number = -1): void {
-        const tempQty = this.carts[index].qty;
+    // Remove the item from the cart at the specified index
+    this.carts.splice(index, 1);
 
+    // Calculate and update the total price of the items in the cart
+    this.getTotalPrice();
+    }
+
+    blur    (event: any, index: number = -1): void {
+
+        // Store the current quantity before any changes
+        const tempQty      = this.carts[index].qty;
+
+        // Check if the entered value is 0, and update canSubmit accordingly
         if (event.target.value == 0) {
-            this.canSubmit = false;
+
+            this.canSubmit = false; 
         } else {
+
             this.canSubmit = true;
         }
 
+        // Parse the entered value as an integer (base 10)
         const enteredValue = parseInt(event.target.value, 10);
+
+        // Ensure the entered value does not exceed 1000
         if (enteredValue > 1000) {
             event.target.value = '1000';
         }
 
+        // Check if the entered value is falsy (e.g., an empty string)
         if (!event.target.value) {
-            this.carts[index].qty = tempQty;
-            this.carts[index].temp_qty = tempQty;
+
+            // Restore the quantity to its previous value if the entered value is falsy
+            this.carts[index].qty       = tempQty;
+            this.carts[index].temp_qty  = tempQty;
         } else {
-            this.carts[index].qty = enteredValue;
-            this.carts[index].temp_qty = enteredValue;
+
+            // Update the quantity with the entered value
+            this.carts[index].qty       = enteredValue;
+            this.carts[index].temp_qty  = enteredValue;
         }
 
+        // Calculate and update the total price of the items in the cart
         this.getTotalPrice();
     }
 
     private matDialog = inject(MatDialog);
-    checkOut(): void {
-        const carts: { [itemId: number]: number } = {};
-        this.carts.forEach((item: CartItem) => {
+    checkOut    (): void {
+
+        // Create a dictionary to represent the cart with item IDs and quantities
+        const carts: { [itemId: number]: number }   = {};
+
+        this.carts.forEach((item: CartItem)         => {
+
             carts[item.id] = item.qty;
         });
 
-        const body = {
+        // Prepare the request body with the serialized cart data
+        const body  = {
+
             cart: JSON.stringify(carts)
         };
 
-        this.isOrderBeingMade = true;
+        // Set the flag to indicate that an order is being made
+        this.isOrderBeingMade   = true;
+
+        // Make the API call to create an order using the POS service
         this.posService.create(body).subscribe({
-            next: response => {
+
+            next    : response  => {
+
+                // Reset the order in progress flag
                 this.isOrderBeingMade = false;
-                this.carts = [];
+
+                // Clear the cart after a successful order
+                this.carts      = [];
+
+                // Display a success message
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
-                const dialogConfig = new MatDialogConfig();
-                dialogConfig.data = response.data;
-                dialogConfig.width = "650px";
-                dialogConfig.minHeight = "200px";
-                dialogConfig.autoFocus = false;
+
+                // Open a dialog to display order details
+                const dialogConfig      = new MatDialogConfig();
+                dialogConfig.data       = response.data;
+                dialogConfig.width      = "650px";
+                dialogConfig.minHeight  = "200px";
+                dialogConfig.autoFocus  = false;
                 this.matDialog.open(SharedDetailsComponent, dialogConfig);
             },
-            error: (err: HttpErrorResponse) => {
-                this.isOrderBeingMade = false;
+
+            error   : (err: HttpErrorResponse) => {
+
+                // Reset the order in progress flag on error
+                this.isOrderBeingMade   = false;
+
+                // Display an error message
                 this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
             }
         });
     }
+
 }

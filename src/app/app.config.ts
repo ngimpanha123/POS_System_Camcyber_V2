@@ -1,27 +1,29 @@
 // ================================================================>> Core Library
-import { provideHttpClient } from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations'
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { APP_INITIALIZER, ApplicationConfig, inject }   from '@angular/core';
+import { provideAnimations }                            from '@angular/platform-browser/animations'
+import { PreloadAllModules, provideRouter, withHashLocation, withInMemoryScrolling, withPreloading } from '@angular/router';
+import { provideHttpClient }                            from '@angular/common/http';
+
 
 // ================================================================>> Third Party Library
-import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
-import { PreloadAllModules, provideRouter, withHashLocation, withInMemoryScrolling, withPreloading } from '@angular/router';
-import { provideTransloco, TranslocoService } from '@ngneat/transloco';
-import { firstValueFrom } from 'rxjs';
+import { LuxonDateAdapter }                             from '@angular/material-luxon-adapter';
+import { DateAdapter, MAT_DATE_FORMATS }                from '@angular/material/core';
+import { provideTransloco, TranslocoService }           from '@ngneat/transloco';
+import { firstValueFrom }                               from 'rxjs';
 
 // ================================================================>> Custom Library
-import { appRoutes } from 'app/app.routes';
-import { provideAuth } from 'app/core/auth/auth.provider';
-import { provideIcons } from 'app/core/icons/icons.provider';
-import { mockApiServices } from 'app/mock-api';
-import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
-import { provideHelpers } from 'helpers';
+import { appRoutes }                                    from 'app/app.routes';
+import { provideAuth }                                  from 'app/core/auth/auth.provider';
+import { provideIcons }                                 from 'app/core/icons/icons.provider';
+import { mockApiServices }                              from 'app/mock-api';
+import { TranslocoHttpLoader }                          from './core/transloco/transloco.http-loader';
+import { provideHelpers }                               from 'helpers';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideAnimations(),
         provideHttpClient(),
+        
         provideRouter(appRoutes,
             withPreloading(PreloadAllModules),
             withInMemoryScrolling({scrollPositionRestoration: 'enabled'}),
@@ -94,10 +96,10 @@ export const appConfig: ApplicationConfig = {
                 layout : 'classy',
                 scheme : 'dark',
                 screens: {
-                    sm: '600px',
-                    md: '960px',
-                    lg: '1280px',
-                    xl: '1440px',
+                    sm  : '600px',
+                    md  : '960px',
+                    lg  : '1280px',
+                    xl  : '1440px',
                 },
                 theme  : 'theme-default',
                 themes : [

@@ -1,17 +1,18 @@
 // ================================================================ Core Library
-import { inject } from '@angular/core';
+import { inject }       from '@angular/core';
 
 // ================================================================ Third Party Library
-import jwt_decode from 'jwt-decode';
+import jwt_decode       from 'jwt-decode';
 
 // ================================================================ Costom Library
-import { User } from '../user/user.types';
-import { UserService } from '../user/user.service';
+import { User }         from '../user/user.types';
+import { UserService }  from '../user/user.service';
 
 interface TotkenPayload {
-    exp: number
-    iat: number
-    user: User;
+
+    exp     : number
+    iat     : number
+    user    : User;
 }
 
 export class AuthUtils {
@@ -21,6 +22,7 @@ export class AuthUtils {
      *
      * @param token
      */
+
     static isTokenExpired(token: string): boolean {
         // Return if there is no token
         if (!token || token === '') {
@@ -48,8 +50,10 @@ export class AuthUtils {
     }
 
     private static _getTokenExpirationDate(token: string): number | null {
+
         const _userService = inject(UserService);
         // Get the decoded token
+        
         const decodedToken: TotkenPayload = jwt_decode(token);
 
         // Return if the decodedToken doesn't have an 'exp' field

@@ -10,49 +10,62 @@ import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
 import { environment as env } from 'environments/environment';
 import { Data, List } from './type.types';
 
-
+// Injectable decorator is used to define the service as a provider
 @Injectable({
     providedIn: 'root',
 })
+
 export class ProductsTypeService {
 
-    constructor(private httpClient: HttpClient) { }
+    // HttpClient is injected through the constructor
+    constructor(private httpClient  : HttpClient) { }
 
-    private loadingSpinner = inject(LoadingSpinnerService);
-    list(): Observable<List> {
+    // LoadingSpinnerService is injected using the inject function
+    private loadingSpinner          = inject(LoadingSpinnerService);
+
+     // Method to retrieve a list of product types from the backend
+     list(): Observable<List> {
+
         return this.httpClient.get<List>(`${env.API_BASE_URL}/products/type`, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         }).pipe(
-            switchMap((response: List) => {
-                this.loadingSpinner.open();
+
+            // Perform actions before and after making the HTTP request
+            switchMap   ((response: List) => {
+                this.loadingSpinner.open(); // Open a loading spinner before making the request
                 return of(response);
             }),
-            catchError((error) => {
-                this.loadingSpinner.close();
+
+            catchError  ((error) => {
+                this.loadingSpinner.close(); // Close the loading spinner in case of an error
                 return new Observable(observer => {
                     observer.error(error);
                     observer.complete();
                 });
             }),
-            tap((_response: List) => {
-                this.loadingSpinner.close();
+
+            tap         ((_response: List) => {
+                this.loadingSpinner.close(); // Close the loading spinner after a successful response
             })
         );
     }
 
-    create(body: { name: string }): Observable<{ data: Data, message: string }> {
+    // Method to create a new product type
+    create  (body: { name: string }): Observable<{ data: Data, message: string }> {
         return this.httpClient.post<{ data: Data, message: string }>(`${env.API_BASE_URL}/products/type`, body, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         });
     }
 
-    update(id: number, body: { name: string }): Observable<{ data: Data, message: string }> {
+    // Method to update an existing product type
+    update  (id: number, body: { name: string }): Observable<{ data: Data, message: string }> {
         return this.httpClient.put<{ data: Data, message: string }>(`${env.API_BASE_URL}/products/type/${id}`, body, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         });
     }
 
-    delete(id: number = 0): Observable<{ status_code: number, message: string }> {
+    // Method to delete an existing product type
+    delete  (id: number = 0): Observable<{ status_code: number, message: string }> {
         return this.httpClient.delete<{ status_code: number, message: string }>(`${env.API_BASE_URL}/products/type/${id}`, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         });

@@ -1,12 +1,13 @@
 // ================================================================>> Core Library
-import { NgFor, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { NgFor, NgTemplateOutlet }          from '@angular/common';
 
 // ================================================================>> Third Party Library
 import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { take } from 'rxjs';
+import { MatButtonModule }                  from '@angular/material/button';
+import { MatMenuModule }                    from '@angular/material/menu';
+
+import { take }                             from 'rxjs';
 
 // ================================================================>> Costom Library
 import { HelpersNavigationService, HelpersNavigationComponent } from 'helpers/components/navigation';
@@ -21,19 +22,21 @@ import { HelpersNavigationService, HelpersNavigationComponent } from 'helpers/co
     standalone     : true,
     imports        : [MatButtonModule, MatMenuModule, NgTemplateOutlet, NgFor],
 })
+
 export class LanguagesComponent implements OnInit, OnDestroy
 {
-    availableLangs: AvailableLangs;
-    activeLang: string;
-    flagCodes: any;
+    availableLangs  : AvailableLangs;
+    activeLang      : string;
+    flagCodes       : any;
 
     /**
      * Constructor
      */
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _helpersNavigationService: HelpersNavigationService,
-        private _translocoService: TranslocoService,
+
+        private _changeDetectorRef          : ChangeDetectorRef,
+        private _helpersNavigationService   : HelpersNavigationService,
+        private _translocoService           : TranslocoService,
     )
     {
     }
@@ -48,20 +51,21 @@ export class LanguagesComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         // Get the available languages from transloco
-        this.availableLangs = this._translocoService.getAvailableLangs();
+        this.availableLangs     = this._translocoService.getAvailableLangs();
 
         // Subscribe to language changes
         this._translocoService.langChanges$.subscribe((activeLang) =>
         {
             // Get the active lang
-            this.activeLang = activeLang;
+            this.activeLang     = activeLang;
 
             // Update the navigation
             this._updateNavigation(activeLang);
         });
 
         // Set the country iso codes for languages for flags
-        this.flagCodes = {
+        this.flagCodes  = {
+
             'en': 'us',
             'kh': 'kh',
         };
@@ -129,10 +133,10 @@ export class LanguagesComponent implements OnInit, OnDestroy
         }
 
         // Get the flat navigation data
-        const navigation = navComponent.navigation;
+        const navigation            = navComponent.navigation;
 
         // Get the Project dashboard item and update its title
-        const projectDashboardItem = this._helpersNavigationService.getItem('dashboards.project', navigation);
+        const projectDashboardItem  = this._helpersNavigationService.getItem('dashboards.project', navigation);
         if ( projectDashboardItem )
         {
             this._translocoService.selectTranslate('Project').pipe(take(1))
@@ -148,6 +152,7 @@ export class LanguagesComponent implements OnInit, OnDestroy
 
         // Get the Analytics dashboard item and update its title
         const analyticsDashboardItem = this._helpersNavigationService.getItem('dashboards.analytics', navigation);
+        
         if ( analyticsDashboardItem )
         {
             this._translocoService.selectTranslate('Analytics').pipe(take(1))

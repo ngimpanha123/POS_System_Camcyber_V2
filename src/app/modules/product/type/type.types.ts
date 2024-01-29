@@ -1,9 +1,11 @@
 export interface List {
-    data: Data[]
+    
+    data    : Data[]
 }
 
 export interface Data {
-    id: number,
-    name: string,
-    n_of_products: number,
+
+    id              : number,
+    name            : string,
+    n_of_products   : number,
 }

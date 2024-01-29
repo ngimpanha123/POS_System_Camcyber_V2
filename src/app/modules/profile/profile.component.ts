@@ -11,11 +11,11 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 
 
 @Component({
-    selector: 'app-profile',
-    standalone: true,
-    templateUrl: './profile.component.html',
-    styleUrl: './profile.component.scss',
-    imports: [
+    selector        : 'app-profile',
+    standalone      : true,
+    templateUrl     : './profile.component.html',
+    styleUrl        : './profile.component.scss',
+    imports : [
         CommonModule,
         MatTabsModule,
         OverviewComponent,
