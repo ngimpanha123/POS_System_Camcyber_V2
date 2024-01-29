@@ -5,8 +5,6 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 // =========================================================================>> Third Party Library
 
 // =========================================================================>> Custom Library
-// Model
-import { DatabaseModule } from './models/database.module';
 
 // Middleware (Authenication & Authorization)
 import { AuthInterceptor } from './middleware/interceptors/auth.interceptor';
@@ -15,6 +13,7 @@ import { AuthInterceptor } from './middleware/interceptors/auth.interceptor';
 import { ExceptionFilterErrors } from './shared/handle.errors';
 
 // Module
+import { DatabaseModule } from './models/database.module';
 import { AuthModule } from './resources/auth/auth.module';
 import { DashboardModule } from './resources/cp/dashboard/dashboard.module';
 import { ProfileModule } from './resources/cp/profile/profile.module';
