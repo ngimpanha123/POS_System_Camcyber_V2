@@ -19,6 +19,9 @@ import { UpdatePasswordDialogComponent, UserDialogComponent } from './dialog/dia
 import { HelpersConfirmationConfig, HelpersConfirmationService } from 'helpers/services/confirmation';
 import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
 import { GlobalConstants } from 'helpers/shared/global-constants';
+
+import { environment as env } from 'environments/environment';
+
 import { UserService } from './user.service';
 import { List, Data } from './user.types';
 import { environment as env } from 'environments/environment';
@@ -84,7 +87,7 @@ export class UserComponent implements core.OnInit {
             },
             error: (err: HttpErrorResponse) => {
                 this.isLoading = false;
-                this.snackBarService.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
+                this._snackBarService.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
             }
         }); 
     }
@@ -191,7 +194,7 @@ export class UserComponent implements core.OnInit {
 
                     next    : (response: { status_code: number, message: string }) => {
                         this.dataSource.data = this.dataSource.data.filter((v: Data) => v.id != user.id);
-                        this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
+                        this._snackBarService.openSnackBar(response.message, GlobalConstants.success);
                     },
                     error   : (err: HttpErrorResponse) => {
                         this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
