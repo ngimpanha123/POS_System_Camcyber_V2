@@ -1,9 +1,14 @@
+// ================================================================>> Core Library
 import { BadRequestException, Injectable } from '@nestjs/common';
+
+// ================================================================>> Third Party Library
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+import { DatabaseError, Op } from 'sequelize';
+
+// ================================================================>> Costom Library
 import User from '../../models/user/user.model';
 import UsersType from '../../models/user/type.model';
-import { DatabaseError, Op } from 'sequelize';
 import { jwtConstants } from 'src/shared/constants.jwt';
 import { UserDto } from './auth.dto';
 import { UsersActiveEnum } from 'src/enums/user/active.enum';

@@ -1,6 +1,11 @@
+// ================================================================>> Core Library
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
+
+// ================================================================>> Third Party Library
 import { Dialect } from 'sequelize';
 import * as dotenv from 'dotenv';
+
+
 dotenv.config();
 
 /** @MySQL and @Postgresql */

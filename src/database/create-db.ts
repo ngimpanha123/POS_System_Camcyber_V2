@@ -1,6 +1,9 @@
-import sequelizeConfig from '../config/sequelize.config';
+// ================================================================>> Third Party Library
 import { Sequelize } from 'sequelize';
 import "colors";
+
+// ================================================================>> Costom Library
+import sequelizeConfig from '../config/sequelize.config';
 
 const createDatabase = async () => {
     const { dialect, database } = sequelizeConfig;

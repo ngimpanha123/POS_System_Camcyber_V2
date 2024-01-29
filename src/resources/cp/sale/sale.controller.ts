@@ -1,4 +1,7 @@
+// ================================================================>> Core Library
 import { Controller, UseGuards, Get, Query, BadRequestException, Delete, Param, HttpCode, HttpStatus } from '@nestjs/common';
+
+// ================================================================>> Costom Library
 import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decorator';
 import { AuthGuard } from 'src/middleware/guards/auth.guard';
 import { SaleService } from './sale.service';

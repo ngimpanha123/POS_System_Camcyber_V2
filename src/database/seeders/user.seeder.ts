@@ -1,8 +1,12 @@
+// ================================================================>> Third Party Library
+import * as bcrypt from 'bcryptjs';
+
+// ================================================================>> Costom Library
 import { UsersActiveEnum } from "../../enums/user/active.enum";
 import { UsersTypeEnum } from "../../enums/user/type.enum";
-import * as bcrypt from 'bcryptjs';
 import UsersType from "../../models/user/type.model";
 import User from "../../models/user/user.model";
+
 
 export class UserSeeder {
 

@@ -1,11 +1,14 @@
+// ================================================================>> Third Party Library
 import { Sequelize } from 'sequelize-typescript';
+import * as readlineSync from 'readline-sync';
+import "colors";
+
+// ================================================================>> Costom Library
 import sequelizeConfig from '../../config/sequelize.config';
 import models from '../../models/models';
 import { ProductSeeder } from './product.seeder';
 import { OrderSeeder } from './order.seeder'
 import { UserSeeder } from './user.seeder';
-import * as readlineSync from 'readline-sync';
-import "colors";
 
 async function seeds() {
     const sequelize = new Sequelize(sequelizeConfig);

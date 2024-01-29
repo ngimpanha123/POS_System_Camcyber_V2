@@ -1,8 +1,12 @@
+// ================================================================>> Third Party Library
 import { Sequelize } from 'sequelize-typescript';
-import sequelizeConfig from '../../config/sequelize.config';
-import models from '../../models/models';
 import * as readlineSync from 'readline-sync';
 import "colors"
+
+// ================================================================>> Costom Library
+import sequelizeConfig from '../../config/sequelize.config';
+import models from '../../models/models';
+
 
 async function migrate() {
     const sequelize = new Sequelize(sequelizeConfig);

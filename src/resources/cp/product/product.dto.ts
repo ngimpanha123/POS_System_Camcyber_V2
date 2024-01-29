@@ -1,3 +1,4 @@
+// =========================================================================>> Custom Library
 import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator'
 
 export class CreateProductDto {
@@ -43,3 +44,9 @@ export class UpdateProductDto {
     @IsString()
     image: string
 }
+
+// @IsString(): Ensures that the property is a string.
+// @IsNotEmpty(): Requires that the property is not empty.
+// @IsNumber(): Requires that the property is a number.
+// @IsPositive(): Requires that the property is a positive number.
+// @IsOptional(): Marks the property as optional.
