@@ -1,11 +1,11 @@
-// ================================================================ Core Library
+// ================================================================>> Core Library
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
-// ================================================================ Third Party Library
-// Angular material 
+// ================================================================>> Third Party Library
+// Angular material >>
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

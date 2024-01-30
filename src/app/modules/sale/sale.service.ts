@@ -1,11 +1,11 @@
-// ================================================================ Core Library (Angular)
+// ================================================================>> Core Library (Angular)
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// ================================================================ Third-Party Library (RxJS)
+// ================================================================>> Third-Party Library (RxJS)
 import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 
-// ================================================================ Custom Library
+// ================================================================>> Custom Library
 import { List } from './sale.types';
 import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
 import { environment as env } from 'environments/environment';

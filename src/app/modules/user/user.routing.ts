@@ -1,9 +1,9 @@
-// ================================================================ Core Library
+// ================================================================>> Core Library
 import { Routes } from '@angular/router';
 
-// ================================================================ Third Party Library
+// ================================================================>> Third Party Library
 
-// ================================================================ Costom Library
+// ================================================================>> Costom Library
 import { roleResolver } from 'helpers/resolvers/roles.resolver';
 import { UserComponent } from './user.component';
 
