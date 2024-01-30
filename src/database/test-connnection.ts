@@ -1,9 +1,9 @@
 // ================================================================>> Third Party Library
-import { Sequelize } from "sequelize-typescript";
+import { Sequelize }    from "sequelize-typescript";
 import 'colors';
 
 // ================================================================>> Costom Library
-import sequelizeConfig from "../config/sequelize.config";
+import sequelizeConfig  from "../config/sequelize.config";
 
 const main = async () => {
     const sequelize = new Sequelize(sequelizeConfig);

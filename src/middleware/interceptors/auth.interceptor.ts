@@ -2,11 +2,11 @@
 import { CallHandler, ExecutionContext, NestInterceptor } from "@nestjs/common";
 
 // ================================================================>> Third Party Library
-import * as jwt from 'jsonwebtoken';
-import { Observable } from "rxjs";
+import * as jwt         from 'jsonwebtoken';
+import { Observable }   from "rxjs";
 
 // ================================================================>> Costom Library
-import User from "src/models/user/user.model";
+import User             from "src/models/user/user.model";
 
 export interface UserPayload {
     user: User,

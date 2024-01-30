@@ -1,17 +1,17 @@
 
 // ================================================================>> Core Library
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
+import { Reflector }            from "@nestjs/core";
 
 // ================================================================>> Third Party Library
-import * as jwt from 'jsonwebtoken';
+import * as jwt                 from 'jsonwebtoken';
 
 // ================================================================>> Costom Library
-import { jwtConstants } from "src/shared/constants.jwt";
-import { UserRoleDecorator } from "../decorators/rolse.decorator";
-import { UserPayload } from "../interceptors/auth.interceptor";
-import User from "../../models/user/user.model";
-import UsersType from "../../models/user/type.model";
+import { jwtConstants }         from "src/shared/constants.jwt";
+import { UserRoleDecorator }    from "../decorators/rolse.decorator";
+import { UserPayload }          from "../interceptors/auth.interceptor";
+import User                     from "../../models/user/user.model";
+import UsersType                from "../../models/user/type.model";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

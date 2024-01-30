@@ -1,10 +1,10 @@
 // ================================================================>> Core Library
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards }   from '@nestjs/common';
 
 // ================================================================>> Costom Library
-import { DashboardService } from './dashboard.service';
-import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decorator'; // Typo correction: 'rolse' -> 'roles'
-import { AuthGuard } from 'src/middleware/guards/auth.guard';
+import { DashboardService }             from './dashboard.service';
+import { Roles, UserRoleDecorator }     from 'src/middleware/decorators/rolse.decorator'; // Typo correction: 'rolse' -> 'roles'
+import { AuthGuard }                    from 'src/middleware/guards/auth.guard';
 
 // Applying decorators to the class
 @Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)

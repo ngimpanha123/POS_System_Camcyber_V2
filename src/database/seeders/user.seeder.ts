@@ -2,10 +2,10 @@
 import * as bcrypt from 'bcryptjs';
 
 // ================================================================>> Costom Library
-import { UsersActiveEnum } from "../../enums/user/active.enum";
-import { UsersTypeEnum } from "../../enums/user/type.enum";
-import UsersType from "../../models/user/type.model";
-import User from "../../models/user/user.model";
+import { UsersActiveEnum }  from "../../enums/user/active.enum";
+import { UsersTypeEnum }    from "../../enums/user/type.enum";
+import UsersType            from "../../models/user/type.model";
+import User                 from "../../models/user/user.model";
 
 
 export class UserSeeder {

@@ -2,10 +2,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 // ================================================================>> Third Party Library
-import { DatabaseError, Op } from 'sequelize';
+import { DatabaseError, Op }               from 'sequelize';
 
 // ================================================================>> Costom Library
-import Order from 'src/models/order/order.model';
+import Order                               from 'src/models/order/order.model';
 
 @Injectable()
 export class DashboardService {
