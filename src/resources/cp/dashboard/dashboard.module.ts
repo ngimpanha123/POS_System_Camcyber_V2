@@ -1,9 +1,9 @@
 // ================================================================>> Core Library
-import { Module } from '@nestjs/common';
+import { Module }               from '@nestjs/common';
 
 // ================================================================>> Costom Library
-import { DashboardService } from './dashboard.service';
-import { DashboardController } from './dashboard.controller';
+import { DashboardService }     from './dashboard.service';
+import { DashboardController }  from './dashboard.controller';
 
 // Defining a NestJS module for the Dashboard feature
 @Module({

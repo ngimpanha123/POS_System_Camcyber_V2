@@ -1,8 +1,13 @@
+// =========================================================================>> Core Library
 import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+
+// =========================================================================>> Third party Library
+import { Op, Sequelize } from 'sequelize';
+
+// =========================================================================>> Custom Library
 import Product from 'src/models/product/product.model';
 import ProductsType from 'src/models/product/type.model';
 import { CreateProductTypeDto, UpdateProductTypeDto } from './type.dto';
-import { Op, Sequelize } from 'sequelize';
 
 @Injectable()
 export class ProductsTypeService {

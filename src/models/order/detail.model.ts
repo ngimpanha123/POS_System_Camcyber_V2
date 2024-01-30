@@ -3,8 +3,8 @@
 import { Model, Column, Table, BelongsTo, ForeignKey, DataType } from 'sequelize-typescript';
 
 // ================================================================>> Costom Library
-import Order from './order.model';
-import Product from '../product/product.model';
+import Order        from './order.model';
+import Product      from '../product/product.model';
 
 @Table({ tableName: 'order_details', createdAt: 'created_at', updatedAt: 'updated_at' })
 class OrderDetails extends Model<OrderDetails> {

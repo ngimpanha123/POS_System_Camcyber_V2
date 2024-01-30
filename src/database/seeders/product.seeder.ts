@@ -1,6 +1,6 @@
 // ================================================================>> Costom Library
-import ProductsType from "../../models/product/type.model";
-import Product from "../../models/product/product.model";
+import ProductsType     from "../../models/product/type.model";
+import Product          from "../../models/product/product.model";
 
 export class ProductSeeder {
 

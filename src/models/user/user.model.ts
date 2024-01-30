@@ -2,8 +2,8 @@
 import { Model, Column, Table, BelongsTo, ForeignKey, DataType } from 'sequelize-typescript';
 
 // ================================================================>> Costom Library
-import UsersType from './type.model';
-import { UsersActiveEnum } from '../../enums/user/active.enum';
+import UsersType            from './type.model';
+import { UsersActiveEnum }  from '../../enums/user/active.enum';
 
 @Table({ tableName: 'user', createdAt: 'created_at', updatedAt: 'updated_at' })
 class User extends Model<User> {

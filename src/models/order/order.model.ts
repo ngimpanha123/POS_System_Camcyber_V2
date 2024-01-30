@@ -2,7 +2,7 @@
 import { Model, Column, Table, BelongsTo, ForeignKey, DataType, HasMany } from 'sequelize-typescript';
 
 // ================================================================>> Costom Library
-import User from '../user/user.model';
+import User         from '../user/user.model';
 import OrderDetails from './detail.model';
 
 @Table({ tableName: 'order', createdAt: 'created_at', updatedAt: 'updated_at' })

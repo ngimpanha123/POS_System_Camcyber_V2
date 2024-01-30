@@ -2,7 +2,7 @@
 import { Model, Column, Table, BelongsTo, ForeignKey, DataType } from 'sequelize-typescript';
 
 // ================================================================>> Costom Library
-import ProductsType from './type.model';
+import ProductsType     from './type.model';
 
 @Table({ tableName: 'product', createdAt: 'created_at', updatedAt: 'updated_at' })
 class Product extends Model<Product> {
