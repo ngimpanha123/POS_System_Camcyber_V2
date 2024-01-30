@@ -1,12 +1,12 @@
-// ================================================================ Core Library (Angular)
+// ================================================================>> Core Library (Angular)
 import { Routes } from '@angular/router';
 
-// ================================================================ Custom Library (Application-specific)
-import { SaleComponent } from './sale.component';
+// ================================================================>> Custom Library (Application-specific)
+import * as saleComponent from './sale.component';
 
 export default [
     {
         path        : '',
-        component   : SaleComponent
+        component   : saleComponent.SaleComponent
     },
 ] as Routes;

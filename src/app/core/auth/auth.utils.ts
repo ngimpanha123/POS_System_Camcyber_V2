@@ -1,10 +1,10 @@
-// ================================================================ Core Library
+// ================================================================>> Core Library
 import { inject }       from '@angular/core';
 
-// ================================================================ Third Party Library
+// ================================================================>> Third Party Library
 import jwt_decode       from 'jwt-decode';
 
-// ================================================================ Costom Library
+// ================================================================>> Costom Library
 import { User }         from '../user/user.types';
 import { UserService }  from '../user/user.service';
 
