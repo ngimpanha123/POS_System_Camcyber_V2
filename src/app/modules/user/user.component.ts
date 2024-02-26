@@ -4,7 +4,7 @@ import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 // ================================================================>> Third Party  Library
-// angular material 
+// angular material
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,7 +24,6 @@ import { environment as env } from 'environments/environment';
 
 import { UserService } from './user.service';
 import { List, Data } from './user.types';
-import { environment as env } from 'environments/environment';
 
 @core.Component({
     selector        : 'app-user',
@@ -46,12 +45,12 @@ import { environment as env } from 'environments/environment';
 export class UserComponent implements core.OnInit {
 
     private userService                 = core.inject(UserService);
-    private snackBarService             = core.inject(SnackbarService);
+    private _snackBarService             = core.inject(SnackbarService);
     private helpersConfirmationService  = core.inject(HelpersConfirmationService);
 
     displayedColumns    : string[]                   = ['profile', 'contact', 'last_activity', 'status', 'action'];      // Define displayed columns for the user data table
     dataSource          : MatTableDataSource<Data>   = new MatTableDataSource<Data>([]);                                 // MatTableDataSource to hold the user data for the table
-    fileUrl             : string    = env.FILE_BASE_URL;   // Base URL for user avatars    
+    fileUrl             : string    = env.FILE_BASE_URL;   // Base URL for user avatars
 
     // Pagination variables
     total               : number    = 10;
@@ -89,7 +88,7 @@ export class UserComponent implements core.OnInit {
                 this.isLoading = false;
                 this._snackBarService.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
             }
-        }); 
+        });
     }
 
     // Method to handle pagination changes
@@ -124,7 +123,7 @@ export class UserComponent implements core.OnInit {
 
     // Update an existing user
     update(row: Data): void {
-        
+
         const dialogConfig      = new MatDialogConfig();
         dialogConfig.data       = {
             title: 'កែប្រែអ្នកប្រើប្រាស់',
@@ -197,7 +196,7 @@ export class UserComponent implements core.OnInit {
                         this._snackBarService.openSnackBar(response.message, GlobalConstants.success);
                     },
                     error   : (err: HttpErrorResponse) => {
-                        this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
+                        this._snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
                     }
                 });
             }
@@ -220,10 +219,10 @@ export class UserComponent implements core.OnInit {
                 const data              = this.dataSource.data;
                 data[index].is_active   = status ? 1 : 0;
                 this.dataSource.data    = data;
-                this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
+                this._snackBarService.openSnackBar(response.message, GlobalConstants.success);
             },
             error   : (err) => {
-                this.snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
+                this._snackBarService.openSnackBar(err?.error?.message || GlobalConstants.genericError, GlobalConstants.error);
             }
         })
     }
