@@ -12,8 +12,8 @@ import { ProfileService } from './profile.service';
 import { UpdatePasswordDto, UpdateProfileDto } from './profile.dto';
 
 // File Handling:
-import { FileResponse } from 'src/shared/file.interface';
 import { FileService } from 'src/services/file.service';
+import User from 'src/models/user/user.model';
 
 @Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
 @UseGuards(AuthGuard)
@@ -27,7 +27,7 @@ export class ProfileController {
     @Put('')
     async update(
         @Body() body: UpdateProfileDto,
-        @UserDecorator() payload: UserPayload,
+        @UserDecorator() user: User
     ): Promise<{ access_token: string, message: string }> {
 
         if (body.avatar) {
@@ -37,8 +37,11 @@ export class ProfileController {
                 throw new BadRequestException('Invalid image');
             }
             try {
-                const avatar: FileResponse = await this.fileService.base64Image(body.avatar);
-                body.avatar = avatar.data.uri;
+                const result = await this.fileService.uploadBase64Image('profie', body.avatar);
+                if (result.error) {
+                    throw new BadRequestException(result.error);
+                }
+                body.avatar = result.file.uri;
             } catch (error) {
                 throw new BadRequestException(error.message);
             }
@@ -47,7 +50,7 @@ export class ProfileController {
             body.avatar = undefined;
         }
 
-        return await this.profileService.update(body, payload.user.id);
+        return await this.profileService.update(body, user.id);
     }
 
     @Put('update-password')

@@ -13,13 +13,13 @@ import { UserPayload } from "src/middleware/interceptors/auth.interceptor";
 
 // Shared
 import { UsersTypeExistsPipe } from "src/shared/pipes/user.pipe";
-import { FileResponse } from "src/shared/file.interface";
 import { FileService } from "src/services/file.service";
 
 // Inside Module
 import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
 import { UserService } from "./user.service";
 import { Create, List, Update } from "./user.types";
+import User from "src/models/user/user.model";
 
 @Roles(UserRoleDecorator.ADMIN)
 @UseGuards(AuthGuard)
@@ -32,7 +32,7 @@ export class UserController {
     ) { };
 
     @Get()
-    async listing(@UserDecorator() payload: UserPayload, @Query('key') key?: string, @Query('limit') limit?: number, @Query('page') page?: number): Promise<List> {
+    async listing(@UserDecorator() user: User, @Query('key') key?: string, @Query('limit') limit?: number, @Query('page') page?: number): Promise<List> {
         // Set default values if not provided
         if (!limit) {
             limit = 10;
@@ -40,12 +40,12 @@ export class UserController {
         if (!page) {
             page = 1;
         }
-        return await this.userService.listing(payload.user.id, key, limit, page);
+        return await this.userService.listing(user.id, key, limit, page);
     }
 
     @Post()
     @UsePipes(UsersTypeExistsPipe)
-    async create(@Body() body: CreateUserDto, @UserDecorator() payload: UserPayload): Promise<Create> {
+    async create(@Body() body: CreateUserDto, @UserDecorator() user: User): Promise<Create> {
         const passwordHash = await bcrypt.hash(body.password, 12);
         body.password = passwordHash;
         const base64PrefixJPEG = 'data:image/jpeg;base64,';
@@ -54,17 +54,21 @@ export class UserController {
             throw new BadRequestException('Invalid image');
         }
         try {
-            const avatar: FileResponse = await this.fileService.base64Image(body.avatar);
-            body.avatar = avatar.data.uri;
+            const result = await this.fileService.uploadBase64Image('user', body.avatar);
+            if (result.error) {
+                throw new BadRequestException(result.error);
+            }
+            // Replace base64 string by file URI from FileService
+            body.avatar = result.file.uri;
         } catch (error) {
             throw new BadRequestException(error.message);
         }
-        return this.userService.create(body, payload.user.id);
+        return this.userService.create(body, user.id);
     }
 
     @Put(':id')
     @UsePipes(UsersTypeExistsPipe)
-    async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateUserDto, @UserDecorator() payload: UserPayload): Promise<Update> {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateUserDto, @UserDecorator() user: User): Promise<Update> {
         if (body.avatar) {
             const base64PrefixJPEG = 'data:image/jpeg;base64,';
             const base64PrefixPNG = 'data:image/png;base64,';
@@ -72,8 +76,12 @@ export class UserController {
                 throw new BadRequestException('Invalid image');
             }
             try {
-                const avatar: FileResponse = await this.fileService.base64Image(body.avatar);
-                body.avatar = avatar.data.uri;
+                const result = await this.fileService.uploadBase64Image('user', body.avatar);
+                if (result.error) {
+                    throw new BadRequestException(result.error);
+                }
+                // Replace base64 string by file URI from FileService
+                body.avatar = result.file.uri;
             } catch (error) {
                 throw new BadRequestException(error.message);
             }
@@ -81,7 +89,7 @@ export class UserController {
         else {
             body.avatar = undefined;
         }
-        return await this.userService.update(id, body, payload.user.id);
+        return await this.userService.update(id, body, user.id);
     }
 
     @Delete(':id')

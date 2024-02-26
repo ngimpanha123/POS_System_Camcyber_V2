@@ -8,7 +8,6 @@ import { ProductService } from './product.service';
 import { ProductsTypeExistsPipe } from 'src/shared/pipes/product.pipe';
 import { CreateProductDto, UpdateProductDto } from './product.dto';
 import { FileService } from 'src/services/file.service';
-import { FileResponse } from 'src/shared/file.interface';
 import Product from 'src/models/product/product.model';
 import ProductsType from 'src/models/product/type.model';
 
@@ -59,8 +58,12 @@ export class ProductController {
             throw new BadRequestException('Invalid image');
         }
         try {
-            const image: FileResponse = await this.fileService.base64Image(body.image);
-            body.image = image.data.uri;
+            const result = await this.fileService.uploadBase64Image('product', body.image);
+            if (result.error) {
+                throw new BadRequestException(result.error);
+            }
+            // Replace base64 string by file URI from FileService
+            body.image = result.file.uri;
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -81,14 +84,12 @@ export class ProductController {
             if (!(typeof body.image === 'string' && (body.image.startsWith(base64PrefixJPEG) || body.image.startsWith(base64PrefixPNG)))) {
                 throw new BadRequestException('Invalid image');
             }
-            let image: FileResponse;
-            try {
-                image = await this.fileService.base64Image(body.image);
-            } catch (error) {
-                throw new BadRequestException(error.message);
+            const result = await this.fileService.uploadBase64Image('product', body.image);
+            if (result.error) {
+                throw new BadRequestException(result.error);
             }
             // Replace base64 string by file URI from FileService
-            body.image = image.data.uri;
+            body.image = result.file.uri;
         }
         else {
             body.image = undefined;

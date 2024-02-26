@@ -25,10 +25,15 @@ import { InvoiceModule } from './resources/cp/invoice/invoice.module';
 
 // Custom External Lib
 import { AppController } from './app.controller';
+import { MulterModule } from '@nestjs/platform-express';
+import * as multer from 'multer';
 
 // ======================================= >> Code Starts Here << ========================== //
 @Module({
     imports: [
+        MulterModule.register({
+            storage: multer.memoryStorage(),
+        }),
         DatabaseModule, 
         AuthModule,
         DashboardModule,
