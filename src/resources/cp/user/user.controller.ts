@@ -9,7 +9,6 @@ import * as bcrypt from 'bcryptjs';
 import { Roles, UserRoleDecorator } from "src/middleware/decorators/rolse.decorator";
 import { AuthGuard } from "src/middleware/guards/auth.guard";
 import { User as UserDecorator } from 'src/middleware/decorators/user.decorator';
-import { UserPayload } from "src/middleware/interceptors/auth.interceptor";
 
 // Shared
 import { UsersTypeExistsPipe } from "src/shared/pipes/user.pipe";

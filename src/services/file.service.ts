@@ -31,7 +31,7 @@ export class FileService {
                     Authorization: `Basic ${btoa(`${this.fileUsername}:${this.filePassword}`)}`
                 }
             });
-            result.file = response.data;
+            result.file = response.data.data;
         } catch (error) {
             result.error = error?.response?.data?.message || 'Something when wrong';
         }
