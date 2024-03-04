@@ -1,19 +1,12 @@
 // ================================================================>> Third Party Library
-import { Sequelize }        from 'sequelize-typescript';
-import * as readlineSync    from 'readline-sync';
-import "colors"
-
+import { Sequelize } from 'sequelize-typescript';
+import * as readlineSync from 'readline-sync';
+import "colors";
 // ================================================================>> Costom Library
-import sequelizeConfig      from '../../config/sequelize.config';
-import models               from '../../models/models';
-
+import sequelizeConfig from '../../config/sequelize.config';
 
 async function migrate() {
     const sequelize = new Sequelize(sequelizeConfig);
-
-    // Initialize models from each group
-    sequelize.addModels(models);
-
     try {
         // Check if there are any existing tables in the database
         const tableNames = await sequelize.getQueryInterface().showAllTables();
@@ -27,7 +20,6 @@ async function migrate() {
                 process.exit(0);
             }
         }
-
         // Drop all existing tables in the database and recreate them according to your model definitions.
         await sequelize.sync({ force: true });
         console.log('\nMigration completed successfully.'.green);

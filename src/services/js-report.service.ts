@@ -1,43 +1,40 @@
-// ================================================================>> Core Library
-import { BadRequestException, Injectable } from '@nestjs/common';
-
-// ================================================================>> Third Party Library
+import { Injectable, Logger } from '@nestjs/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-
-interface ReportTemplate {
-    template: {
-        name: string;
-    };
-    data: any;
-}
 
 @Injectable()
 export class JsReportService {
-    private jsUrl: string = process.env.JS_URL || '';
-    private username: string = process.env.JS_USERNAME || 'admin';
-    private password: string = process.env.JS_PASSWORD || 'CamCyberTeam';
+    private jsBaseUrl: string = process.env.JS_BASE_URL;
+    private jsUsername: string = process.env.JS_USERNAME;
+    private jsPassword: string = process.env.JS_PASSWORD;
+    private readonly logger = new Logger(JsReportService.name);
 
-    private getAxiosConfig(data: ReportTemplate): AxiosRequestConfig {
+    private getAxiosConfig<T>(templateName: string, data: T): AxiosRequestConfig {
         return {
-            url: `${this.jsUrl}/api/report`,
+            url: `${this.jsBaseUrl}/api/report`,
             method: 'post',
             responseType: 'arraybuffer',
             auth: {
-                username: this.username,
-                password: this.password,
+                username: this.jsUsername,
+                password: this.jsPassword,
             },
-            data: data,
+            data: {
+                template: {
+                    name: templateName
+                },
+                data: data
+            }
         };
     }
 
-    async generateReport(reportTemplate: ReportTemplate): Promise<string> {
+    async generateReport<T>(template: string, data: T): Promise<{ data?: string, error?: string }> {
+        const result: { data?: string, error?: string } = {};
         try {
-            const response: AxiosResponse<Buffer> = await axios(this.getAxiosConfig(reportTemplate));
-            const base64Report = response.data.toString('base64');
-            return base64Report;
+            const response: AxiosResponse<Buffer> = await axios(this.getAxiosConfig(template, data));
+            result.data = response.data.toString('base64');
         } catch (error) {
-            console.error('Failed to generate the report:', error.message);
-            throw new BadRequestException('Failed to generate the report');
+            this.logger.error(`Failed to generate the report: ${error.message}`);
+            result.error = 'Something when wrong. Failed to generate the report';
         }
+        return result;
     }
 }

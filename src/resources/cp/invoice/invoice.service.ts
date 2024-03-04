@@ -55,27 +55,20 @@ export class InvoiceService {
             data: orders,
         };
 
-        // Creating the report template
-        const reportTemplate = {
-            template: {
-                name: '/invoice-pos/invoice-main',
-            },
-            data: data,
-        };
+        // Get the report template
+        const template = process.env.JS_TEMPLATE;
 
         try {
             // Generating the report using the JsReportService
-            const base64Report = await this.jsReportService.generateReport(reportTemplate);
-            
+            const result = await this.jsReportService.generateReport(template, data);
+            if (result.error) {
+                throw new BadRequestException(result.error);
+            }
             // Returning the generated report
-            return {
-                file_base64: base64Report,
-                error: null,
-            };
+            return result;
         } catch (error) {
             // Log the error or handle it in a more appropriate way
-            console.error('Failed to generate the report:', error);
-            throw new BadRequestException('Failed to generate the report');
+            throw new BadRequestException(error?.message || 'Failed to generate the report');
         }
     }
 }

@@ -5,16 +5,12 @@ import "colors";
 
 // ================================================================>> Costom Library
 import sequelizeConfig from '../../config/sequelize.config';
-import models from '../../models/models';
 import { ProductSeeder } from './product.seeder';
 import { OrderSeeder } from './order.seeder'
 import { UserSeeder } from './user.seeder';
 
 async function seeds() {
     const sequelize = new Sequelize(sequelizeConfig);
-
-    // Initialize models from each group
-    sequelize.addModels(models);
 
     try {
         // Check if there are any existing tables in the database

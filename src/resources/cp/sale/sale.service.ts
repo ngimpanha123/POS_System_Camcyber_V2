@@ -1,5 +1,5 @@
 // ================================================================>> Core Library
-import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 // ================================================================>> Third party Library
 import { Op } from 'sequelize';
@@ -64,7 +64,7 @@ export class SaleService {
         const totalPages = Math.ceil(totalCount / limit);
 
         const dataFormat: List = {
-            data: data,
+            data,
             pagination: {
                 current_page: page,
                 per_page: limit,
@@ -76,7 +76,7 @@ export class SaleService {
         return dataFormat;
     }
 
-    async delete(id: number): Promise<{ status_code: number, message: string }> {
+    async delete(id: number): Promise<{ message: string }> {
         try {
             const rowsAffected = await Order.destroy({
                 where: {
@@ -88,10 +88,7 @@ export class SaleService {
                 throw new NotFoundException('Sale record not found.');
             }
 
-            return {
-                status_code: HttpStatus.OK,
-                message: 'This product has been deleted successfully.'
-            };
+            return { message: 'This product has been deleted successfully.' };
         } catch (error) {
             throw new BadRequestException(error.message ?? 'Something went wrong!. Please try again later.', 'Error Delete');
         }

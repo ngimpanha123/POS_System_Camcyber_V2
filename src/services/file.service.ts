@@ -33,7 +33,7 @@ export class FileService {
             });
             result.file = response.data.data;
         } catch (error) {
-            result.error = error?.response?.data?.message || 'Something when wrong';
+            result.error = error?.response?.data?.message || 'Something when wrong. Failed call to saving the file';
         }
         return result
     }

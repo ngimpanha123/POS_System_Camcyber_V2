@@ -1,5 +1,5 @@
 // ================================================================>> Core Library
-import { BadRequestException, ConflictException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 
 // ================================================================>> Third Party Library
 import { Op } from "sequelize";
@@ -8,10 +8,13 @@ import { Op } from "sequelize";
 import UsersType from "src/models/user/type.model";
 import User from "src/models/user/user.model";
 import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
-import { Create, List, Update } from "./user.types";
+import { Create, List, Update } from "./user.interface";
+import { FileService } from "src/services/file.service";
 
 @Injectable()
 export class UserService {
+
+    constructor(private readonly fileService: FileService) { };
 
     async listing(userId: number, key?: string, limit: number = 10, page: number = 1): Promise<List> {
         const offset = (page - 1) * limit;
@@ -75,6 +78,13 @@ export class UserService {
         if (user) {
             throw new BadRequestException('Email or phone already exists!.')
         }
+
+        const result = await this.fileService.uploadBase64Image('user', body.avatar);
+        if (result.error) {
+            throw new BadRequestException(result.error);
+        }
+        // Replace base64 string by file URI from FileService
+        body.avatar = result.file.uri;
 
         const crateUser = await User.create({
             type_id: body.type_id,
@@ -146,6 +156,17 @@ export class UserService {
         if (checkExistEmail) {
             throw new ConflictException('Email is already in use');
         }
+
+        if (body.avatar) {
+            const result = await this.fileService.uploadBase64Image('user', body.avatar);
+            if (result.error) {
+                throw new BadRequestException(result.error);
+            }
+            // Replace base64 string by file URI from FileService
+            body.avatar = result.file.uri;
+        } else {
+            body.avatar = undefined;
+        }
         //=============================================
         try {
             await User.update({
@@ -186,7 +207,7 @@ export class UserService {
         return dataFormat;
     }
 
-    async delete(userId: number): Promise<{ status_code: number, message: string }> {
+    async delete(userId: number): Promise<{ message: string }> {
         try {
             const rowsAffected = await User.destroy({
                 where: {
@@ -198,16 +219,13 @@ export class UserService {
                 throw new NotFoundException('This user not found.');
             }
 
-            return {
-                status_code: HttpStatus.OK,
-                message: 'User has been deleted successfully.'
-            };
+            return { message: 'User has been deleted successfully.' };
         } catch (error) {
             throw new BadRequestException(error.message ?? 'Something went wrong!. Please try again later.', 'Error Delete');
         }
     }
 
-    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ status_code: number, message: string }> {
+    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -229,13 +247,10 @@ export class UserService {
         }
 
         //=============================================
-        return {
-            status_code: HttpStatus.OK,
-            message: 'Password has been updated successfully.'
-        };
+        return { message: 'Password has been updated successfully.' };
     }
 
-    async updateStatus(userId: number, body: UpdateStatusDto): Promise<{ status_code: number, message: string }> {
+    async updateStatus(userId: number, body: UpdateStatusDto): Promise<{ message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -257,9 +272,6 @@ export class UserService {
         }
 
         //=============================================
-        return {
-            status_code: HttpStatus.OK,
-            message: 'Status has been updated successfully.'
-        };
+        return { message: 'Status has been updated successfully.' };
     }
 }

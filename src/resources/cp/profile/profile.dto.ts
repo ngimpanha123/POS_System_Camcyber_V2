@@ -1,5 +1,6 @@
 // =========================================================================>> Custom Library
 import { IsEmail, IsNotEmpty, IsString, IsOptional , Matches, MinLength } from 'class-validator'
+import { IsBase64Image } from 'src/decorators/base64-image.decorator'
 
 export class UpdateProfileDto {
     @IsString()
@@ -16,6 +17,7 @@ export class UpdateProfileDto {
 
     @IsOptional()
     @IsString()
+    @IsBase64Image({ message: 'Invalid image format. Image must be base64 encoded JPEG or PNG.' })
     avatar?: string
 }
 

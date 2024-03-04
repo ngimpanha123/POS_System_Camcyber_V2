@@ -33,7 +33,7 @@ export class TelegramService {
         }
     }
 
-    private handleSendMessageError(error: any) {
+    private handleSendMessageError(error: Error | any) {
         this.logger.error(`Error sending message to Telegram: ${error.message}`);
     }
 }

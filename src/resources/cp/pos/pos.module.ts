@@ -11,7 +11,12 @@ import { PosService } from './pos.service';
 
 // ======================================= >> Code Starts Here << ========================== //
 @Module({
-    controllers: [PosController], // Controller Declaration
-    providers: [PosService, TelegramService] // Service Declaration
+    controllers: [
+        PosController
+    ],
+    providers: [
+        PosService,
+        TelegramService
+    ]
 })
-export class PosModule {}
+export class PosModule { }

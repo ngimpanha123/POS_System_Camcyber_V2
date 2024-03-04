@@ -1,5 +1,6 @@
 // ================================================================>> Costom Library
 import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Matches, MinLength } from 'class-validator'
+import { IsBase64Image } from 'src/decorators/base64-image.decorator'
 import { UsersActiveEnum } from 'src/enums/user/active.enum'
 
 export class CreateUserDto {
@@ -25,6 +26,7 @@ export class CreateUserDto {
 
     @IsString()
     @IsNotEmpty()
+    @IsBase64Image({ message: 'Invalid image format. Image must be base64 encoded JPEG or PNG.' })
     avatar: string
 }
 
@@ -47,6 +49,7 @@ export class UpdateUserDto {
 
     @IsOptional()
     @IsString()
+    @IsBase64Image({ message: 'Invalid image format. Image must be base64 encoded JPEG or PNG.' })
     avatar: string
 }
 

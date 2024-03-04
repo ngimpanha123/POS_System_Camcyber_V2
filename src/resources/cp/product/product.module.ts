@@ -1,5 +1,5 @@
 // ================================================================>> Core Library
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 // ================================================================>> Costom Library
 import { ProductsTypeModule } from './type/type.module';
@@ -8,10 +8,16 @@ import { ProductsTypeModule } from './type/type.module';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { FileService } from 'src/services/file.service';
+import { AdminMiddleware } from 'src/middlewares/admin.middleware';
+import { ProductsTypeController } from './type/type.controller';
 
 @Module({
     imports: [ProductsTypeModule],
     controllers: [ProductController],
     providers: [ProductService, FileService]
 })
-export class ProductModule { }
+export class ProductModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(AdminMiddleware).forRoutes(ProductController, ProductsTypeController);
+    }
+}

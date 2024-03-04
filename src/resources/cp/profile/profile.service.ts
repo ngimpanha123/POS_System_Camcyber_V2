@@ -1,5 +1,5 @@
 // ================================================================>> Core Library
-import { BadRequestException, ConflictException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 
 // ================================================================>> Third Party Library
 import { DatabaseError, Op } from 'sequelize';
@@ -11,11 +11,14 @@ import { UpdatePasswordDto, UpdateProfileDto } from './profile.dto';
 import User from 'src/models/user/user.model';
 import { jwtConstants } from 'src/shared/constants.jwt';
 import UsersType from 'src/models/user/type.model';
+import { FileService } from 'src/services/file.service';
 
 @Injectable()
 export class ProfileService {
 
-    async update(body: UpdateProfileDto, userId: number): Promise<{ access_token: string, message: string }> {
+    constructor(private readonly fileService: FileService) { };
+
+    async update(body: UpdateProfileDto, userId: number): Promise<{ data: { access_token: string }, message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -59,6 +62,16 @@ export class ProfileService {
             throw new ConflictException('Email is already in use');
         }
 
+        if (body.avatar) {
+            const result = await this.fileService.uploadBase64Image('profie', body.avatar);
+            if (result.error) {
+                throw new BadRequestException(result.error);
+            }
+            body.avatar = result.file.uri;
+        } else {
+            body.avatar = undefined;
+        }
+
         //=============================================
         try {
             await User.update(body, {
@@ -91,12 +104,14 @@ export class ProfileService {
 
         const token: string = this.generateToken(updateUser.id, updateUser.name, updateUser.email, updateUser.avatar, updateUser.phone, updateUser.type.name);
         return {
-            access_token: token,
+            data: {
+                access_token: token,
+            },
             message: 'Your profile has been updated successfully.'
         }
     }
 
-    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ status_code: number, message: string }> {
+    async updatePassword(userId: number, body: UpdatePasswordDto): Promise<{ message: string }> {
         //=============================================
         let currentUser: User;
         try {
@@ -132,10 +147,7 @@ export class ProfileService {
         }
 
         //=============================================
-        return {
-            status_code: HttpStatus.OK,
-            message: 'Password has been updated successfully.'
-        };
+        return { message: 'Password has been updated successfully.' };
     }
 
     private generateToken(id: number, name: string, email: string, avatar: string, phone: string, role: string): string {

@@ -6,4 +6,8 @@ export enum UserRoleDecorator {
     STAFF = 'Staff'
 }
 
-export const Roles = (...roles: UserRoleDecorator[]) => SetMetadata('roles', roles)
+/**
+ * @author Yim Klok <yimklok.kh@gmail.com>
+ * @params Array<role>
+ */
+export const RolesDecorator = (...roles: UserRoleDecorator[]) => SetMetadata('roles', roles)

@@ -1,5 +1,5 @@
 // ================================================================>> Core Library
-import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 // ================================================================>> Third Party Library
 import { Op } from 'sequelize';
@@ -8,9 +8,12 @@ import { Op } from 'sequelize';
 import Product from 'src/models/product/product.model';
 import ProductsType from 'src/models/product/type.model';
 import { CreateProductDto, UpdateProductDto } from './product.dto';
+import { FileService } from 'src/services/file.service';
 
 @Injectable()
 export class ProductService {
+
+    constructor(private readonly fileService: FileService) { };
 
     // Method to retrieve the setup data for product types
     async setup(): Promise<{ data: ProductsType[] }> {
@@ -24,7 +27,7 @@ export class ProductService {
     async listing(type_id?: number, key?: string, limit: number = 10, page: number = 1) {
         // Calculate offset for pagination
         const offset = (page - 1) * limit;
-        
+
         // Define the WHERE condition based on provided parameters
         const where = {
             [Op.and]: [
@@ -60,7 +63,7 @@ export class ProductService {
         const totalPages = Math.ceil(totalCount / limit);
 
         return {
-            data: data,
+            data,
             pagination: {
                 current_page: page,
                 per_page: limit,
@@ -87,6 +90,13 @@ export class ProductService {
         if (checkExistName) {
             throw new BadRequestException('This name already exists in the system.');
         }
+
+        const result = await this.fileService.uploadBase64Image('product', body.image);
+        if (result.error) {
+            throw new BadRequestException(result.error);
+        }
+        // Replace base64 string by file URI from FileService
+        body.image = result.file.uri;
 
         // Create the new product
         const product = await Product.create(body);
@@ -127,6 +137,17 @@ export class ProductService {
             throw new BadRequestException('This name already exists in the system.');
         }
 
+        if (body.image) {
+            const result = await this.fileService.uploadBase64Image('product', body.image);
+            if (result.error) {
+                throw new BadRequestException(result.error);
+            }
+            // Replace base64 string by file URI from FileService
+            body.image = result.file.uri;
+        } else {
+            body.image = undefined;
+        }
+
         // Update the product
         await Product.update(body, {
             where: { id: id }
@@ -140,7 +161,7 @@ export class ProductService {
     }
 
     // Method to delete a product by ID
-    async delete(id: number): Promise<{ status_code: number, message: string }> {
+    async delete(id: number): Promise<{ message: string }> {
         try {
             // Attempt to delete the product
             const rowsAffected = await Product.destroy({
@@ -154,10 +175,7 @@ export class ProductService {
                 throw new NotFoundException('Product not found.');
             }
 
-            return {
-                status_code: HttpStatus.OK,
-                message: 'This product has been deleted successfully.'
-            };
+            return { message: 'This product has been deleted successfully.' };
         } catch (error) {
             // Handle any errors during the delete operation
             throw new BadRequestException(error.message ?? 'Something went wrong! Please try again later.', 'Error Delete');

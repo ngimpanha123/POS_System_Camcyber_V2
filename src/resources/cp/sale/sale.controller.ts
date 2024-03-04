@@ -2,12 +2,12 @@
 import { Controller, UseGuards, Get, Query, BadRequestException, Delete, Param, HttpCode, HttpStatus } from '@nestjs/common';
 
 // ================================================================>> Costom Library
-import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decorator';
-import { AuthGuard } from 'src/middleware/guards/auth.guard';
+import { RolesDecorator, UserRoleDecorator } from 'src/decorators/roles.decorator';
+import { RoleGuard } from 'src/guards/role.guard';
 import { SaleService } from './sale.service';
-import { User } from 'src/middleware/decorators/user.decorator';
-import { UserPayload } from 'src/middleware/interceptors/auth.interceptor';
+import UserDecorator from 'src/decorators/user.decorator';
 import { List } from './sale.types';
+import User from 'src/models/user/user.model';
 
 interface GetSaleParams {
     receipt_number?: number;
@@ -18,16 +18,16 @@ interface GetSaleParams {
     cashier_id?: number;
 }
 
-@Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
-@UseGuards(AuthGuard)
+@RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
+@UseGuards(RoleGuard)
 @Controller('api/sales')
 export class SaleController {
 
-    constructor(private saleService: SaleService) { };
+    constructor(private readonly saleService: SaleService) { };
 
     @Get()
     async listing(
-        @User() payload: UserPayload,
+        @UserDecorator() user: User,
         @Query('receipt_number') receipt_number?: number,
         @Query('from') from?: string,
         @Query('to') to?: string,
@@ -45,15 +45,15 @@ export class SaleController {
             throw new BadRequestException('Invalid to date');
         }
 
-        const created_at = from && to ? {
+        const date = from && to ? {
             ...{ gte: fromDate },
             ...{ lte: toDate }
         } : undefined;
 
         const filters: GetSaleParams = {
             ...(receipt_number && { receipt_number }),
-            ...(created_at && { created_at }),
-            ...(payload.role === UserRoleDecorator.STAFF && { cashier_id: payload.user.id }), // If Not admin, get only record that this user made orders
+            ...(date && { date }),
+            ...(user.type?.name === UserRoleDecorator.STAFF && { cashier_id: user.id }), // If Not admin, get only record that this user made orders
         };
 
         if (isNaN(limit)) {
@@ -68,7 +68,7 @@ export class SaleController {
 
     @Delete(':id')
     @HttpCode(HttpStatus.OK)
-    async delete(@Param('id') id: number): Promise<{ status_code: number, message: string }> {
+    async delete(@Param('id') id: number): Promise<{message: string }> {
         return await this.saleService.delete(id);
     }
 }

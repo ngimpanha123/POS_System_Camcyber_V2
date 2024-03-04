@@ -1,5 +1,5 @@
 // =========================================================================>> Core Library
-import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 // =========================================================================>> Third party Library
 import { Op, Sequelize } from 'sequelize';
@@ -85,7 +85,7 @@ export class ProductsTypeService {
         return dataFormat;
     }
 
-    async delete(id: number): Promise<{ status_code: number; message: string }> {
+    async delete(id: number): Promise<{ message: string }> {
         try {
             // Check if there are associated products
             const productsCount = await Product.count({
@@ -109,10 +109,7 @@ export class ProductsTypeService {
                 throw new NotFoundException('Products type not found.');
             }
 
-            return {
-                status_code: HttpStatus.OK,
-                message: 'Data has been deleted successfully.',
-            };
+            return { message: 'Data has been deleted successfully.' };
         } catch (error) {
             throw new BadRequestException(
                 error.message ?? 'Something went wrong!. Please try again later.',

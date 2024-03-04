@@ -4,20 +4,20 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 // =========================================================================>> Custom Library
 import Product from 'src/models/product/product.model';
 import Order from 'src/models/order/order.model';
-import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decorator'; // Typo correction: 'rolse' -> 'roles'
-import { AuthGuard } from 'src/middleware/guards/auth.guard';
-import { User } from 'src/middleware/decorators/user.decorator';
-import { UserPayload } from 'src/middleware/interceptors/auth.interceptor';
+import UserDecorator from 'src/decorators/user.decorator';
+import { RolesDecorator, UserRoleDecorator } from 'src/decorators/roles.decorator'; // Typo correction: 'rolse' -> 'roles'
 import { PosService } from './pos.service';
 import { CreateOrderDto } from './pos.dto';
+import User from 'src/models/user/user.model';
+import { RoleGuard } from 'src/guards/role.guard';
 
 // ======================================= >> Code Starts Here << ========================== //
 
-// Applying decorators to the class
-@UseGuards(AuthGuard) // ===> Check Authentication (Login or Not)
-@Roles(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF) // ===> Check Role or Authorization
+@UseGuards(RoleGuard) // Apply the RolesGuard at the controller level to protect all routes of PosController
+@RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF) // ===> Allew Admin and Staff can access all routes of PosController
 @Controller('api/pos')
 export class PosController {
+
     constructor(private readonly posService: PosService) { };
 
     // Handling HTTP GET requests for retrieving products
@@ -28,7 +28,7 @@ export class PosController {
 
     // Handling HTTP POST requests for making an order
     @Post('order')
-    async makeOrder(@Body() body: CreateOrderDto, @User() payload: UserPayload): Promise<{ data: Order, message: string }> {
-        return await this.posService.makeOrder(payload.user.id, body);
+    async makeOrder(@Body() body: CreateOrderDto, @UserDecorator() user: User): Promise<{ data: Order, message: string }> {
+        return await this.posService.makeOrder(user.id, body);
     }
 }

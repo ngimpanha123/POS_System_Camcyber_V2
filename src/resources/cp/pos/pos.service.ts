@@ -39,9 +39,7 @@ export class PosService {
             products: type.products || []
         }));
 
-        return {
-            data: dataFormat
-        };
+        return { data: dataFormat };
     }
 
     // Method for creating an order
@@ -54,7 +52,7 @@ export class PosService {
             // Open DB Connection
             transaction = await sequelize.transaction();
 
-            // Create an order
+            // Create an order using method create()
             const order = await Order.create({
                 cashier_id: cashierId,
                 total_price: 0,
@@ -130,10 +128,7 @@ export class PosService {
             // Send
             await this.telegramService.sendHTMLMessage(htmlMessage);
 
-            return {
-                data: data,
-                message: 'ការបញ្ជាទិញត្រូវបានបង្កើតដោយជោគជ័យ។',
-            };
+            return { data, message: 'ការបញ្ជាទិញត្រូវបានបង្កើតដោយជោគជ័យ។' };
 
         } catch (error) {
             if (transaction) {

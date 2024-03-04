@@ -1,15 +1,11 @@
 // =========================================================================>> Core Library
-import { Controller, Get, Post, Put, Delete, UseGuards, ParseIntPipe, Param, Body, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, ParseIntPipe, Param, Body, HttpCode, HttpStatus } from '@nestjs/common';
 
 // =========================================================================>> Custom Library
-import { Roles, UserRoleDecorator } from 'src/middleware/decorators/rolse.decorator';
-import { AuthGuard } from 'src/middleware/guards/auth.guard';
 import { ProductsTypeService } from './type.service';
 import { CreateProductTypeDto, UpdateProductTypeDto } from './type.dto';
 import ProductsType from 'src/models/product/type.model';
 
-@Roles(UserRoleDecorator.ADMIN)
-@UseGuards(AuthGuard)
 @Controller('api/products/type')
 export class ProductsTypeController {
     constructor(private typeService: ProductsTypeService) { };
@@ -33,8 +29,8 @@ export class ProductsTypeController {
     }
 
     @Delete(':id')
-    @HttpCode(200)
-    async delete(@Param('id') id: number): Promise<{ status_code: number, message: string }> {
+    @HttpCode(HttpStatus.OK)
+    async delete(@Param('id') id: number): Promise<{ message: string }> {
         return await this.typeService.delete(id);
     }
 }

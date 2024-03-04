@@ -1,5 +1,6 @@
 // =========================================================================>> Custom Library
 import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator'
+import { IsBase64Image } from 'src/decorators/base64-image.decorator'
 
 export class CreateProductDto {
     @IsString()
@@ -20,6 +21,7 @@ export class CreateProductDto {
 
     @IsString()
     @IsNotEmpty()
+    @IsBase64Image({ message: 'Invalid image format. Image must be base64 encoded JPEG or PNG.' })
     image: string
 }
 
@@ -42,6 +44,7 @@ export class UpdateProductDto {
 
     @IsOptional()
     @IsString()
+    @IsBase64Image({ message: 'Invalid image format. Image must be base64 encoded JPEG or PNG.' })
     image: string
 }
 
