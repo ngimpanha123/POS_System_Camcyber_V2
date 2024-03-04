@@ -89,7 +89,7 @@ export class AppModule implements NestModule {
         // consumer
         //     .apply(AdminMiddleware)
         //     .forRoutes(UserController, ProductController);
-        // =====> But we should we AdminMiddleware inside UserModule and ProductModule itself.
+        // =====> But we should AdminMiddleware inside UserModule and ProductModule itself.
     }
 }
 // For dashboard, invoice, pos, profile and sale I will apply Guards concept in NestJS
