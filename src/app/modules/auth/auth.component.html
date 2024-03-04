@@ -14,9 +14,6 @@
             <div class="mt-2 text-center text-2xl font-extrabold tracking-tight">
                 POS Management System
             </div>
-            <div class="mt-4 text-center text-4xl font-extrabold tracking-tight">
-                HY CHIN
-            </div>
             <div class="mt-8 text-center text-3xl font-extrabold tracking-tight">
                 ចូលគណនីរបស់អ្នក
             </div>
@@ -24,7 +21,7 @@
 
             <form class="mt-8 md-form-field-appearance-outline" [formGroup]="loginForm">
 
-                <mat-form-field appearance="outline" class="w-full">
+                <mat-form-field class="w-full">
                     <mat-label>លេខទូរស័ព្ទ</mat-label>
                     <input matInput [formControlName]="'username'">
                     <mat-error>
@@ -32,7 +29,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="w-full">
+                <mat-form-field class="w-full">
                     <mat-label>លេខសម្ងាត់</mat-label>
                     <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
                     <button mat-icon-button type="button"

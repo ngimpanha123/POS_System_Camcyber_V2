@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Data, Detail } from 'app/modules/sale/sale.types';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +29,7 @@ export class SharedDetailsComponent implements OnInit {
     dataSource: MatTableDataSource<Detail> = new MatTableDataSource<Detail>([]);
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: Data,
+        private dialogRef : MatDialogRef<SharedDetailsComponent>,
         private detailsService: DetailsService,
         private snackBarService: SnackbarService
     ) { }
@@ -43,7 +44,8 @@ export class SharedDetailsComponent implements OnInit {
         this.detailsService.download(this.data.receipt_number).subscribe({
             next: res => {
                 this.downloading = false;
-                let blob = this.b64toBlob(res.file_base64, 'application/pdf');
+                this.dialogRef.close();
+                let blob = this.b64toBlob(res.data, 'application/pdf');
                 FileSaver.saveAs(blob, 'Invoice-' + this.data.receipt_number + '.pdf');
             },
             error: (err: HttpErrorResponse) => {

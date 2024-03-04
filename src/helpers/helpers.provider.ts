@@ -38,10 +38,10 @@ export const provideHelpers = (config: HelpersProviderConfig): Array<Provider | 
             },
         },
         {
-            // Use the 'fill' appearance on Angular Material form fields by default
+            // Use the 'outline' appearance on Angular Material form fields by default
             provide : MAT_FORM_FIELD_DEFAULT_OPTIONS,
             useValue: {
-                appearance: 'fill',
+                appearance: 'outline',
             },
         },
         {

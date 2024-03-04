@@ -87,7 +87,7 @@ export class PosComponent implements OnInit, OnDestroy {
 
         // Set isLoading to true to indicate that data is being loaded
         this.isLoading          = true;
-    
+
         // Subscribe to the list method of the posService
         this.posService.list().subscribe({
 
@@ -110,7 +110,7 @@ export class PosComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     ngOnDestroy (): void {
 
         // Emit a value through the _unsubscribeAll subject to trigger the unsubscription
@@ -118,7 +118,7 @@ export class PosComponent implements OnInit, OnDestroy {
         // Complete the subject to release resources
         this._unsubscribeAll.complete();
     }
-    
+
 
     addToCart   (incomingItem: Product, qty = 0): void {
 
@@ -132,7 +132,7 @@ export class PosComponent implements OnInit, OnDestroy {
         existingItem.temp_qty   = existingItem.qty;
 
     }   else {
-        
+
         // If the item doesn't exist, create a new CartItem and add it to the cart
         const newItem   : CartItem = {
 
@@ -181,7 +181,7 @@ export class PosComponent implements OnInit, OnDestroy {
         // Check if the entered value is 0, and update canSubmit accordingly
         if (event.target.value == 0) {
 
-            this.canSubmit = false; 
+            this.canSubmit = false;
         } else {
 
             this.canSubmit = true;

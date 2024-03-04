@@ -1,27 +1,26 @@
 
 // ================================================================>> Core Library
-import { HttpClient }           from '@angular/common/http';
-import { Injectable }           from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 // ================================================================>> Third Party Library
-import { Observable, ReplaySubject, of, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 
 // ================================================================>> Costom Library
-import { AuthUtils }            from 'app/core/auth/auth.utils';
-import { UserService }          from 'app/core/user/user.service';
-import { Login }                from './auth.types';
-import { environment as env }   from 'environments/environment';
+import { AuthUtils } from 'app/core/auth/auth.utils';
+import { UserService } from 'app/core/user/user.service';
+import { LoginResponse } from './auth.types';
+import { environment as env } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private _baseUrl        : string    = env.API_BASE_URL;
-    private _authenticated  : boolean   = false;
-    private _token          : ReplaySubject<{ token: string }> = new ReplaySubject<{ token: string }>(1);
+    private _baseUrl: string = env.API_BASE_URL;
+    private _authenticated: boolean = false;
 
     constructor(
-        private _httpClient     : HttpClient,
-        private _userService    : UserService,
+        private _httpClient: HttpClient,
+        private _userService: UserService,
     ) { }
 
 
@@ -41,15 +40,15 @@ export class AuthService {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    login(credentials: { username: string, password: string }): Observable<Login> {
+    login(credentials: { username: string, password: string }): Observable<LoginResponse> {
 
         return this._httpClient.post(`${this._baseUrl}/auth/login`, credentials).pipe(
 
-            switchMap((response: Login) => {
+            switchMap((response: LoginResponse) => {
 
-                this.accessToken        = response.access_token;
+                this.accessToken = response.data.access_token;
                 // Store the user on the user service
-                this._userService.user  = response.user;
+                this._userService.user = response.data.user;
                 // Return a new observable with the response
                 return of(response);
             }),
@@ -73,7 +72,7 @@ export class AuthService {
      * Check the authentication status
      */
     check(): Observable<boolean> {
-        
+
         // Check if the user is logged in
         if (this._authenticated) {
             return of(true);

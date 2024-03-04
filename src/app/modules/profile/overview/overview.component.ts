@@ -25,56 +25,56 @@ import { environment as env } from 'environments/environment'; // Custom import 
 
 // Interface for decoding JWT token payload
 interface UserPayload {
-    exp     : number;
-    iat     : number;
-    user    : User;
-    role    : string;
+    exp: number;
+    iat: number;
+    user: User;
+    role: string;
 }
 
 @Component({
-    selector        : 'profile-overview',
-    standalone      : true,
-    templateUrl     : './overview.component.html',
-    imports     : [
-            CommonModule,
-            ReactiveFormsModule,
-            MatFormFieldModule,
-            MatInputModule,
-            MatButtonModule,
-            MatProgressSpinnerModule,
-            PortraitComponent
+    selector: 'profile-overview',
+    standalone: true,
+    templateUrl: './overview.component.html',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        PortraitComponent
     ],
 })
 
 export class OverviewComponent implements OnInit, OnDestroy {
 
-    private  _unsubscribeAll     : Subject<User> = new Subject<User>();
-    public   form                : UntypedFormGroup;
-    public   src                 : string = 'assets/images/avatars/profile.jpg';
-    public   user                : User;
+    private _unsubscribeAll: Subject<User> = new Subject<User>();
+    public form: UntypedFormGroup;
+    public src: string = 'assets/images/avatars/profile.jpg';
+    public user: User;
 
     constructor(
-        private _userService        : UserService,
-        private _serviceProfile     : ProfileService,
-        private _formBuilder        : UntypedFormBuilder,
-        private _snackBar           : SnackbarService
+        private _userService: UserService,
+        private _serviceProfile: ProfileService,
+        private _formBuilder: UntypedFormBuilder,
+        private _snackBar: SnackbarService
     ) { }
 
     // Subscribe to user changes using RxJS takeUntil to handle component destruction
-    ngOnInit    (): void {
-        
+    ngOnInit(): void {
+
         this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
-            this.user   = user;
-            this.src    = env.FILE_BASE_URL + this.user.avatar;
+            this.user = user;
+            this.src = env.FILE_BASE_URL + this.user.avatar;
         });
 
         // Build the form when the component initializes
         this._buildForm();
     }
 
-    ngOnDestroy (): void {
+    ngOnDestroy(): void {
 
-         // Unsubscribe from observables when the component is destroyed
+        // Unsubscribe from observables when the component is destroyed
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
@@ -87,21 +87,21 @@ export class OverviewComponent implements OnInit, OnDestroy {
         // Call the profile service to update the user profile
         this._serviceProfile.updateProfile(this.form.value).subscribe({
 
-            next: (response) => {
+            next: response => {
 
                 // Enable the form after a successful update
                 this.form.enable();
-                const tokenPayload: UserPayload = jwt_decode(response.access_token);
+                const tokenPayload: UserPayload = jwt_decode(response.data.access_token);
                 this._userService.user = tokenPayload.user;
 
                 // Save the updated access token to localStorage
-                localStorage.setItem('accessToken', response.access_token);
+                localStorage.setItem('accessToken', response.data.access_token);
 
                 // Show a success message using the snackbar service
                 this._snackBar.openSnackBar(response.message, GlobalConstants.success);
             },
 
-            error: (err: HttpErrorResponse) => {
+            error: err => {
 
                 // Enable the form after an error and show an error message
                 this.form.enable();
@@ -119,12 +119,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
     private _buildForm(): void {
 
         // Build the form using the user's current information
-        this.form   = this._formBuilder.group({
-            name    : [this.user.name, [Validators.required]],
-            phone   : [this.user.phone, [Validators.required, Validators.pattern(/^(\+855|0)[1-9]\d{7,8}$/)]],
-            email   : [this.user.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+        this.form = this._formBuilder.group({
+            name: [this.user.name, [Validators.required]],
+            phone: [this.user.phone, [Validators.required, Validators.pattern(/^(\+855|0)[1-9]\d{7,8}$/)]],
+            email: [this.user.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
 
-            avatar  : [''],         // This field is initially empty and will be updated when the image changes
+            avatar: [null],         // This field is initially empty and will be updated when the image changes
         });
     }
 }

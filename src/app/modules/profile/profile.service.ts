@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 // ================================================================>> Custom Library (Application-specific)
 import { environment as env } from 'environments/environment';
-import { UpdatePassword, UpdateProfile } from './profile.tyeps'; 
+import { UpdatePassword, UpdateProfile } from './profile.tyeps';
 
 
 @Injectable({
@@ -16,10 +16,10 @@ import { UpdatePassword, UpdateProfile } from './profile.tyeps';
 export class ProfileService {
 
     // Base URL for the API
-    private readonly url: string    = env.API_BASE_URL;
+    private readonly url: string = env.API_BASE_URL;
 
     // HTTP options with headers for sending JSON data
-    private readonly httpOptions    = {
+    private readonly httpOptions = {
         headers: new HttpHeaders().set('Content-Type', 'application/json'),
     };
 
@@ -27,10 +27,10 @@ export class ProfileService {
     constructor(private http: HttpClient) { }
 
     // Method to update user profile information
-    updateProfile(body: UpdateProfile): Observable<{ access_token: string, message: string }> {
+    updateProfile(body: UpdateProfile): Observable<{ data: { access_token: string, }, message: string }> {
 
         // Sends a PUT request to the API endpoint for updating the profile
-        return this.http.put<{ access_token: string, message: string }>(this.url + '/profile', body, this.httpOptions);
+        return this.http.put<{ data: { access_token: string, }, message: string }>(this.url + '/profile', body, this.httpOptions);
     }
 
     // Method to update user password
