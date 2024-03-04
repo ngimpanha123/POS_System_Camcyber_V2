@@ -70,10 +70,10 @@ export class AuthLoginComponent implements OnInit {
             error: err => {
 
                 // Extract error details, if available
-                const errors: { field: string, message: string }[] | undefined = err.error.errors;
+                const errors: { type: string, message: string }[] | undefined = err.error?.errors;
 
                 // Default error message (if not provided in the response)
-                let message: string = err.error.message ?? GlobalConstants.genericError;
+                let message: string = err.error?.message ?? GlobalConstants.genericError;
 
                 // If there are specific errors, concatenate them to the message
                 if (errors && errors.length > 0) {

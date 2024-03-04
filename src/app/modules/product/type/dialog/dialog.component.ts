@@ -20,66 +20,66 @@ import { Data } from '../type.types';
 
 @Component({
 
-    selector        : 'products-type-dialog',
-    standalone      : true,
-    templateUrl     : './dialog.component.html',
-    imports         : [
-                CommonModule,
-                ReactiveFormsModule,
-                MatFormFieldModule,
-                MatInputModule,
-                MatIconModule,
-                MatButtonModule,
-                MatDialogModule
+    selector: 'products-type-dialog',
+    standalone: true,
+    templateUrl: './dialog.component.html',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDialogModule
     ]
 })
 
 export class ProductsTypeDialogComponent implements OnInit {
 
     // EventEmitter to emit response data after create or update operations
-    ResponseData        = new EventEmitter<Data>();
+    ResponseData = new EventEmitter<Data>();
 
     // Form related properties
-    typeForm            : UntypedFormGroup;
-    saving              : boolean = false;
+    typeForm: UntypedFormGroup;
+    saving: boolean = false;
 
     // Constructor with dependency injection
     constructor(
 
         @Inject(MAT_DIALOG_DATA) public data: { title: string, type: Data },
 
-        private dialogRef       : MatDialogRef<ProductsTypeDialogComponent>,
-        private formBuilder     : UntypedFormBuilder,
-        private snackBarService : SnackbarService,
-        private typeService     : ProductsTypeService
+        private dialogRef: MatDialogRef<ProductsTypeDialogComponent>,
+        private formBuilder: UntypedFormBuilder,
+        private snackBarService: SnackbarService,
+        private typeService: ProductsTypeService
     ) { }
 
     // Lifecycle hook: ngOnInit
-    ngOnInit    (): void {
+    ngOnInit(): void {
 
         // Initialize the form on component initialization
         this.ngBuilderForm();
     }
 
     // Method to build the form using the form builder
-    ngBuilderForm   (): void {
+    ngBuilderForm(): void {
 
         // Create the form group with initial values
         this.typeForm = this.formBuilder.group({
 
-            name    : [this.data?.type?.name || null, [Validators.required]]
+            name: [this.data?.type?.name || null, [Validators.required]]
         });
     }
 
     // Method to handle form submission
-    submit  () {
+    submit() {
 
         // Check whether to perform create or update based on data.type
         this.data.type == null ? this.create() : this.update();
     }
 
     // Method to handle create operation
-    create  (): void {
+    create(): void {
 
         // Disable dialog close while the operation is in progress
         this.dialogRef.disableClose = true;
@@ -90,7 +90,7 @@ export class ProductsTypeDialogComponent implements OnInit {
         // Call the typeService to create a new type
         this.typeService.create(this.typeForm.value).subscribe({
 
-            next    : response => {
+            next: response => {
 
                 // Update the number of products (assuming it's a property of the returned data)
                 response.data.n_of_products = 0;
@@ -108,7 +108,7 @@ export class ProductsTypeDialogComponent implements OnInit {
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
             },
 
-            error   : (err: HttpErrorResponse) => {
+            error: (err: HttpErrorResponse) => {
 
                 // Re-enable dialog close
                 this.dialogRef.disableClose = false;
@@ -123,7 +123,7 @@ export class ProductsTypeDialogComponent implements OnInit {
     }
 
     // Method to handle update operation
-    update  (): void {
+    update(): void {
 
         // Disable dialog close while the operation is in progress
         this.dialogRef.disableClose = true;
@@ -134,7 +134,7 @@ export class ProductsTypeDialogComponent implements OnInit {
         // Call the typeService to update an existing type
         this.typeService.update(this.data.type.id, this.typeForm.value).subscribe({
 
-            next    : response => {
+            next: response => {
 
                 // Emit the response data using the EventEmitter
                 this.ResponseData.emit(response.data);
@@ -149,7 +149,7 @@ export class ProductsTypeDialogComponent implements OnInit {
                 this.snackBarService.openSnackBar(response.message, GlobalConstants.success);
             },
 
-            error   : (err: HttpErrorResponse) => {
+            error: (err: HttpErrorResponse) => {
 
                 // Re-enable dialog close
                 this.dialogRef.disableClose = false;
@@ -166,12 +166,11 @@ export class ProductsTypeDialogComponent implements OnInit {
     // Helper method to handle and display errors
     private handleErrors(err: HttpErrorResponse): void {
 
-        const   errors  : { field: string, message: string }[] | undefined = err.error.errors;
-        let     message : string = err.error.message ?? GlobalConstants.genericError;
+        const errors: { type: string, message: string }[] | undefined = err.error?.errors;
+        let message: string = err.error?.message ?? GlobalConstants.genericError;
 
         if (errors && errors.length > 0) {
-            
-            message     = errors.map((obj) => obj.message).join(', ');
+            message = errors.map((obj) => obj.message).join(', ');
         }
 
         // Display error snackbar
