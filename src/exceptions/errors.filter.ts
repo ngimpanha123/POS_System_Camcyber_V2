@@ -12,12 +12,22 @@ export class ExceptionErrorsFilter implements ExceptionFilter {
 
         // Handle types of exceptions
         const errorMessage = exception instanceof HttpException ? exception.getResponse() : 'Internal server error';
-        const errorInfo = typeof errorMessage === 'string' ? errorMessage : (errorMessage as any).message || 'Unexpected error occurred';
+        let errorInfo = typeof errorMessage === 'string' ? errorMessage : (errorMessage as any).message || 'Unexpected error occurred';
+        let errors = undefined;
+        // it errorInfo is array it should comming from dto of class-validator
+        if (Array.isArray(errorInfo)) {
+            errors = errorInfo.map(value => ({
+                type: 'field',
+                message: value
+            }));
+            errorInfo = 'Invalid Entity';
+        }
 
         const responseBody = {
             status_code: status,
             message: errorInfo,
             error: exception instanceof HttpException && typeof errorMessage !== 'string' ? (errorMessage as any).error || exception.name : 'Internal Server Error',
+            ...{ errors },
             timestamp: formatDate(new Date()),
             path: request.url,
         };
