@@ -9,8 +9,7 @@ import { RoleGuard } from 'src/guards/role.guard';
 // Applying decorators to the class
 @RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
 @UseGuards(RoleGuard)
-@Controller('api/print')
-
+@Controller()
 export class InvoiceController {
     constructor(private readonly invoiceService: InvoiceService) { };
 

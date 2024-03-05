@@ -18,7 +18,7 @@ import { UserService } from "./user.service";
 import { Create, List, Update } from "./user.interface";
 import User from "src/models/user/user.model";
 
-@Controller('api/users')
+@Controller()
 export class UserController {
 
     constructor(

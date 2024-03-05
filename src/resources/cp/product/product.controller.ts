@@ -8,7 +8,7 @@ import { CreateProductDto, UpdateProductDto } from './product.dto';
 import Product from 'src/models/product/product.model';
 import ProductsType from 'src/models/product/type.model';
 
-@Controller('api/products')
+@Controller()
 export class ProductController {
 
     constructor(private productService: ProductService) { };

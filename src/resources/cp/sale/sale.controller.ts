@@ -20,7 +20,7 @@ interface GetSaleParams {
 
 @RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
 @UseGuards(RoleGuard)
-@Controller('api/sales')
+@Controller()
 export class SaleController {
 
     constructor(private readonly saleService: SaleService) { };

@@ -1,6 +1,6 @@
 // =========================================================================>> Core Library
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
 
 // =========================================================================>> Third Party Library
 
@@ -22,6 +22,7 @@ import { JwtMiddleware } from './middlewares/jwt.middleware';
 import { AppController } from './app.controller';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
+import { appRoutes } from './app.routing';
 
 // ======================================= >> Code Starts Here << ========================== //
 @Module({
@@ -39,7 +40,9 @@ import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
         ProductModule,
         PosModule,
         SaleModule,
-        InvoiceModule
+        InvoiceModule,
+        // Utilize RouterModule for configuring application routes
+        RouterModule.register(appRoutes)
     ],
     providers: [
         // all this we it the same use as Global in main.ts

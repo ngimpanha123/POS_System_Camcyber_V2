@@ -12,8 +12,7 @@ import { UpdatePasswordDto, UpdateProfileDto } from './profile.dto';
 import { FileService } from 'src/services/file.service';
 import User from 'src/models/user/user.model';
 
-
-@Controller('api/profile')
+@Controller()
 export class ProfileController {
     constructor(
         private profileService: ProfileService,

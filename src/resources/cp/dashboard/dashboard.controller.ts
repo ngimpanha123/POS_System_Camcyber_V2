@@ -9,7 +9,7 @@ import { RoleGuard } from 'src/guards/role.guard';
 // Applying roles decorators to the class
 @RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)
 @UseGuards(RoleGuard)
-@Controller('api/dashboard') // Setting the base route for the controller
+@Controller()
 export class DashboardController {
 
     // Constructor injecting the DashboardService

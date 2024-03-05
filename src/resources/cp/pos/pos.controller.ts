@@ -15,7 +15,7 @@ import { RoleGuard } from 'src/guards/role.guard';
 
 @UseGuards(RoleGuard) // Apply the RolesGuard at the controller level to protect all routes of PosController
 @RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF) // ===> Allew Admin and Staff can access all routes of PosController
-@Controller('api/pos')
+@Controller()
 export class PosController {
 
     constructor(private readonly posService: PosService) { };

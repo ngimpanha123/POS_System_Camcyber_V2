@@ -6,7 +6,7 @@ import { ProductsTypeService } from './type.service';
 import { CreateProductTypeDto, UpdateProductTypeDto } from './type.dto';
 import ProductsType from 'src/models/product/type.model';
 
-@Controller('api/products/type')
+@Controller()
 export class ProductsTypeController {
     constructor(private typeService: ProductsTypeService) { };
 
