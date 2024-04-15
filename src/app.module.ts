@@ -75,11 +75,14 @@ import { appRoutes } from './app.routing';
  * @author Yim Klok <yimklok.kh@gmail.com>
  */
 export class AppModule implements NestModule {
-    // Apply global jwt middleware exclude only login and register
+    // Apply global jwt middleware exclude only baseRoute, login and register
     configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(JwtMiddleware)
             .exclude(
+                {
+                    path: '', method: RequestMethod.GET
+                },
                 {
                     path: 'api/auth/login', method: RequestMethod.POST
                 },
