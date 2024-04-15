@@ -25,7 +25,7 @@ export class LoginRequestDto {
 
     @IsString()
     @IsNotEmpty({ message: "Filed username is required" })
-    username: string
+    username: string;
 
     @IsString()
     @IsNotEmpty()

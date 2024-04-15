@@ -24,7 +24,7 @@ interface LoginPayload {
 @Injectable()
 export class AuthService {
     /** @userLogin */
-    async login(body: LoginPayload): Promise<{ data: { access_token: string, expires_in: string, user: UserDto } }> {
+    async login(body: LoginPayload): Promise<{ res: { access_token: string, expires_in: string, user: UserDto } }> {
         let user: User;
         try {
             user = await User.findOne({
@@ -62,24 +62,25 @@ export class AuthService {
         }
 
         const role: string = user.type.name ?? '';
-        const token = this.generateToken(user);
+        const token = this._generateToken(user);
 
-        //================================================
-        const data = {
+        // ===>> Prepare Response
+        const res = {
             access_token: token,
             expires_in: `${jwtConstants.expiresIn / 3600}h`,
             user: new UserDto(user),
             role: role
         }
-        return { data };
+        return { res };
     }
 
-    private generateToken(user: User): string {
+    private _generateToken(user: User): string {
         return jwt.sign(
             {
                 user: new UserDto(user),
                 role: user.type.name
-            }, jwtConstants.secret,
+            }, 
+            jwtConstants.secret,
             {
                 expiresIn: jwtConstants.expiresIn
             }
