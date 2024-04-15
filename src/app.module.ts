@@ -21,12 +21,12 @@ import { appRoutes } from './app.routing';
 import { AuthModule } from './app/resources/account/auth/auth.module';
 import { ProfileModule } from './app/resources/account/profile/profile.module';
 
-import { DashboardModule } from './app/resources/admin/dashboard/dashboard.module';
-import { PosModule } from './app/resources/admin/pos/pos.module';
-import { ProductModule } from './app/resources/admin/product/product.module';
-import { SaleModule } from './app/resources/admin/sale/sale.module';
-import { InvoiceModule } from './app/resources/admin/invoice/invoice.module';
-import { UserModule } from './app/resources/admin/user/user.module';
+import { DashboardModule } from './app/resources/cp/dashboard/dashboard.module';
+import { PosModule } from './app/resources/cp/pos/pos.module';
+import { ProductModule } from './app/resources/cp/product/product.module';
+import { SaleModule } from './app/resources/cp/sale/sale.module';
+import { InvoiceModule } from './app/resources/cp/invoice/invoice.module';
+import { UserModule } from './app/resources/cp/user/user.module';
 
 // ======================================= >> Code Starts Here << ========================== //
 @Module({
