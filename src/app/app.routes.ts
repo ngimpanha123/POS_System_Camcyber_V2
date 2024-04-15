@@ -35,23 +35,23 @@ export const appRoutes: Route[] = [
 
             {
                 path        : 'dashboard',
-                loadChildren: () => import('app/resources/dashboard/dashboard.routing')
+                loadChildren: () => import('app/resources/cp/dashboard/dashboard.routing')
             },
             {
                 path        : 'pos',
-                loadChildren: () => import('app/resources/pos/pos.routing')
+                loadChildren: () => import('app/resources/cp/pos/pos.routing')
             },
             {
                 path        : 'sales',
-                loadChildren: () => import('app/resources/sale/sale.routing')
+                loadChildren: () => import('app/resources/cp/sale/sale.routing')
             },
             {
                 path        : 'products',
-                loadChildren: () => import('app/resources/product/product.routing')
+                loadChildren: () => import('app/resources/cp/product/product.routing')
             },
             {
                 path        : 'users',
-                loadChildren: () => import('app/resources/user/user.routing')
+                loadChildren: () => import('app/resources/cp/user/user.routing')
             },
             {
                 path        : 'profile',

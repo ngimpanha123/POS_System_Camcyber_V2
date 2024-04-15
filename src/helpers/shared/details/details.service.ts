@@ -1,8 +1,7 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment as env } from 'environments/environment';
-import { Observable, catchError, of, switchMap, tap } from 'rxjs';
-import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
