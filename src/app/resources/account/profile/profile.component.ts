@@ -7,7 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 // ================================================================>> Custom Library (Application-specific)
 import { OverviewComponent } from './overview/overview.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangePasswordComponent } from '../password/change-password.component';
 
 
 @Component({

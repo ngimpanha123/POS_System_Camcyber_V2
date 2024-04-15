@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // ================================================================>> Custom Library (Application-specific)
 import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
-import { ProfileService } from '../profile.service';
+import { ProfileService } from '../profile/profile.service';
 import { GlobalConstants } from 'helpers/shared/global-constants';
 
 
