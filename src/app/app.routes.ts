@@ -20,7 +20,7 @@ export const appRoutes: Route[] = [
         data: {
             layout  : 'empty'
         },
-        loadChildren: () => import('app/modules/auth/auth.routes')
+        loadChildren: () => import('app/resources/auth/auth.routes')
     },
 
     // Admin routes
@@ -35,34 +35,34 @@ export const appRoutes: Route[] = [
 
             {
                 path        : 'dashboard',
-                loadChildren: () => import('app/modules/dashboard/dashboard.routing')
+                loadChildren: () => import('app/resources/dashboard/dashboard.routing')
             },
             {
                 path        : 'pos',
-                loadChildren: () => import('app/modules/pos/pos.routing')
+                loadChildren: () => import('app/resources/pos/pos.routing')
             },
             {
                 path        : 'sales',
-                loadChildren: () => import('app/modules/sale/sale.routing')
+                loadChildren: () => import('app/resources/sale/sale.routing')
             },
             {
                 path        : 'products',
-                loadChildren: () => import('app/modules/product/product.routing')
+                loadChildren: () => import('app/resources/product/product.routing')
             },
             {
                 path        : 'users',
-                loadChildren: () => import('app/modules/user/user.routing')
+                loadChildren: () => import('app/resources/user/user.routing')
             },
             {
                 path        : 'profile',
-                loadChildren: () => import('app/modules/profile/profile.routing')
+                loadChildren: () => import('app/resources/profile/profile.routing')
             },
 
             // 404 & Catch all
             {
                 path: '404-not-found',
                 pathMatch: 'full',
-                loadChildren: () => import('app/modules/error/error-404.module').then(m => m.Error404Module),
+                loadChildren: () => import('app/resources/error/error-404.module').then(m => m.Error404Module),
                 canActivate: [AuthGuard]
             },
             { path: '**', redirectTo: '404-not-found' }
