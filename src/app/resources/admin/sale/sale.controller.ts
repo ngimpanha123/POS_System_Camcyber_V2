@@ -2,10 +2,10 @@
 import { Controller, UseGuards, Get, Query, BadRequestException, Delete, Param, HttpCode, HttpStatus } from '@nestjs/common';
 
 // ================================================================>> Costom Library
-import { RolesDecorator, UserRoleDecorator } from 'src/decorators/roles.decorator';
-import { RoleGuard } from 'src/guards/role.guard';
+import { RolesDecorator, UserRoleDecorator } from 'src/app/decorators/roles.decorator';
+import { RoleGuard } from 'src/app/guards/role.guard';
 import { SaleService } from './sale.service';
-import UserDecorator from 'src/decorators/user.decorator';
+import UserDecorator from 'src/app/decorators/user.decorator';
 import { List } from './sale.types';
 import User from 'src/models/user/user.model';
 

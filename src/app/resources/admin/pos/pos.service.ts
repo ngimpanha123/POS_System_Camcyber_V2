@@ -11,7 +11,7 @@ import ProductsType from 'src/models/product/type.model';
 import Product from 'src/models/product/product.model';
 import Order from 'src/models/order/order.model';
 import OrderDetails from 'src/models/order/detail.model';
-import { TelegramService } from 'src/services/telegram.service';
+import { TelegramService } from 'src/app/services/telegram.service';
 import { CreateOrderDto } from './pos.dto';
 
 // ======================================= >> Code Starts Here << ========================== //

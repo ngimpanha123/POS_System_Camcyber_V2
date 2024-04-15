@@ -4,12 +4,12 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 // =========================================================================>> Custom Library
 import Product from 'src/models/product/product.model';
 import Order from 'src/models/order/order.model';
-import UserDecorator from 'src/decorators/user.decorator';
-import { RolesDecorator, UserRoleDecorator } from 'src/decorators/roles.decorator'; // Typo correction: 'rolse' -> 'roles'
+import UserDecorator from 'src/app/decorators/user.decorator';
+import { RolesDecorator, UserRoleDecorator } from 'src/app/decorators/roles.decorator'; // Typo correction: 'rolse' -> 'roles'
 import { PosService } from './pos.service';
 import { CreateOrderDto } from './pos.dto';
 import User from 'src/models/user/user.model';
-import { RoleGuard } from 'src/guards/role.guard';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 // ======================================= >> Code Starts Here << ========================== //
 

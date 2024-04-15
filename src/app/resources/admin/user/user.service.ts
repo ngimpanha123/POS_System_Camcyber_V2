@@ -9,7 +9,7 @@ import UsersType from "src/models/user/type.model";
 import User from "src/models/user/user.model";
 import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
 import { Create, List, Update } from "./user.interface";
-import { FileService } from "src/services/file.service";
+import { FileService } from "src/app/services/file.service";
 
 @Injectable()
 export class UserService {

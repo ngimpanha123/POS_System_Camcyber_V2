@@ -2,14 +2,14 @@
 import { Controller, Body, Put, BadRequestException, HttpCode, HttpStatus } from '@nestjs/common';
 
 // ================================================================>> Costom Library
-import UserDecorator from 'src/decorators/user.decorator';
+import UserDecorator from 'src/app/decorators/user.decorator';
 
 //Custom Services and DTOs:
 import { ProfileService } from './profile.service';
 import { UpdatePasswordDto, UpdateProfileDto } from './profile.dto';
 
 // File Handling:
-import { FileService } from 'src/services/file.service';
+import { FileService } from 'src/app/services/file.service';
 import User from 'src/models/user/user.model';
 
 @Controller()

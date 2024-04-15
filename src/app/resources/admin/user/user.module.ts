@@ -3,9 +3,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 // ================================================================>> Costom Library
 import { UserService } from './user.service';
-import { FileService } from 'src/services/file.service';
+import { FileService } from 'src/app/services/file.service';
 import { UserController } from './user.controller';
-import { AdminMiddleware } from 'src/middlewares/admin.middleware';
+import { AdminMiddleware } from 'src/app/middlewares/admin.middleware';
 
 @Module({
     providers: [UserService, FileService],

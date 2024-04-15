@@ -1,7 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler, HttpStatus } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Pagination } from 'src/shared/pagination.interface';
+import { Pagination } from 'src/app/shared/pagination.interface';
 
 export interface Response<T, P = Pagination> {
     status_code: HttpStatus;

@@ -1,8 +1,8 @@
 // ================================================================>> Core Library
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
-import { jwtConstants } from "src/shared/constants.jwt";
+import { jwtConstants } from "src/app/shared/constants.jwt";
 import * as jwt from 'jsonwebtoken';
-import UserPayload from 'src/shared/user.payload';
+import UserPayload from 'src/app/shared/user.payload';
 import User from 'src/models/user/user.model';
 import UsersType from 'src/models/user/type.model';
 

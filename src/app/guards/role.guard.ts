@@ -5,9 +5,9 @@ import { Reflector } from "@nestjs/core";
 
 // ================================================================>> Costom Library
 import { UserRoleDecorator } from "../decorators/roles.decorator";
-import { jwtConstants } from "src/shared/constants.jwt";
+import { jwtConstants } from "src/app/shared/constants.jwt";
 import * as jwt from 'jsonwebtoken';
-import UserPayload from "src/shared/user.payload";
+import UserPayload from "src/app/shared/user.payload";
 
 @Injectable()
 export class RoleGuard implements CanActivate {

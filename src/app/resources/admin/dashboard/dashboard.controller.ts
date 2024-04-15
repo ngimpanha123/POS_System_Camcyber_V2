@@ -3,8 +3,8 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 
 // ================================================================>> Costom Library
 import { DashboardService } from './dashboard.service';
-import { RolesDecorator, UserRoleDecorator } from 'src/decorators/roles.decorator';
-import { RoleGuard } from 'src/guards/role.guard';
+import { RolesDecorator, UserRoleDecorator } from 'src/app/decorators/roles.decorator';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 // Applying roles decorators to the class
 @RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)

@@ -3,7 +3,7 @@ import { Model, Column, Table, BelongsTo, ForeignKey, DataType } from 'sequelize
 
 // ================================================================>> Costom Library
 import UsersType            from './type.model';
-import { UsersActiveEnum }  from '../../enums/user/active.enum';
+import { UsersActiveEnum }  from '../../app/enums/user/active.enum';
 
 @Table({ tableName: 'user', createdAt: 'created_at', updatedAt: 'updated_at' })
 class User extends Model<User> {

@@ -1,6 +1,6 @@
 // =========================================================================>> Custom Library
 import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator'
-import { IsBase64Image } from 'src/decorators/base64-image.decorator'
+import { IsBase64Image } from 'src/app/decorators/base64-image.decorator'
 
 export class CreateProductDto {
     @IsString()

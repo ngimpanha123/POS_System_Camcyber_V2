@@ -1,7 +1,7 @@
 // ================================================================>> Costom Library
 import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Matches, MinLength } from 'class-validator'
-import { IsBase64Image } from 'src/decorators/base64-image.decorator'
-import { UsersActiveEnum } from 'src/enums/user/active.enum'
+import { IsBase64Image } from 'src/app/decorators/base64-image.decorator'
+import { UsersActiveEnum } from 'src/app/enums/user/active.enum'
 
 export class CreateUserDto {
     @IsString()

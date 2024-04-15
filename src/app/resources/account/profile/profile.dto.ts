@@ -1,6 +1,6 @@
 // =========================================================================>> Custom Library
 import { IsEmail, IsNotEmpty, IsString, IsOptional , Matches, MinLength } from 'class-validator'
-import { IsBase64Image } from 'src/decorators/base64-image.decorator'
+import { IsBase64Image } from 'src/app/decorators/base64-image.decorator'
 
 export class UpdateProfileDto {
     @IsString()

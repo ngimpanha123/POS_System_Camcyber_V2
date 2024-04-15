@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 
 // =========================================================================>> Custom Library
 // External Service
-import { TelegramService } from 'src/services/telegram.service';
+import { TelegramService } from 'src/app/services/telegram.service';
 
 // Custom External Lib
 import { PosController } from './pos.controller';

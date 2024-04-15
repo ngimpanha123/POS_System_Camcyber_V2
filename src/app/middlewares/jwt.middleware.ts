@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/commo
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import User from "src/models/user/user.model";
-import { jwtConstants } from "src/shared/constants.jwt";
+import { jwtConstants } from "src/app/shared/constants.jwt";
 
 interface UserPayload {
     user: User;

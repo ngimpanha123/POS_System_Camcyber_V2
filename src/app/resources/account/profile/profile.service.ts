@@ -9,9 +9,9 @@ import * as bcrypt from 'bcryptjs';
 // ================================================================>> Costom Library
 import { UpdatePasswordDto, UpdateProfileDto } from './profile.dto';
 import User from 'src/models/user/user.model';
-import { jwtConstants } from 'src/shared/constants.jwt';
+import { jwtConstants } from 'src/app/shared/constants.jwt';
 import UsersType from 'src/models/user/type.model';
-import { FileService } from 'src/services/file.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Injectable()
 export class ProfileService {

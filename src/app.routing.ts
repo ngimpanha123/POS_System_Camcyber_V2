@@ -1,13 +1,21 @@
+// ================================================================>> Core Library
 import { Routes } from '@nestjs/core';
-import { AuthModule } from './resources/auth/auth.module';
-import { DashboardModule } from './resources/cp/dashboard/dashboard.module';
-import { PosModule } from './resources/cp/pos/pos.module';
-import { SaleModule } from './resources/cp/sale/sale.module';
-import { ProductModule } from './resources/cp/product/product.module';
-import { ProductsTypeModule } from './resources/cp/product/type/type.module';
-import { UserModule } from './resources/cp/user/user.module';
-import { ProfileModule } from './resources/cp/profile/profile.module';
-import { InvoiceModule } from './resources/cp/invoice/invoice.module';
+
+// ================================================================>> Custom Library
+// Account
+import { AuthModule } from './app/resources/account/auth/auth.module';
+import { ProfileModule } from './app/resources/account/profile/profile.module';
+
+import { DashboardModule } from './app/resources/admin/dashboard/dashboard.module';
+
+import { PosModule } from './app/resources/admin/pos/pos.module';
+import { SaleModule } from './app/resources/admin/sale/sale.module';
+import { InvoiceModule } from './app/resources/admin/invoice/invoice.module';
+
+import { ProductModule } from './app/resources/admin/product/product.module';
+import { ProductsTypeModule } from './app/resources/admin/product/type/type.module';
+
+import { UserModule } from './app/resources/admin/user/user.module';
 
 export const appRoutes: Routes = [{
     path: 'api',

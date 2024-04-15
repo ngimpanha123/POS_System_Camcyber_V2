@@ -7,11 +7,11 @@ import * as jwt from 'jsonwebtoken';
 import { DatabaseError, Op } from 'sequelize';
 
 // ================================================================>> Costom Library
-import User from '../../models/user/user.model';
-import UsersType from '../../models/user/type.model';
-import { jwtConstants } from 'src/shared/constants.jwt';
+import User from '../../../../models/user/user.model';
+import UsersType from '../../../../models/user/type.model';
+import { jwtConstants } from 'src/app/shared/constants.jwt';
 import { UserDto } from './auth.dto';
-import { UsersActiveEnum } from 'src/enums/user/active.enum';
+import { UsersActiveEnum } from 'src/app/enums/user/active.enum';
 
 interface LoginParams {
     username: string

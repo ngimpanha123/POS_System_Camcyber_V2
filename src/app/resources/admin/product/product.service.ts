@@ -8,7 +8,7 @@ import { Op } from 'sequelize';
 import Product from 'src/models/product/product.model';
 import ProductsType from 'src/models/product/type.model';
 import { CreateProductDto, UpdateProductDto } from './product.dto';
-import { FileService } from 'src/services/file.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Injectable()
 export class ProductService {

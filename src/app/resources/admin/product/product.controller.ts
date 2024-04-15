@@ -3,7 +3,7 @@ import { Controller, Get, Post, Param, ParseIntPipe, Query, UsePipes, Body, Put,
 
 // ================================================================>> Costom Library
 import { ProductService } from './product.service';
-import { ProductsTypeExistsPipe } from 'src/pipes/product.pipe';
+import { ProductsTypeExistsPipe } from 'src/app/pipes/product.pipe';
 import { CreateProductDto, UpdateProductDto } from './product.dto';
 import Product from 'src/models/product/product.model';
 import ProductsType from 'src/models/product/type.model';

@@ -5,24 +5,28 @@ import { APP_FILTER, APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
 // =========================================================================>> Third Party Library
 
 // =========================================================================>> Custom Library
-import { ExceptionErrorsFilter } from './exceptions/errors.filter';
-// Module
-import { AuthModule } from './resources/auth/auth.module';
-import { DashboardModule } from './resources/cp/dashboard/dashboard.module';
-import { ProfileModule } from './resources/cp/profile/profile.module';
-import { UserModule } from './resources/cp/user/user.module';
-import { ProductModule } from './resources/cp/product/product.module';
-import { PosModule } from './resources/cp/pos/pos.module';
-import { SaleModule } from './resources/cp/sale/sale.module';
-import { InvoiceModule } from './resources/cp/invoice/invoice.module';
+import { ExceptionErrorsFilter } from './app/exceptions/errors.filter';
 import { ConfigModule } from './config/config.module';
+
 // Middleware
-import { JwtMiddleware } from './middlewares/jwt.middleware';
+import { JwtMiddleware } from './app/middlewares/jwt.middleware';
+
 // Bass Controller
 import { AppController } from './app.controller';
-import { TransformInterceptor } from './interceptors/transform.interceptor';
-import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
+import { TransformInterceptor } from './app/interceptors/transform.interceptor';
+import { TimeoutInterceptor } from './app/interceptors/timeout.interceptor';
 import { appRoutes } from './app.routing';
+
+// Resources
+import { AuthModule } from './app/resources/account/auth/auth.module';
+import { ProfileModule } from './app/resources/account/profile/profile.module';
+
+import { DashboardModule } from './app/resources/admin/dashboard/dashboard.module';
+import { PosModule } from './app/resources/admin/pos/pos.module';
+import { ProductModule } from './app/resources/admin/product/product.module';
+import { SaleModule } from './app/resources/admin/sale/sale.module';
+import { InvoiceModule } from './app/resources/admin/invoice/invoice.module';
+import { UserModule } from './app/resources/admin/user/user.module';
 
 // ======================================= >> Code Starts Here << ========================== //
 @Module({

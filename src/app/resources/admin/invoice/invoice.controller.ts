@@ -3,8 +3,8 @@ import { BadRequestException, Controller, Get, Param, UseGuards } from '@nestjs/
 
 // ================================================================>> Costom Library
 import { InvoiceService } from './invoice.service';
-import { RolesDecorator, UserRoleDecorator } from 'src/decorators/roles.decorator';
-import { RoleGuard } from 'src/guards/role.guard';
+import { RolesDecorator, UserRoleDecorator } from 'src/app/decorators/roles.decorator';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 // Applying decorators to the class
 @RolesDecorator(UserRoleDecorator.ADMIN, UserRoleDecorator.STAFF)

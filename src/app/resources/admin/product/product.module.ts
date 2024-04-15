@@ -7,8 +7,8 @@ import { ProductsTypeModule } from './type/type.module';
 // Custom Components:
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
-import { FileService } from 'src/services/file.service';
-import { AdminMiddleware } from 'src/middlewares/admin.middleware';
+import { FileService } from 'src/app/services/file.service';
+import { AdminMiddleware } from 'src/app/middlewares/admin.middleware';
 import { ProductsTypeController } from './type/type.controller';
 
 @Module({

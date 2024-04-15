@@ -6,11 +6,11 @@ import * as bcrypt from 'bcryptjs';
 
 // ================================================================>> Costom Library
 // Middlware
-import UserDecorator from 'src/decorators/user.decorator';
+import UserDecorator from 'src/app/decorators/user.decorator';
 
 // Shared
-import { UsersTypeExistsPipe } from "src/pipes/user.pipe";
-import { FileService } from "src/services/file.service";
+import { UsersTypeExistsPipe } from "src/app/pipes/user.pipe";
+import { FileService } from "src/app/services/file.service";
 
 // Inside Module
 import { CreateUserDto, UpdatePasswordDto, UpdateStatusDto, UpdateUserDto } from "./user.dto";
