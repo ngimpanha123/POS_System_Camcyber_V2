@@ -68,11 +68,11 @@ import { UserModule } from './app/resources/cp/user/user.module';
          * @noted If we use as Global in main.ts => 
          * app.useGlobalInterceptors(new TransformInterceptor());
          */
-        {
-            provide: APP_INTERCEPTOR,
-            useFactory: () => new TransformInterceptor(), //=> We can useClass like TimeoutInterceptor
-            inject: []
-        }
+        // {
+        //     provide: APP_INTERCEPTOR,
+        //     useFactory: () => new TransformInterceptor(), //=> We can useClass like TimeoutInterceptor
+        //     inject: []
+        // }
     ]
 })
 /**
