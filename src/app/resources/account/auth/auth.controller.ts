@@ -12,7 +12,7 @@ export class AuthController {
 
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    async login(@Body() body: LoginRequestDto): Promise<{ data: { access_token: string, expires_in: string, user: UserDto } }> {
-        return await this.authService.login(body);
+    async login(@Body() data: LoginRequestDto): Promise<{ res: { access_token: string, expires_in: string, user: UserDto } }> {
+        return await this.authService.login(data);
     }
 }
