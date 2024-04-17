@@ -44,13 +44,13 @@ export class AuthService {
 
         return this._httpClient.post(`${this._baseUrl}/auth/login`, credentials).pipe(
 
-            switchMap((response: LoginResponse) => {
+            switchMap((res: LoginResponse) => {
 
-                this.accessToken = response.data.access_token;
+                this.accessToken = res.access_token;
                 // Store the user on the user service
-                this._userService.user = response.data.user;
+                this._userService.user = res.user;
                 // Return a new observable with the response
-                return of(response);
+                return of(res);
             }),
         );
     }
