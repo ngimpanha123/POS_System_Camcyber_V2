@@ -1,0 +1,79 @@
+<div mat-dialog-title>
+    <span class="text-2xl">កែសម្រួលប្រវត្តិរូប</span>
+</div>
+
+<mat-dialog-content class="border-t">
+    <form class="grid grid-cols-1 gap-4" [formGroup]="profile">
+
+        <div class="rounded-2xl h-fit lg:h-auto">
+            <div class="p-5">
+                <div class="w-full md:min-w-64 flex justify-center">
+                    <div class="pr-0 md:pr-5 w-full max-w-64 min-h-64 overflow-hidden relative">
+                        <app-portrait [disabled]="loading" [mode]="'UPLOAD'" [title]="'បង្ហោះរូបថតថ្មី'" [src]="src" (srcChange)='srcChange($event)'></app-portrait>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-2xl">
+            <div class="md-form-field-appearance-outline">
+
+                <!-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                    <mat-form-field appearance="outline">
+                        <mat-label>ឈ្មោះជាភាសាខ្មែរ</mat-label>
+                        <input matInput [formControlName]="'kh_name'" placeholder="Input your khmer name">
+                        <mat-error> ឈ្មោះខ្មែរត្រូវបានទាមទារ </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>ឈ្មោះជាអក្សរឡាតាំង</mat-label>
+                        <input matInput [formControlName]="'en_name'" placeholder="Input your english name">
+                        <mat-error> ឈ្មោះខ្មែរត្រូវបានទាមទារ </mat-error>
+                    </mat-form-field>
+                </div> -->
+
+                <div class="grid gap-0 lg:gap-5">
+                    <mat-form-field appearance="outline">
+                        <mat-label>ឈ្មោះ</mat-label>
+                        <input matInput [formControlName]="'name'" placeholder="Input your telegram username">
+                        <mat-error> ឈ្មោះត្រូវបានទាមទារ </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-5">
+                    <mat-form-field appearance="outline">
+                        <mat-label>អ៊ីមែល</mat-label>
+                        <input matInput [formControlName]="'email'" placeholder="Input your email">
+                        <mat-error> អ៊ីមែលត្រូវបានទាមទារ </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>លេខទូរស័ព្ទ</mat-label>
+                        <input matInput [formControlName]="'phone'" placeholder="Input your phone number">
+                        <mat-error> ទូរស័ព្ទត្រូវបានទាមទារ </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- <mat-form-field appearance="outline" class="w-full sm-textarea noError">
+                    <mat-label>អំពី</mat-label>
+                    <textarea id="about" matInput [formControlName]="'about'" placeholder="Input your about"></textarea>
+                </mat-form-field> -->
+
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex items-center justify-end gap-2">
+
+    <button class="helpers-mat-button-md min-w-20" mat-flat-button (click)="submit()"
+        [disabled]="profile.invalid || profile.disabled">
+        <span *ngIf="!profile.disabled">រក្សាទុក</span>
+        <mat-progress-spinner *ngIf="profile.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+
+    <button [class.helpers-mat-button-red]="profile.enabled" class="helpers-mat-button-md" [disabled]="profile.disabled"
+        mat-flat-button [mat-dialog-close]="false">
+        <span>បោះបង់</span>
+    </button>
+
+</mat-dialog-actions>

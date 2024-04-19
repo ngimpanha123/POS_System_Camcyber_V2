@@ -1,0 +1,11 @@
+.user-profile-section {
+    width: 100%;
+    height: calc(100dvh - 7.75rem);
+    overflow: auto;
+}
+
+::ng-deep .side-dialog { 
+    .mat-mdc-dialog-surface.mdc-dialog__surface {
+        border-radius: 0 !important;
+    }
+}
