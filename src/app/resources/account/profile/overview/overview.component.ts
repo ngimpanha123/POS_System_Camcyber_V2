@@ -1,130 +1,108 @@
-// ================================================================>> Core Library (Angular)
-import { Component, OnDestroy, OnInit } from '@angular/core';
+// ================================================================================>> Core Library
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// ================================================================>> Third Party Library
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
+// ================================================================================>> Thrid Party Library
+// Material
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
-import jwt_decode from 'jwt-decode'; // External library for decoding JWT tokens
-import { Subject, takeUntil } from 'rxjs'; // RxJS library for observables
-
-
-// ================================================================>> Custom Library (Application-specific)
-import { GlobalConstants } from 'helpers/shared/global-constants';
-import { SnackbarService } from 'helpers/services/snack-bar/snack-bar.service';
+// ================================================================================>> Custom Library
+// Core
 import { User } from 'app/core/user/user.types';
-import { UserService } from 'app/core/user/user.service';
-import { ProfileService } from '../profile.service';
-import { environment as env } from 'environments/environment'; // Custom import for environment variables
 
-// Interface for decoding JWT token payload
-interface UserPayload {
-    exp: number;
-    iat: number;
-    user: User;
-    role: string;
-}
+// Environment
+import { environment as env } from 'environments/environment';
+
+// Helper
+import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
+import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
+
+// Local
+// import { Setup } from '../interface';
+// import { UpdateSignatureComponent } from './signature/component';
+// import { TwoFAComponent } from './twoFA/component';
+import { UpdateProfileComponent } from '../update/component';
 
 @Component({
     selector: 'profile-overview',
     standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule, MatInputModule, MatSelectModule, MatOptionModule, MatDividerModule, MatFormFieldModule, UpdateProfileComponent],
     templateUrl: './overview.component.html',
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        PortraitComponent
-    ],
+    styleUrls: ['./style.scss']
 })
-
-export class OverviewComponent implements OnInit, OnDestroy {
-
-    private _unsubscribeAll: Subject<User> = new Subject<User>();
-    public form: UntypedFormGroup;
-    public src: string = 'assets/images/avatars/profile.jpg';
-    public user: User;
-
+export class OverviewComponent {
+    @Input() user: User;
+    @Input() src: string = 'assets/images/avatars/profile.jpg';
+    signature: string
+    loading: boolean;
+    // setup: Setup;
+    currentDate: Date = new Date();
+    private loadingSpinner = inject(LoadingSpinnerService);
     constructor(
-        private _userService: UserService,
-        private _serviceProfile: ProfileService,
-        private _formBuilder: UntypedFormBuilder,
-        private _snackBar: SnackbarService
+        private readonly matDialog: MatDialog
     ) { }
 
-    // Subscribe to user changes using RxJS takeUntil to handle component destruction
     ngOnInit(): void {
-
-        this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
-            this.user = user;
-            this.src = env.FILE_BASE_URL + this.user.avatar;
-        });
-
-        // Build the form when the component initializes
-        this._buildForm();
+        this.signature = env.FILE_BASE_URL + this.user.avatar;
+        // this.setupData();                  
     }
 
-    ngOnDestroy(): void {
-
-        // Unsubscribe from observables when the component is destroyed
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
+    updateDialog():void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+            user: this.user,
+            src: this.src,
+        }
+        dialogConfig.autoFocus = false;
+        dialogConfig.position = { right: '0', top: '0' };
+        dialogConfig.height = '100vh';
+        dialogConfig.panelClass = 'side-dialog';
+        this.matDialog.open(UpdateProfileComponent, dialogConfig);
     }
 
-    submit(): void {
+    // changeSignature():void {
+    //     const dialogConfig = new MatDialogConfig();
+    //     dialogConfig.autoFocus = false;
+    //     dialogConfig.position = { right: '0', top: '0' };
+    //     dialogConfig.width = '450px';
+    //     dialogConfig.height = '100vh';
+    //     dialogConfig.panelClass = 'side-dialog';
+    //     this.matDialog.open(UpdateSignatureComponent, dialogConfig);
+    // }
 
-        // Disable the form during the submission
-        this.form.disable();
+    // TwoFA():void {
+    //     const dialogConfig = new MatDialogConfig();
+    //     dialogConfig.data = {
+    //         phone: this.user.phone,
+    //     }
+    //     dialogConfig.autoFocus = false;
+    //     dialogConfig.position = { right: '0', top: '0' };
+    //     dialogConfig.width = '450px';
+    //     dialogConfig.height = '100vh';
+    //     dialogConfig.panelClass = 'side-dialog';
+    //     this.matDialog.open(TwoFAComponent, dialogConfig);
+    // }
 
-        // Call the profile service to update the user profile
-        this._serviceProfile.updateProfile(this.form.value).subscribe({
-
-            next: response => {
-
-                // Enable the form after a successful update
-                this.form.enable();
-                const tokenPayload: UserPayload = jwt_decode(response.data.access_token);
-                this._userService.user = tokenPayload.user;
-
-                // Save the updated access token to localStorage
-                localStorage.setItem('accessToken', response.data.access_token);
-
-                // Show a success message using the snackbar service
-                this._snackBar.openSnackBar(response.message, GlobalConstants.success);
-            },
-
-            error: err => {
-
-                // Enable the form after an error and show an error message
-                this.form.enable();
-                this._snackBar.openSnackBar(err?.error?.message ?? GlobalConstants.genericError, GlobalConstants.error);
-            }
-        });
-    }
-
-    srcChange(src: string): void {
-
-        // Update the 'avatar' form control when the source changes
-        this.form.get('avatar').setValue(src);
-    }
-
-    private _buildForm(): void {
-
-        // Build the form using the user's current information
-        this.form = this._formBuilder.group({
-            name: [this.user.name, [Validators.required]],
-            phone: [this.user.phone, [Validators.required, Validators.pattern(/^(\+855|0)[1-9]\d{7,8}$/)]],
-            email: [this.user.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-
-            avatar: [null],         // This field is initially empty and will be updated when the image changes
-        });
-    }
+    // setupData(): void {
+    //     this.loadingSpinner.open();
+    //     this.accountService.setup().subscribe({
+    //         next: (response: ResponseSetup) => {
+    //             this.setup = response.data;
+    //             this.loadingSpinner.close();
+    //         },
+    //         error: (err: HttpErrorResponse) => {
+    //             const error: { httpStatus: 400, message: string } = err.error;
+    //             this.snackBarService.openSnackBar(error.message ?? GlobalConstants.genericError, GlobalConstants.error);
+    //             this.loadingSpinner.close();
+    //         }
+    //     })
+    // }
 }

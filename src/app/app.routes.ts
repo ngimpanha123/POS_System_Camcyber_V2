@@ -55,7 +55,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path        : 'profile',
-                loadChildren: () => import('app/resources/account/profile/profile.routing')
+                loadChildren: () => import('app/resources/account/routes')
             },
 
             // 404 & Catch all

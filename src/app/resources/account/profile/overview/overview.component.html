@@ -1,52 +1,122 @@
-<div class="flex gap-4 py-4">
-    <div class="p-5 m-auto md:w-100 border border-dashed rounded-xl mb-4 h-fit">
-        <div class="w-full md:min-w-64 flex flex-col items-center">
-            <div class="pr-0 md:pr-5 w-full max-w-64 min-h-64 overflow-hidden relative">
-                <app-portrait [disabled]="form.disabled" [mode]="'UPLOAD'" [title]="'បញ្ចូលរូបភាព'" [src]="src"
-                    [index]="'profile'" (srcChange)='srcChange($event)'></app-portrait>
+<div class="user-profile-section p-4 bg-white dark:bg-opacity-5 border-t-8 border-l-8 border-slate-100 dark:border-slate-800">
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 rounded-2xl">
+
+        <div class="md:col-span-3 lg:col-span-2 h-auto">
+
+            <div class="p-5 lg:p-10">
+                <div class="w-full md:min-w-64 flex justify-center">
+                    <div class="pr-0 w-full max-w-64 min-h-64 overflow-hidden relative">
+                        <img [src]="src">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div class="w-full md:min-w-64 flex justify-center">
+                <div class="pr-0 w-full max-w-64 min-h-64 overflow-hidden relative">
+                    <img [src]="signature">
+                </div>
+            </div> -->
+
+        </div>
+        
+        <div class="md:col-span-3 lg:col-span-4">
+            <div class="px-5 md-form-field">
+
+                <div class="grid grid-cols-1 gap-5 py-5">
+
+                    <!-- <div class="flex items-center">
+                        <mat-icon svgIcon="feather:user"></mat-icon>
+                        <p class="w-40 ml-3">ឈ្មោះជាភាសាខ្មែរ</p>
+                        <p>: {{ user.kh_name }}</p>
+                    </div> -->
+
+                    <!-- <mat-divider></mat-divider> -->
+
+                    <div class="flex items-center">
+                        <mat-icon svgIcon="feather:user"></mat-icon>
+                        <p class="w-40 ml-3">ឈ្មោះ</p>
+                        <p>: {{ user.name }}</p>
+                    </div>
+                    
+                    <mat-divider></mat-divider>
+                    
+                    <!-- <div class="flex items-center">
+                        <mat-icon svgIcon="feather:send"></mat-icon>
+                        <p class="w-40 ml-3">ឈ្មោះតេឡេក្រាម</p>
+                        <p>: {{ user.tg_username }}</p>
+                    </div> -->
+
+                    <!-- <mat-divider></mat-divider> -->
+
+                    <div class="flex items-center">
+                        <mat-icon svgIcon="mat_outline:mail"></mat-icon>
+                        <p class="w-40 ml-3">អ៊ីមែល</p>
+                        <p>: {{ user.email }}</p>
+                    </div>
+
+                    <mat-divider></mat-divider>
+                    
+                    <div class="flex items-center">
+                        <mat-icon svgIcon="heroicons_outline:phone"></mat-icon>
+                        <p class="w-40 ml-3">លេខទូរស័ព្ទ</p>
+                        <p>: {{ user.phone }}</p>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                </div>
+
+                <!-- <div class="mb-5">
+                    <div class="mb-3 flex">
+                        <mat-icon svgIcon="heroicons_outline:question-mark-circle"></mat-icon>
+                        <p class="ml-3">អំពី</p>
+                    </div>
+                    <p>{{ user.about }}</p>
+                </div> -->
+
+                <!-- <mat-divider></mat-divider> -->
+
+                <div class="flex justify-end gap-5 py-5">
+                    <button 
+                        class="w-full md:w-fit min-w-15 helpers-mat-button-md" color="primary" mat-stroked-button (click)="updateDialog()">
+                        <mat-icon svgIcon="feather:edit"></mat-icon>
+                        <span class="ml-3">កែប្រែ</span>
+                    </button>
+                    <!-- <button 
+                        class="w-full md:w-fit min-w-15 helpers-mat-button-md" color="primary" mat-stroked-button (click)="changeSignature()">
+                        <mat-icon svgIcon="feather:pen-tool"></mat-icon>
+                        <span class="ml-3">ផ្លាស់ប្តូរហត្ថលេខា</span>
+                    </button> -->
+                </div>
+
+                <!-- <button *ngIf="!user.isTwoFactorAuthenticationEnabled" class="bg-yellow-50 border border-yellow-500 p-6 rounded-xl flex gap-4 w-full" (click)="TwoFA()">
+                    <mat-icon svgIcon="mat_outline:smartphone"></mat-icon>
+                    <p>តំណើរការសុវត្ថិភាពគណនីរបស់អ្នកជាមួយ Google 2FA</p>
+                </button> -->
+
             </div>
         </div>
+
     </div>
-    <form class="md-form-field-appearance-outline w-full" [formGroup]="form">
+</div>
 
-        <mat-form-field appearance="outline" class="w-full">
-            <mat-label>ឈ្មោះ</mat-label>
-            <input id="name" matInput [formControlName]="'name'">
-            <mat-error *ngIf="form.get('name').hasError('required')">
-                Full name is required
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-full">
-            <mat-label>លេខទូរស័ព្ទ</mat-label>
-            <input id="phone" matInput [formControlName]="'phone'" class="siereap">
-            <mat-error *ngIf="form.get('phone').hasError('required')">
-                Phone address is required
-            </mat-error>
-            <mat-error *ngIf="form.get('phone').hasError('phone')">
-                Please enter a valid phone address
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-full">
-            <mat-label>អុីម៉ែល</mat-label>
-            <input id="email" matInput [formControlName]="'email'" class="siereap">
-            <mat-error *ngIf="form.get('email').hasError('required')">
-                Email address is required
-            </mat-error>
-            <mat-error *ngIf="form.get('email').hasError('email')">
-                Please enter a valid email address
-            </mat-error>
-        </mat-form-field>
-
-        <div class="flex justify-end">
-            <button class="helpers-mat-button-md min-w-24" [disabled]="form.invalid  || form.disabled"
-                (click)="submit()" mat-flat-button>
-                @if(form.disabled) {
-                <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
-                }
-                @else {
-                <span>កែប្រែ</span>
-                }
-            </button>
+<div>
+    <ng-template #loadingTemplate>
+        <div class="overflow-hidden min-h-30">
+            <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
-    </form>
+    </ng-template>
 </div>
