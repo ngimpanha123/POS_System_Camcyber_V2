@@ -56,7 +56,7 @@ export class PosService {
             const order = await Order.create({
                 cashier_id: cashierId,
                 total_price: 0,
-                receipt_number: await this.generateReceiptNumber(),
+                receipt_number: await this._generateReceiptNumber(),
                 ordered_at: null
             }, { transaction });
 
@@ -143,7 +143,7 @@ export class PosService {
     }
 
     // Private method to generate a unique receipt number
-    private async generateReceiptNumber(): Promise<number> {
+    private async _generateReceiptNumber(): Promise<number> {
         const number = Math.floor(Math.random() * 9000000) + 1000000;
         return await Order.findOne({
             where: {
