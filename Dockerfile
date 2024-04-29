@@ -1,6 +1,6 @@
 FROM node:18.15-alpine
 
-WORKDIR /myapp
+WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install
