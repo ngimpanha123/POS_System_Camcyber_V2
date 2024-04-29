@@ -151,7 +151,7 @@ export class PosService {
             },
         }).then((order) => {
             if (order) {
-                return this.generateReceiptNumber();
+                return this._generateReceiptNumber();
             }
             return number;
         });

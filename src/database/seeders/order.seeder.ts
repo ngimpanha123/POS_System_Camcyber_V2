@@ -16,7 +16,7 @@ export class OrderSeeder {
         for (let i = 1; i <= 100; i++) {
             const order = await Order.findByPk(i);
             if (order) await order.destroy();
-            const receipt_number = await this.generateReceiptNumber();
+            const receipt_number = await this._generateReceiptNumber();
             data.push({
                 receipt_number,
                 cashier_id: Math.floor(Math.random() * (2 - 1) + 1), //Math.floor(Math.random()*(max-min)+min) is min to max
@@ -75,7 +75,7 @@ export class OrderSeeder {
         console.log('\x1b[32mSeed order_details inserted successfully.');
     }
 
-    private generateReceiptNumber = async () => {
+    private _generateReceiptNumber = async () => {
         const number: number = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
         const check = await Order.findOne({
             where: {
@@ -83,7 +83,7 @@ export class OrderSeeder {
             },
         });
         if (check) {
-            return this.generateReceiptNumber();
+            return this._generateReceiptNumber();
         }
         return number;
     }
