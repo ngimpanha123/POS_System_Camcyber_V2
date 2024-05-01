@@ -36,7 +36,7 @@ const productSeeder = {
             type_id: 4,
             name: 'Boscia',
             unit_price: 10000,
-            image: 'upload/file/5a3d9053-0885-4ea7-b4d2-0ef380874c06'
+            image: 'static/pos/products/beauty/boscia.jpg'
 
         },
         {
@@ -44,35 +44,35 @@ const productSeeder = {
             type_id: 4,
             name: 'Deep Cleaning Oil',
             unit_price: 15000,
-            image: 'upload/file/0021737e-f060-4e83-81fd-a2dfee58b8f0'
+            image: 'static/pos/products/beauty/deep-cleansing-oil.jpg'
         },
         {
             code: 'B003',
             type_id: 4,
             name: 'LipGloss',
             unit_price: 25000,
-            image: 'upload/file/d58f8a69-8202-49f0-b194-4f67e39de57d'
+            image: 'static/pos/products/beauty/lipgloss.jpg'
         },
         {
             code: 'B004',
             type_id: 4,
             name: 'Dark Pot',
             unit_price: 18000,
-            image: 'upload/file/9550b001-1f86-4b9a-bd77-ac11ad2978a9'
+            image: 'static/pos/products/beauty/dark-spot.jpg'
         },
         {
             code: 'B005',
             type_id: 4,
             name: 'Mauli',
             unit_price: 23000,
-            image: 'upload/file/e1b0318e-e182-4d4c-9740-c25534fdacbc'
+            image: 'static/pos/products/beauty/mauli.jpg'
         },
         {
             code: 'S001',
             type_id: 1,
             name: 'Schoko',
             unit_price: 3000,
-            image: 'upload/file/3dbe5ced-9dcc-4b6d-962d-6646a7dd4166'
+            image: 'static/pos/products/snack/milch-schoko.png'
 
         },
         {
@@ -80,70 +80,70 @@ const productSeeder = {
             type_id: 1,
             name: 'Cheez-it',
             unit_price: 5000,
-            image: 'upload/file/b19f3d3c-5912-410f-b5ad-adf3e7ad6ea9'
+            image: 'static/pos/products/snack/cheezit.png'
         },
         {
             code: 'S003',
             type_id: 1,
             name: 'Chikki',
             unit_price: 2000,
-            image: 'upload/file/c966922c-4920-4929-87b9-a29e6f692015'
+            image: 'static/pos/products/snack/chikki.png'
         },
         {
             code: 'S004',
             type_id: 1,
             name: 'Snickers',
             unit_price: 4000,
-            image: 'upload/file/81bed61b-c50f-4bc9-b626-1dce345758b7'
+            image: 'static/pos/products/snack/snickers.jpg'
         },
         {
             code: 'S005',
             type_id: 1,
             name: 'Protein',
             unit_price: 5000,
-            image: 'upload/file/ff0bd666-5127-482b-b35f-adb8d8cf6dba'
+            image: 'static/pos/products/snack/protein-snack.jpg'
         },
         {
             code: 'M001',
             type_id: 2,
             name: 'Crab',
             unit_price: 10000,
-            image: 'upload/file/6186ce49-8372-4bc0-b72b-ad5320f839c2'
+            image: 'static/pos/products/food-meat/crab.jpg'
         },
         {
             code: 'M002',
             type_id: 2,
             name: 'Jerky Beef',
             unit_price: 15000,
-            image: 'upload/file/75425217-1b76-468a-897f-3222f19c789e'
+            image: 'static/pos/products/food-meat/jerky-beef.jpg'
         },
         {
             code: 'M003',
             type_id: 2,
             name: 'Clam',
             unit_price: 25000,
-            image: 'upload/file/4fa03d02-85a2-4d4e-8e87-9feabd728a15'
+            image: 'static/pos/products/food-meat/clam.jpg'
         },
         {
             code: 'M004',
             type_id: 2,
             name: 'Chicken meat',
             unit_price: 15000,
-            image: 'upload/file/0f362100-b8c7-480e-b660-44d1a5e65527'
+            image: 'static/pos/products/food-meat/chicken-meat.png'
         },
         {
             code: 'M005',
             type_id: 2,
             name: 'Beef',
             unit_price: 23000,
-            image: 'upload/file/f8b548eb-ac68-4617-84ee-8e89104e90bb'
+            image: 'static/pos/products/food-meat/beef.png'
         },
         {
             code: 'Be001',
             type_id: 3,
             name: 'G',
             unit_price: 8000,
-            image: 'upload/file/ba66decf-0f14-4165-b009-618bb6706612'
+            image: 'static/pos/products/beverage/g.jpg'
 
         },
         {
@@ -151,28 +151,28 @@ const productSeeder = {
             type_id: 3,
             name: 'IZE',
             unit_price: 1500,
-            image: 'upload/file/ad76f43f-ad01-4087-9df6-b5ee3c61dc00'
+            image: 'static/pos/products/beverage/ize.png'
         },
         {
             code: 'Be003',
             type_id: 3,
             name: 'Creamsoda',
             unit_price: 12000,
-            image: 'upload/file/d49a326f-e686-40c9-8c9e-0d306513a01b'
+            image: 'static/pos/products/beverage/creamsoda.png'
         },
         {
             code: 'Be004',
             type_id: 3,
             name: 'EGB',
             unit_price: 6000,
-            image: 'upload/file/cc4a2951-601c-4301-9e8a-6b8309df8296'
+            image: 'static/pos/products/beverage/egb.png'
         },
         {
             code: 'Be005',
             type_id: 3,
             name: 'Heineken',
             unit_price: 8000,
-            image: 'upload/file/6fd14baf-1213-4811-ad33-140de2fc4b64'
+            image: 'static/pos/products/beverage/heineken.jpg'
         },
     ]
 }
