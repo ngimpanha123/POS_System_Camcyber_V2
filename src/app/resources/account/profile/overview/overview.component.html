@@ -10,12 +10,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- <div class="w-full md:min-w-64 flex justify-center">
-                <div class="pr-0 w-full max-w-64 min-h-64 overflow-hidden relative">
-                    <img [src]="signature">
-                </div>
-            </div> -->
 
         </div>
         
@@ -24,14 +18,6 @@
 
                 <div class="grid grid-cols-1 gap-5 py-5">
 
-                    <!-- <div class="flex items-center">
-                        <mat-icon svgIcon="feather:user"></mat-icon>
-                        <p class="w-40 ml-3">ឈ្មោះជាភាសាខ្មែរ</p>
-                        <p>: {{ user.kh_name }}</p>
-                    </div> -->
-
-                    <!-- <mat-divider></mat-divider> -->
-
                     <div class="flex items-center">
                         <mat-icon svgIcon="feather:user"></mat-icon>
                         <p class="w-40 ml-3">ឈ្មោះ</p>
@@ -39,14 +25,6 @@
                     </div>
                     
                     <mat-divider></mat-divider>
-                    
-                    <!-- <div class="flex items-center">
-                        <mat-icon svgIcon="feather:send"></mat-icon>
-                        <p class="w-40 ml-3">ឈ្មោះតេឡេក្រាម</p>
-                        <p>: {{ user.tg_username }}</p>
-                    </div> -->
-
-                    <!-- <mat-divider></mat-divider> -->
 
                     <div class="flex items-center">
                         <mat-icon svgIcon="mat_outline:mail"></mat-icon>
@@ -66,33 +44,13 @@
 
                 </div>
 
-                <!-- <div class="mb-5">
-                    <div class="mb-3 flex">
-                        <mat-icon svgIcon="heroicons_outline:question-mark-circle"></mat-icon>
-                        <p class="ml-3">អំពី</p>
-                    </div>
-                    <p>{{ user.about }}</p>
-                </div> -->
-
-                <!-- <mat-divider></mat-divider> -->
-
                 <div class="flex justify-end gap-5 py-5">
                     <button 
                         class="w-full md:w-fit min-w-15 helpers-mat-button-md" color="primary" mat-stroked-button (click)="updateDialog()">
                         <mat-icon svgIcon="feather:edit"></mat-icon>
                         <span class="ml-3">កែប្រែ</span>
                     </button>
-                    <!-- <button 
-                        class="w-full md:w-fit min-w-15 helpers-mat-button-md" color="primary" mat-stroked-button (click)="changeSignature()">
-                        <mat-icon svgIcon="feather:pen-tool"></mat-icon>
-                        <span class="ml-3">ផ្លាស់ប្តូរហត្ថលេខា</span>
-                    </button> -->
                 </div>
-
-                <!-- <button *ngIf="!user.isTwoFactorAuthenticationEnabled" class="bg-yellow-50 border border-yellow-500 p-6 rounded-xl flex gap-4 w-full" (click)="TwoFA()">
-                    <mat-icon svgIcon="mat_outline:smartphone"></mat-icon>
-                    <p>តំណើរការសុវត្ថិភាពគណនីរបស់អ្នកជាមួយ Google 2FA</p>
-                </button> -->
 
             </div>
         </div>

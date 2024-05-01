@@ -59,12 +59,8 @@ export class UpdateProfileComponent {
         this.profile = this.formBuilder.group({
             avatar: [null],
             name: [this.dialogData?.user.name, Validators.required],
-            // en_name: [this.dialogData?.user.en_name, Validators.required],
-            // username: [this.dialogData?.user.username, [Validators.required, this.usernameValidator]],
-            // tg_username: [this.dialogData?.user.tg_username, [Validators.required, this.usernameValidator]],
             email: [this.dialogData?.user.email, Validators.required],
             phone: [this.dialogData?.user.phone, Validators.required]
-            // about: [this.dialogData?.user.about]
         });
     }
     

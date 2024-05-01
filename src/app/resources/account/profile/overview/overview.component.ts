@@ -1,6 +1,6 @@
 // ================================================================================>> Core Library
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // ================================================================================>> Thrid Party Library
@@ -23,12 +23,8 @@ import { environment as env } from 'environments/environment';
 
 // Helper
 import { LoadingSpinnerService } from 'helpers/shared/loading/loading.service';
-import { PortraitComponent } from 'helpers/shared/portrait/portrait.component';
 
 // Local
-// import { Setup } from '../interface';
-// import { UpdateSignatureComponent } from './signature/component';
-// import { TwoFAComponent } from './twoFA/component';
 import { UpdateProfileComponent } from '../update/component';
 
 @Component({
@@ -67,42 +63,4 @@ export class OverviewComponent {
         dialogConfig.panelClass = 'side-dialog';
         this.matDialog.open(UpdateProfileComponent, dialogConfig);
     }
-
-    // changeSignature():void {
-    //     const dialogConfig = new MatDialogConfig();
-    //     dialogConfig.autoFocus = false;
-    //     dialogConfig.position = { right: '0', top: '0' };
-    //     dialogConfig.width = '450px';
-    //     dialogConfig.height = '100vh';
-    //     dialogConfig.panelClass = 'side-dialog';
-    //     this.matDialog.open(UpdateSignatureComponent, dialogConfig);
-    // }
-
-    // TwoFA():void {
-    //     const dialogConfig = new MatDialogConfig();
-    //     dialogConfig.data = {
-    //         phone: this.user.phone,
-    //     }
-    //     dialogConfig.autoFocus = false;
-    //     dialogConfig.position = { right: '0', top: '0' };
-    //     dialogConfig.width = '450px';
-    //     dialogConfig.height = '100vh';
-    //     dialogConfig.panelClass = 'side-dialog';
-    //     this.matDialog.open(TwoFAComponent, dialogConfig);
-    // }
-
-    // setupData(): void {
-    //     this.loadingSpinner.open();
-    //     this.accountService.setup().subscribe({
-    //         next: (response: ResponseSetup) => {
-    //             this.setup = response.data;
-    //             this.loadingSpinner.close();
-    //         },
-    //         error: (err: HttpErrorResponse) => {
-    //             const error: { httpStatus: 400, message: string } = err.error;
-    //             this.snackBarService.openSnackBar(error.message ?? GlobalConstants.genericError, GlobalConstants.error);
-    //             this.loadingSpinner.close();
-    //         }
-    //     })
-    // }
 }
