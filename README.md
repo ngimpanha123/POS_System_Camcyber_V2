@@ -29,4 +29,4 @@ $ npm run seeder
 
 ## License
 
-NestJS API with [YIM KLOK](https://t.me/yim_klok).
+
